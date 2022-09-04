@@ -1,0 +1,37 @@
+
+@startuml
+title Monolith - Komponenten
+
+() "HTTP:80" as http1
+() "HTTP:8000" as http2
+
+[Client - Browser] as client
+node "Monolith" as monolith {
+	package "Web-Server mit App-Logik" as webserver {
+		[Form-backend] as form_backend
+		[Demo-API] as api
+	}
+	[Datenbank - sqlite in-memory] as db
+}
+node "Frontend-Service" as frontend {
+	package "Webserver" as front_webserver {
+		[statische Seiten] as static_site
+		[Site-Builder] as site_builder
+	}
+
+}
+
+
+[Email-Dienst (extern)] as email
+[mkdocs-Dokumentation] as doc
+
+http1 -- front_webserver
+http2 -- webserver
+
+client ..> http1
+client ..> http2
+client ..> doc
+api ..> db: fragt ab
+form_backend ..> email: sendet
+site_builder .up.> static_site: liefert
+@enduml

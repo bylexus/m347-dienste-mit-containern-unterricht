@@ -1,0 +1,43 @@
+{% extends "_base_template.html" %} {% block sections %}
+<style>
+  p,
+  td {
+    font-size: 0.85em !important;
+  }
+</style>
+
+<section>
+  <section id="home" data-markdown style="font-size: 10pt">
+    <textarea data-template>
+M347 - Dienste mit Containern | Jahresplan 2023 - IN21-25c
+=================
+
+**LBV**: 1. Wissensprüfung (40%), 2. Projektarbeit (60%)
+
+| Lekt. | Datum       | Thema | Detail                                            |
+|-------|-------------|--------------|--------------------------------------------|
+|<td colspan="3"><strong>Sportferien 28.01. - 05.02.2023</strong> |
+| [ 001 ](001_start/unterricht.html)               | 06.02.2023  | Einführung | Jahresplan, Verteilung Classroom / Docker-Setup, Abgabe Projektaufgabe |
+| [ 002 ](002_linux/unterricht.html)               | 13.02.2023  | Linux | Schnellbleiche Linux-Konsole, Dateisystem, wichtige Kommandos |
+| [ 003 ](003_grundlagen_container/unterricht.html)| 20.02.2023  | Container-Grundlagen | Was sind Container? Architektur, Docker, erste Images von Dockerhub nutzen |
+| [ 004 ](004_images/unterricht.html)              | 27.02.2023  | Container-Grundlagen | Images mit Dockerfiles selber bauen (am Beispiel mkdoks) |
+| [ 005 ](005_dev_build/unterricht.html)           | 06.03.2023  | Microservice, Container für Entwicklung| vom Monolith zu Micro-Services, Docker für die Entwicklung |
+| [ 006 ](006_prod_build/unterricht.html)          | 13.03.2023  | Produktions-Images | Applikation für Produktion in Container packen, Multi-Stage-Builds |
+| [ 007 ](007_form_backend/unterricht.html)        | 20.03.2023  | mehrere Dienste, Ports | Form-Versand-Applikation, Port-Weiterleitung für Container |
+|<td colspan="3"><strong>Frühlingsferien 25.03.2023 - 10.04.2023</strong></td>|
+| [ 008 ](008_db_backend/unterricht.html)          | 17.04.2023  | Docker Volumes &amp; Networks, Micro-API | Anbindung einer Datenbank, Aufbau API für Daten-Einträge |
+| [ 009 ](009_db_backend_2/unterricht.html)        | 24.04.2023  | Docker Volumes &amp; Networks, Micro-API | Anbindung einer Datenbank, Aufbau API für Daten-Einträge (Teil 2) |
+|<td colspan="3"><strong>1. Mai - Frei</strong></td>|
+| [ 010 ](010_orchestrierung/unterricht.html)      | 08.05.2023  | Dienst-Orchestrierung | docker compose, Orchestrierung der einzelnen Services, `.env`-Konfiguration |
+| [ 011 ](011_lb1_pruefung.html)                   | **15.05.2023**  | **LB 1 - Wissensprüfung** |  |
+|<td colspan="3"><strong>Pfingstferien 18.05.2023 - 29.05.2023</strong></td>|
+| [ 012-014 ](012/projektarbeit.html)              | 05.06.2023 - <br>19.06.2023  | Projektarbeit (LB 2) | Micro-Service-App mit Kommentar-Funktion selber (aus)bauen |
+| [ 015 ](015_sicherheitsaspekte.html)             | 26.06.2023  | Sicherheitsaspekte |  Umgang mit Konfigurationsdaten, non-root-Container |
+| [ 016 ](016_management.html)                     | 03.07.2023  | Management-Tools, Ausblick | Portainer, Übersicht Cloud-Infrastruktur  mit Kubernetes |
+|<td colspan="3"><strong>Sommerferien 08.07. - 06.08.2023</strong></td>|
+
+</textarea>
+</section>
+</section>
+
+{% endblock %}

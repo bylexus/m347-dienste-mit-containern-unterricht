@@ -1,0 +1,166 @@
+
+{% extends "../_base_template.html" %}
+{% block title %}Lektion 4 - Grundlagen Images{% endblock %}
+
+{% block sections %}
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> M347 - Grundlagen Images
+
+## Heutiges Ziel
+
+- Sie wissen, was 'Linux Images' sind
+- Sie wissen, wie man eigene Images von Basis-Images ableitet
+- Sie kennen die wichtigsten Dockerfile-Befehle und
+- Sie können mit einem Dockerfile eigene Images und Container bauen
+- Endziel: Sie haben ein Image gebaut, welches mittels mkdocs Ihre Dokumentationsseite ausliefern kann.
+
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Was sind Images?
+
+Sie haben bereits erste Container gebaut / angewendet. Grundlage für Container sind **Images**. Doch
+was sind denn genau ***Images***?
+
+Eine sehr gute Erklärung zu Docker Images finden Sie hier:
+
+<https://www.ionos.de/digitalguide/server/knowhow/docker-image/>
+
+Wir beantworten am Schluss folgende Fragen gemeinsam (in eigenen Worten formulieren):
+
+* Benötigen wir:
+  * **ein Image, um einen Container zu bauen**, 
+  * oder **einen Container, um ein Image zu bauen**?
+* Können Images beschrieben werden?
+* Wenn wir einen Container starten, wo werden veränderte Dateien des Containers gespeichert?
+* Welche Ressourcen "verbraucht" ein Image?
+* Was bedeutet dies: **"Ein Image ist aus Schichten aufgebaut"**
+
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Dockerfiles
+
+Ein **Dockerfile**  (Filename: `Dockerfile`) beinhaltet **Anweisungen zum Bau eines neuen Images**. Es wird das Basis-Image festgelegt und
+sämtliche Operationen und Konfigurationen, welche zum Bau des Images notwendig sind.
+
+**Ein sehr einfaches Beispiel:**
+
+```Dockerfile
+# Wir "erben" vom Image Debian, in der Version "stable-slim"
+# Wir bauen also auf einem minimalen Debian-Linux auf:
+FROM debian:stable-slim
+
+# Wir führen Linux-Kommandos aus. Hier: Wir installieren ein benötigtes
+# Software-Paket:
+# - apt-get update: aktualisiert den Debian Paket-Cache
+# - && führt rechtes Kommando aus, wenn linkes erfolgreich war
+# - apt-get install -y cowsay: Installiert das Paket "cowsay"
+RUN apt-get update && apt-get install -y cowsay
+
+# wir kopieren notwendige Files von unserem lokalen Filesystem in
+# das Image:
+# Hier kopieren wir das lokale File message.txt ins Image unter /data/
+COPY message.txt /data/message.txt
+
+# Wir definieren, welcher Prozess beim Start eines Containers
+# laufen soll:
+# In unserem Beispiel ist es ein Prozess, der sich nach dem Start
+# auch gleich wieder beendet (Container bleibt also nicht laufen):
+# Dies ist optional, wenn das Parent-Image schon ein Kommando definiert:
+CMD cat /data/message.txt | /usr/games/cowsay
+```
+
+Daraus **bauen wir nun ein eigenes Image:**
+
+```
+docker build -t image-name:version /pfad/zum/Dockerfile-Ordner
+# also z.B.:
+docker build -t my-cowsay:latest /home/alex/cowsay-example/
+```
+
+... und **starten damit einen neuen Container:**
+
+<div style="display: flex;gap:10px; align-items: flex-start;">
+
+```sh
+docker run my-cowsay:latest
+```
+
+```sh
+____________________
+< Hello, from Debian! >
+ --------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+```
+</div>
+
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-flask"></i> Eigenes Dockerfile für `mkdocs`-Dokumentation
+
+**Nun sind Sie dran:** Sie erarbeiten in den nächsten Minuten selbständig (Sie dürfen sich auch austauschen) ein **Dockerfile** für ein eigenes Image:
+
+* Das Image soll die `mkdocs`-Dokumentation Ihres Projektes (Fodler `mkdocs`) als Webseite ausliefern können
+* Vorgaben:
+  * Der damit gestartete Container hört auf Port 10000
+  * Ihre Dokumentation (Verzeichnis `mkdocs/` in Ihrem classroom-git) soll dem Container als **Bound Volume** von aussen zur Verfügung gestellt werden
+  * Sie nehmen als Basis-Image **`debian:stable-slim`**
+* Sie erstellen ein Dockerfile, welches:
+  * die notwendigen Pakete für `mkdocs` installiert: 
+    * python3
+    * python3-pip
+  * die notwendigen Kommandos zum Installieren von `mkdocs` ausführt:
+    Siehe <https://www.mkdocs.org/user-guide/installation/>
+  * beim Container-Start `mkdocs serve --dev-addr 0.0.0.0:8000` startet (siehe Dokumentation mkdocs)
+
+**Lesen Sie sich selbständig in die entsprechenden Dockerfile-Kommandos ein!** (<https://docs.docker.com/engine/reference/builder/>)
+Sie benötigen in etwa: `FROM`, `RUN`, `WORKDIR`, `COPY`, `CMD`.
+
+**Ziel**:
+
+Am Schluss sollten Sie ein Image haben, welches Ihre `mkdocs`-Dokumentation als Container ausliefern kann:
+
+Nach Ausführen von:
+
+```sh
+docker run --name mkdocs -v [.....] -p [.....] my-doc
+```
+
+sollten Sie unter <http://localhost:10000/> Ihre Dokumentation sehen.
+
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-flask"></i> Gemeinsame Inbetriebnahme
+
+Wir gehen das Beispiel gemeinsam durch.
+
+* FRAGEN?
+
+* PROBLEME?
+
+* Wo benötigen Sie noch Hilfestellung?
+
+
+<i class="far fa-hand-point-right"></i> Sie haben nun Ihren ersten Docker-Dienst selbständig aufgebaut.
+
+
+</textarea>
+</section>
+
+{% endblock %}

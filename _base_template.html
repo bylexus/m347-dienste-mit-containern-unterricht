@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>{% block title %}{{ project.name }}{% endblock %}</title>
+
+		<link rel="stylesheet" href="{{webroot}}/dist/reset.css">
+		<link rel="stylesheet" href="{{webroot}}/dist/reveal.css">
+		<link rel="stylesheet" href="{{webroot}}/dist/theme/alex.css" id="theme">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="{{webroot}}/lib/css/github.min.css">
+
+        <!-- font awesome -->
+        <script defer src="{{webroot}}/lib/fontawesome-free-5.15.4-web/js/all.js"></script>
+
+    </head>
+    <body>
+        <div class="reveal">
+            <header>
+                {% block modulname %}{{ project.name }}{% endblock %}&nbsp;
+                <img src="{{webroot}}/data/logo-kanton-thurgau.svg" style="width: 60px" />
+            </header>
+            <div class="slides">
+                {% block sections %}
+                {% endblock %}
+            </div>
+        </div>
+
+		<script src="{{webroot}}/dist/reveal.js"></script>
+		<script src="{{webroot}}/plugin/notes/notes.js"></script>
+		<script src="{{webroot}}/plugin/markdown/markdown.js"></script>
+		<script src="{{webroot}}/plugin/highlight/highlight.js"></script>
+		<script src="{{webroot}}/plugin/zoom/zoom.js"></script>
+
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                width: 1024,
+                height: 768,
+                slideNumber: 'h.v/t',
+                transition: 'slide',
+                hash: true,
+                center: false,
+                pdfSeparateFragments: false,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ],
+                markdown: {
+                    smartypants: true
+                },
+            });
+        </script>
+    </body>
+</html>
