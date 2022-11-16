@@ -62,9 +62,12 @@ Webseite, vom jetzigen Monolithen:
 
 * Diesen setzen wir in 2 Versionen auf: Als **Entwicklungs-Version** (heute) und als **produktive Version** (nächstes Mal)
 
+* Der Client kann via Frontend-Dienst (http-proxy) weiterhin auf die Formular- und API-Dienste zugreifen.
+
 * **Ziel:** Wir haben einen eigenen Container, der nur die statische Webseite ausliefert, und "den Rest", also das Backend, als weiteren Container.
 
-* Der **Client, also der Browser**, kommuniziert nun mit beiden Diensten, jeweils über eine eigene Netzwerk-Verbindung.
+* Der **Client, also der Browser**, kommuniziert nur mit dem Frontend-Dienst: Dieser sorgt mittels eines HTTP-Proxys dafür,
+  dass der Client weiterhin auf die Formular- und API-URLs zugreifen kann.
 </div>
 </div>
 
@@ -81,9 +84,9 @@ Sie sollen nun diesen ersten Teil umsetzen: "Absplittern" des Frontends als Micr
 
 Unser Monolith liefert aktuell mittels NodeJS auch den statischen Teil aus - gestartet wird dieser mit `node server.js`.
 
-- Erstellen Sie einen eigenen Ordner für Ihr "Frontend"-Projekt. Kopieren Sie dazu den gesamten "monolith"-Ordner.
+- **Erstellen Sie einen eigenen Ordner** für Ihr "Frontend"-Projekt. Kopieren Sie dazu den gesamten "monolith"-Ordner.
 - Kopieren Sie auch Ihre statischen Webseiten-Dateien in den "Frontend"-Ordner.
-- Erstellen Sie ein Dockerfile für ein eigenes "frontend"-Image, basierend auf dem Image  "`node`" (https://hub.docker.com/_/node/) basiert
+- **Erstellen Sie ein Dockerfile** für ein eigenes "frontend"-Image, basierend auf dem Image  "`node`" (https://hub.docker.com/_/node/).
 - Räumen Sie `server.js` (jetzt in Ihrem Frontend-Ordner) auf: **Entfernen Sie alle Code-Teile, die nichts mit der Auslieferung des Frontend zu tun haben!**
 - Entfernen Sie auch alle anderen Files im Frontend-Ordner, die Sie (für diesen Dienst) nicht mehr benötigen
 - Erzeugen Sie mit dem Dockerfile nun einen Container, welcher:
@@ -111,10 +114,10 @@ Wir führen hier ein paar neue Konzepte ein:
 
 - ein "**Port Mapping**" "verbindet" einen Host-TCP-Port mit einem Container-TCP-Port, sodass Netzwerk-Verkehr vom Host an den Container geleitet wird.
   Ansonsten wäre unsere Frontend-Webseite von aussen nicht erreichbar.<br>
-  Siehe <https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose> und </https:> <https://docs.docker.com/engine/reference/commandline/port/> und 
+  Siehe <https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose> und <https://docs.docker.com/engine/reference/commandline/port/> 
 
 - Um einen Container beim Start in einem bestimmten "Working Directory" zu starten, benutzen Sie im Dockerfile die Anweisung "`WORKDIR`",<br>
-  siehe: <https://docs.docker.com/engine/reference/builder/#workdir></https:>
+  siehe: <https://docs.docker.com/engine/reference/builder/#workdir>
 
 - Das Kommando, um Ihren Container zu starten, sollte ***in etwa*** so aussehen:
 
@@ -129,12 +132,29 @@ docker> node server.js
 Dieser Container dient dazu, unsere Frontend-Webseite zu entwickeln: Wir überreichen ihm den Ordner unserer Enwicklungs-Version der Webseite:
 So können wir lokal in unserem gewohnten Code-Editor die Webseite editeren, und sie (vom Container ausgeliefert) testen.
 Zudem starten wir den Container manuell, damit wir den Server-Teil einfach stoppen/neu starten können.
+</textarea>
+</section>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-flask"></i> Umbau - Was haben wir erreicht?
+
+**Haben Sie noch Fragen / Probleme beim Extrahieren?** - Wir schauen uns dies gemeinsam an.
+
+Durch diesen Umbau haben wir nun folgendes erreicht:
+
+* Wir haben einen eigenen Container, der sich nur um die Auslieferung des Frontends kümmert.
+* Dadurch wird unser Frontend-Code (server.js) **einfacher, schlanker**: Er macht nur noch "etwas", anstatt alles.
+* Wir können den Frontend-Dienst nun separat entwickeln, starten, deployen.
+
+<i class="far fa-hand-point-right"></i> Im selben Zug haben wir aber die weiteren Dienste "kaputt gemacht":
+Der Formular-Feedback sowie die API-Abfrage funktionieren nun nicht mehr.<br>
+**Wir kümmern uns in den nächsten Lektionen um diese Dienste**.
 
 
 
 </textarea>
 </section>
-</section>
-
 
 {% endblock %}

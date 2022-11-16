@@ -6,12 +6,23 @@ title Monolith - Komponenten
 [Client - Browser] as client
 rectangle "Docker-Dienste" {
 	node "Monolith" as monolith {
-		() "HTTP:80" as http2
 		package "Web-Server mit App-Logik" as webserver {
-			[Form-backend] as form_backend
 			[Demo-API] as api
 		}
 		[Datenbank - sqlite in-memory] as db
+	}
+	note top of monolith
+		diesen Rest unseres Monolithen
+		lassen wir mal so unverbunden
+		stehen - dazu kommen wir später
+	endnote
+
+	node "Feedback-Dienst" as feedback {
+		() "HTTP:80" as http2
+		package "Webserver" as feedback_webserver {
+			[Form-backend] as form_backend
+		}
+
 	}
 	node "Frontend-Service" as frontend {
 		package "Webserver" as front_webserver {
@@ -28,7 +39,7 @@ rectangle "Docker-Dienste" {
 [mkdocs-Dokumentation] as doc
 
 http1 -- front_webserver
-http2 -- webserver
+http2 -- feedback_webserver
 
 client ..> http1
 proxy .right.> http2

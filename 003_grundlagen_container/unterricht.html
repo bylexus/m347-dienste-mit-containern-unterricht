@@ -94,6 +94,7 @@ Applikationen in kleine "Container":
   * Die Applikation kann nur auf einen abgeschotteten Bereich des Speichers zugreifen
   * Die Applikation erhält nur eingeschänkte CPU-Ressourcen
   * Die Applikation erhält nur Zugriff auf ausgewählte Netzwerk-Ressourcen.
+* Die Applikation läuft jedoch **auf derselben physischen CPU, mit demselben Betriebssystem-Kernel** wie der Host.
 
 Diese Technologie **ist nur auf bestimmten Betriebssystemen möglich**: die Containerisierung ist also eine Technologie, welche zwingend
 an eine Betriebssystem-Technologie gebunden ist. **Die bekannteste Container-Lösung besteht für Linux-Betriebssysteme**.
@@ -109,10 +110,41 @@ an eine Betriebssystem-Technologie gebunden ist. **Die bekannteste Container-Lö
 
 <section data-markdown>
 <textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Virtuelle Maschinen vs Container
+
+Virtualisierung und Container sind 2 grundverschiedene Technologien, welche beide ihre
+Vor- und Nachteile aufweisen:
+
+## Virtuelle Maschinen
+
+| Vorteile | Nachteile |
+|----------|------------|
+| komplett isoliert (Sicherheit) | Entwicklungszeit (Aufbau) |
+| Client- und Host-Betriebssystem unabhängig | Grösse (Ressourcen: Disk, RAM, CPU) |
+| Unterschiedliche CPU-Architekturen möglich | Ressourcenverbrauch auch wenn ungenutzt |
+| für viele Betriebssysteme erhältlich | Guest-OS muss auch gemanagt werden  |
+| Interaktive Entwicklung | nicht (einfach) portierbar |
+
+## Container
+
+| Vorteile | Nachteile |
+|----------|------------|
+| Portabel (zwischen Container-Runtimes) | Läuft nur auf 1 Betriebssystem |
+| Leichtgewichtig (effektiver Ressourcenverbrauch | eingeschränkte Sicherheit (shared resources) |
+| Einfach zu warten |  |
+| Einfach zu entwickeln | |
+| Hochskalierbar, automatisierbar | |
+
+
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
 # <i class="fas fa-graduation-cap"></i> Container-Architektur - Docker
 
-**Docker** ist die bekannteste Applikation, um "Linux-Container" zu erstellen, verwalten und laufen zu lassen. Docker führt
-folgende Architektur und Konzepte ein:
+**Docker** ist die bekannteste Applikation, um "Linux-Container" zu erstellen, verwalten und laufen zu lassen. 
+Docker ist eine so genannte "**Container Runtime**". Docker führt folgende Architektur und Konzepte ein:
 
 <div style="display: flex;gap:10px;">
 <div class="links" style="flex-shrink: 0;">

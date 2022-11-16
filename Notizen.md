@@ -2,52 +2,7 @@
 
 # Ideen für M347 - Dienste mit Containern
 
-## Ideensammlung
-
-- Applikation aus mehreren Diensten aufbauen, z.B:
-  - API: konvertiert Markdown > HTML, und speichert dies (in db, lokal)
-      - z.B. für Newsticker, "Zitat des Tages" etc.
-      - Auth via token, ev. via session token (also mit auth token jwt token holen)
-  - DB: speichert MD- und HTML-Snippets, mit user und tokens
-  - Frontend: Webseite, welche auf API zugreift, und Snippets holt
-  - Ev. Frontend-Proxy?
-  - Kleiner Twitter-Clone, anonym:
-    - DB
-    - API
-    - Frontend
-    - Bilder mit Redis?
-
-- Kleinen App-Stack nach und nach aufbauen:
-  - MySQL-DB
-  - kleine PHP-Applikation, um Messdaten engegenzunehmen, in DB speichern
-  - kleine Web-App zum Anzeigen
-  - Mehrere Clients, welche Daten anliefern (z.B. Temperatur, CPU-Usage, ....)
-  - das Ganze mit compose aufziehen
-  - ev. Proxy vorne dran (traefik), Skalierbar
-  - Docker Swarm???
-
-
-- oder:
-  - Projektarbeit nach Anforderung des Business:
-  - Aufbau Ticket-System (Redmine), als Containerdienste:
-    - redmine
-    - postgres/mysql (entscheidung liegt bei Schüler)
-    - mail gateway (mailhog, mailcatcher)
-    - portainer
-    - backup-container für: daten (shared volume), datenbank (dumps)
-    - Dokumentation via mkdocs, ebenfalls docker aufbauen
-    - abgabe alles zusammen als git repo, dockerfiles, compose, doku
-    - Überlegungen zur Sicherheit
-
-
-oder auch:
-- Überführen einer lokalen Wordpress-Installation in eine Container-Lösung:
-    - Beginnen mit lokal installierter WP-Version mit Apache, PHP, MySQL
-    - Überführen von Diensten in Container
-    - Überführen in Compose-Config
-    - Volumes, Backup, Config, ...
-
-## Vorläufig definitive Idee
+## Grund-Idee
 
 - Aufbau auf dem statischen Web-Projekt vom M293
   - Abgabe von:
@@ -83,21 +38,6 @@ oder auch:
 - Security: https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html
 
 
-## Weitere Idee Projektarbeit
-
-- Schüler bearbeiten während des Semesters ein eigenes Projekt
-- Vorgaben:
-  - mind. 3 Container, die zusammenspielen:
-  - mind. 1 db-container (postgresql, mariadb)
-  - mind. 1 backend-api-container (nodejs, express)
-  - mind. 1 frontend-container (html, javascript, ....)
-  - Einstiegs-abgabe: kleine Beispiel-App mit nodejs, express, sql, html-templates via github classroom
-  - Projektarbeit: kleiner Twitter-Clone (anonym), oder: schüler entscheiden selber, was sie machen wollen.
-- Abgabe:
-  - mkdocs-dokumentation des projektes
-  - code-repo via github classroom mit allem
-
-
 ## Provisorischer Jahresplan (16 Lektionen)
 
 001: Willkommen, Setup
@@ -118,28 +58,26 @@ oder auch:
      - Aufzeigen der einzelnen Komponenten der Monolith-Architektur
      - Auseinandernehmen in einzelne Services
      - Docker für Frotend soweit umsetzen, dass damit die Frontend-Seite entwickelt und gestartet werden kann
-006: Prod-Build Frontend:
-      - Ziel 2: die Schüler können eine Applikation builden und in den Container verpacken
-      - Ziel: alles separiert im Repo, git commit/push, gitignore
-      - Am Beispiel der statischen Webseite, mit Multi-Stage-Build:
-        - dev-build für statische Files
-        - dann diese in 2. stage in prod-image verpacken
-007: API-Services für Formular-Mailversand:
+     - Dodker Networks: Separiertes Frontend soll via NodeJS-Proxy mit dem (noch alten) Backend-Dienst kommunizieren können
+006: API-Services für Formular-Mailversand:
       - Schüler können die Formulardaten an eine Formular-Micro-App (expressjs) senden (form post)
-      - API-Service nimmt Formulardaten entgegen, löst Email aus (nodemailer, mit ethermail)
+      - Proxy-Dienst in Frontend-Webserver für api-Zugriff / formpost aufbauen, Networking!
       - docker networks
+      - API-Service nimmt Formulardaten entgegen, löst Email aus (nodemailer, mit ethermail)
+    ( - In DB speichern: wir bauen den bestehenden Formular-Dienst aus, sodass die Daten in der DB gespeichert werden)
       - Ziel: Schüler wissen über Networks und Sicherheits-Aspekte diesbezüglich bescheid
       - Vorgehen:
         - jetziges Beispiel Form-Service in eigenen Container verpacken
         - Docker-File für Form-Service
+        - API-Proxy für Frontend -> Form-Service
         - Front- und Form-Service starten, Port-Freigabe, damit Frontend Zugang erhält
-008+009: DB-Service
-      - Ziel: Kommentar-Service, Kommentare in DB
+007+008: DB-Service
+      - Ziel: API-Service, Einträge in DB
       - Aufbau einer DB (z.b. mittels postgresql) + pgAdmin
       - Ausbau API für DB-Eintrag (pg-promise, mysql)
       - Ziel: docker volumes, docker networks
       - am Beispiel eines Demo-Services werden die Konzepte erklärt
-      - wir bauen den bestehenden Dienst von sqlite nach postgresql aus
+      - wir speichern die Formulardaten in der DB
       - Schüler sollen am Beispiel des Demo-Services in der Lage sein:
         - Ausbau des DB-Teils des Monolith in eigene DB
         - Wechsel von sqlite in-memory nach postgresql
@@ -148,6 +86,15 @@ oder auch:
         - dies soll mit einem eigenen API-Service umgesetzt werden (Ausbau Micro-Service-Architektur)
         - am Ende sollen die Schüler in der Lage sein, dies selbständig im Rahmen der Projekt-Lektionen
           zu einem Kommentar-Service auzubauen
+009: Prod-Build Frontend:
+      - Ziel: die Schüler können eine Applikation builden und in den Container verpacken
+      - Ziel: alles separiert im Repo, git commit/push, gitignore
+      - Am Beispiel der statischen Webseite, mit Multi-Stage-Build:
+        - dev-build für statische Files
+        - dann diese in 2. stage in prod-image verpacken
+      - Am Beispiel eines backend-Services, z.B. Form-Service, mit Multi-Stage-Build:
+        - dev-build für Entwicklung
+        - dann diese in 2. stage in prod-image verpacken (all-inclusive)
 010: Orchestrierung: docker-compose
       - was ist docker-compose?
       - Aufbau compose-File für die Services (frontend, form-api, db)

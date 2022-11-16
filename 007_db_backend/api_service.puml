@@ -1,0 +1,63 @@
+@startuml
+title Microservice - Komponenten
+
+() "HTTP:80" as http_webserver
+
+[Client - Browser] as client
+rectangle "Docker-Dienste" {
+	rectangle #ccffee {
+		node "API-Service" as api_service {
+			() "HTTP:3000" as http_api
+			package "Web-Server mit App-Logik" as api_server {
+				[Demo-API] as api
+			}
+		}
+
+		node "PostgreSQL-Service" as db_service {
+			[Postgresql-Server] as db_server
+		}
+
+		node "PostgreSQL-Verwaltung" as pg_management {
+			() "HTTP:9999" as http_pgadmin
+			[pgAdmin-Verwaltungstool] as pgAdmin
+		}
+	}
+
+	node "Feedback-Dienst" as feedback {
+		() "HTTP:3000" as http2
+		package "Webserver" as feedback_webserver {
+			[Form-backend] as form_backend
+		}
+
+	}
+	node "Frontend-Service" as frontend {
+		package "Webserver" as front_webserver {
+			[statische Seiten] as static_site
+			[Site-Builder] as site_builder
+			[HTTP-Proxy] as proxy
+		}
+
+	}
+}
+
+
+[Email-Dienst (extern)] as email
+[mkdocs-Dokumentation] as doc
+
+http_webserver -- front_webserver
+http2 -- feedback_webserver
+http_api -- api_server
+
+client ..> http_pgadmin
+http_pgadmin -- pgAdmin
+pgAdmin ..> db_server: fragt ab (TCP-Port 5432)
+
+client ..> http_webserver
+proxy ..> http2
+proxy ..> http_api
+
+client ..> doc
+api ..> db_server: fragt ab (TCP-Port 5432)
+form_backend ..> email: sendet
+site_builder .up.> static_site: liefert
+@enduml
