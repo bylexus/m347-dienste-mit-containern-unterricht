@@ -2,7 +2,7 @@
 
 ## Infrastruktur
 
-* Jeder Schüler hat Docker lokal installiert, oder nutzt die abgegebene VM
+* Jeder Schüler hat Docker lokal installiert
 * Github Classroom Repo für jeden Schüler, mit Template aus (github classroom url), beinhaltet:
   * Invitation URL: <https://classroom.github.com/a/kMtz3BEb>
   * Classroom URL: <https://classroom.github.com/classrooms/50485268-m347-in21-25c/assignments/m347>

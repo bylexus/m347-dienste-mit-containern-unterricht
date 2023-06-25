@@ -320,6 +320,10 @@ html * {
   font-size:2em;
 }
 
+.reveal .smaller {
+  font-size: 0.875em;
+}
+
 @media print {
   .reveal pre code {
     max-height: none;

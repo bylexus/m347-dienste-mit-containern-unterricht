@@ -1,4 +1,4 @@
-# Lektion 4 - Images
+# Lektion 4 - Images und Container
 
 ## Themen
 
@@ -10,11 +10,11 @@
 
 ## Ziele
 
-- Sie wissen, was 'Linux Images' sind
-- Sie wissen, wie man eigene Images von Basis-Images ableitet
-- Sie kennen die wichtigsten Dockerfile-Befehle und
-- Sie können mit einem Dockerfile eigene Images und Container bauen
-- Endziel: Sie haben ein Image gebaut, welches mittels mkdocs Ihre Dokumentationsseite ausliefern kann.
+* Sie wissen, was 'Container Images' sind
+* Sie wissen, wie man eigene Images von Basis-Images ableitet
+* Sie wissen, was ein Dockerfile ist und kennen die wichtigsten Dockerfile-Befehle
+* Sie können mit einem Dockerfile eigene Images und Container bauen
+* Endziel: Sie haben ein Image gebaut, welches mittels mkdocs Ihre Dokumentationsseite ausliefern kann.
 
 
 ## Unterrichts-Ablauf

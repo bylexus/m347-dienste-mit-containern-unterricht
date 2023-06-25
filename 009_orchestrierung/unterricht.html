@@ -1,0 +1,304 @@
+{% extends "../_base_template.html" %}
+{% block title %}Lektion 9 - Orchestrierung{% endblock %}
+
+{% block sections %}
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> M347 - Dienste orchestrieren
+
+## Heutiges Ziel
+
+* Sie wissen, was "Container-Orchestrierung" bedeutet
+* Sie kennen `docker compose` als Container-Orchestrier-Werkzeug
+* Sie können eigene Container-Dienste mittels Compose-Files zusammen konfigurieren
+* Sie können die bereits entwickelten Beispiel-Container zusammen orchestrieren
+
+</textarea>
+</section>
+
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Dienste-Management
+
+Unsere jetzige Architektur umfasst nun folgende Dienste:
+
+<div class="d-flex gap-10">
+  <div style="flex-basis: 50%;">
+
+<img src="./api_service.svg">
+  </div>
+  <div style="flex-basis: 50%">
+
+* Frontend-Service mit statischen Webseiten
+* API-Service für das Speichern/Laden von Text-Strings
+* Formular-Service zum Verarbeiten von User-Input
+* PostgreSQL-Datenbank-Server
+* zusätzlich, für den Betrieb nicht unbedingt notwendig:
+    * Postgresql-Verwaltung mit pgAdmin
+    * mkdocs-Dokumentations-Seite
+  </div>
+</div>
+
+<i class="far fa-hand-point-right"></i> **Was müssen Sie alles tun, um Ihre gesamte Infrastruktur hochzufahren / zu starten?** 
+<br>Wer kann das kurz zusammenfassen?
+
+<div class="fragment">
+
+<i class="far fa-hand-point-right"></i> Networks erstellen, alle Images builden, alle Container starten, dabei die korrekten Kommandos anwenden, Container in Netzwerke konfigurieren...
+<br>Puh, ganz schön viel! Das scheint doch recht umständlich und fehleranfällig.
+</div>
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Dienste-Management: Orchestrierung
+
+Es wäre doch schön, wenn wir diesen Vorgang, also das Konfigurieren und Starten all userer Dienste, automatisieren könnten!
+
+## To the rescue: Docker Compose!
+
+Mit [Docker Compose](https://docs.docker.com/compose/features-uses/) stellt uns Docker genau ein solches Werkzeug zur Verfügung:
+
+Wir können als Entwickler mittels eines Konfigurationsfiles genau definieren:
+
+* wie Images gebaut werden müssen
+* wie Container gestartet werden
+* wie Volumes konfiuguriert werden
+* welche Dienste mit welchen Networks zusammengehängt werden
+* welche Ports exponiert werden
+* ... und noch vieles mehr!
+
+am Schluss reicht dann ein eifaches Kommando, um alle Dienste "nach Vorschrift" hochzufahren:
+
+```
+docker compose up -d
+```
+
+<i class="far fa-hand-point-right"></i> Wie genau dies funktioniert, schauen wir uns nun an.
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Dienste-Management: docker-compose.yaml
+
+`docker compose` benötigt ein Konfigurationsfile im [YAML](https://de.wikipedia.org/wiki/YAML)-Format, standardmässig `docker-compose.yaml` genannt.
+
+Ein Beispiel eines compose-yaml-File sieht etwa so aus (von der Dokumentationsseite https://docs.docker.com/compose/features-uses/):
+
+```yaml
+version: "3.9"  # optional since v1.27.0
+# Definition der einzelnen Services / Containers:
+services:
+  web:
+    build: .
+    ports:
+      - "8000:5000"
+    volumes:
+      - .:/code
+      - logvolume01:/var/log
+    depends_on:
+      - redis
+  redis:
+    image: redis
+
+# Definition von Volumes:
+volumes:
+  logvolume01: {}
+```
+
+Dies ist ein compose-File für zwei fiktive Services, "web" und "redis", welche mittels docker-compose zusammen
+gestartet werden können.
+
+Wir definieren nun beispielhaft zusammen den Frontend-Dienst in einem yaml-file. Ziel ist, dass Sie die 
+übrigen Container (api, feedback, db, ...) selbständig konfigurieren können.
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> docker-compose.yaml für frontend-Dienst
+
+Wir definieren ein Compose-file, und darin die Definition des ersten Dienstes ('frontend'):
+
+1. erstellen Sie das File `(projektfolder)/docker-compose.yaml`
+2. definieren Sie unseren ersten Service, den Frontend-Service:
+```yaml
+version: "3.9"  # optional since v1.27.0
+# Definition der einzelnen Services / Containers:
+services:
+    # wir definieren den frontend-Service:
+    frontend:
+        # das Docker-Image soll ab dem lokalen Folder frontend/ gebuildet werden:
+        # dort befindet sich das Dockerfile:
+        build: frontend/
+        # wir mappen den Host-Port 8020 auf den Container-Port 3000:
+        ports:
+            - "8020:3000"
+        # Wir hängen den frontend-Folder als Volume ein:
+        volumes:
+            - ./frontend:/server
+        # optional: falls CMD im Dockerfile nicht definiert ist,
+        # definieren wir hier, was beim Start ausgeführt werden soll:
+        command: node server.js
+        # oder besser: im dockerfile entsprechend setzen
+```
+3. Starten der (resp. des, für den Moment) Service(s):
+```
+docker compose up
+```
+
+Hiermit werden die Images erstellt, die Container gestartet, das **Default-Network** angelegt etc. Den Vorgang können Sie
+im Terminal beobachten.
+
+Wenn alles soweit klappt, können Sie die Dienste auch im Hintergrund starten, dann wird Ihre Konsole wieder frei, und die Dienste
+laufen auch nach Schliessen der Konsole weiter:
+
+```
+docker compose up -d
+```
+
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> docker-compose.yaml für weitere Dienste
+
+## Aufgabe
+
+Definieren Sie nun im compose-File die weiteren Dienste:
+
+* API-Dienst für Textspeicherung
+* Feedback-Dienst für Feedback-Formular
+* Datenbank-Dienst für die Postgresql-Datenbank
+
+zusätzlich (abert nicht so wichtig):
+
+* Dienst für pgAdmin
+* Dienst für die mkdocs-Dokumentationsseite
+
+Sie haben die einzelnen Images/Container nun ja bereits erstellt. Sie müssen diese nun "nur" noch
+im compose-File zusammenstellen.
+
+**Ziel ist, dass beim Starten mit `docker compose up` alle Dientes gebaut (wenn notwendig) und gestartet werden (wenn notwendig), 
+alle Container miteinander kommunizieren können, und die notwendige Ports exponiert werden, sodass Ihre Gesamt-Applikation mit einem Kommando startet!**
+
+<i class="far fa-hand-point-right"></i> Wo notwendig, passen Sie auch Ihre Dockerfiles der einzelnen Dienste an: Ev. gibts da noch das
+Eine oder Andere zu "tweaken"?
+
+Doku-Hint:
+
+* Dokumentation zu `docker compose` CLI: https://docs.docker.com/compose/reference/
+* `docker-compose.yml`-Referenz: https://docs.docker.com/compose/compose-file/
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> docker-compose.yaml für weitere Dienste
+
+## Konfiguration via .env-Files
+
+Wir haben in unserer jetzigen Umgebung diverse **Konfigurationsdaten**, welche je nach Installationsumgebung
+anders sein können, oder sogar **sensitive Daten** beinhalten:
+
+* Datenbank-Verbindungsparameter (Usernamen, Passwörter)
+* Verbindungsparameter des Mail-Dienstes
+* ev. Hostnamen von Diensten?
+
+Diese Daten sind aktuell Teil unseres Codes (siehe `config.php`), sollten aber je nach Umgebung anders eingestellt werden,
+und sicher nicht als Teil unseres Codes in einem Versionskontroll-System landen (Usernamen, Passwörter)
+
+<i class="far fa-hand-point-right"></i>**Wir brauchen also einen Weg, diese Daten von aussen unseren Diensten mitzugeben!**
+
+**Eine** Möglichkeit ist, diese Daten von aussen via **Umgebungs-Variablen** zu übergeben. Umgebungsvariablen sind Variablen,
+welche das Betriebssystem einem Prozess mitgibt und von diesem ausgelesen werden können.
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Umgebungs-Variablen für Konfiguration
+
+Umgebungs-Variablen können Sie einem Container beim Starten mitgeben:
+
+```sh
+docker run ... -e VARNAME1=WERT1 -e VARNAME2=Wert2 
+```
+
+Oder auch in einem Docker Compose-File:
+
+```
+services:
+  db:
+  build: db/
+  environment:
+    - POSTGRES_PASSWORD=m347
+```
+
+Umgebungsvariablen können Sie dann in Ihrer Appliaktion auslesen und verwenden, beispielsweise in einer **NodeJS-Applikation**:
+
+```js
+// NodeJS-JavaScript-Applikation:
+
+// die Variable var1 beihaltet nun den Wert der Umgebungsvariablen "VARNAME1":
+let var1 = process.env.VARNAME1;
+
+// .....
+```
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Umgebungs-Variablen für docker compose
+
+Docker Compose unterstützt das Einlesen von Umgebungs-Variablen in einem `.env`-File:
+
+Legen Sie eine Datei `.env` im selben Verzeichnis wie Ihr `docker-compose.yml`-file an:
+
+```
+# .env-file:
+DB_USER=m347
+DB_PW=m347
+```
+
+Im Compose-File können Sie diese dann an die Container weiterreichen:
+
+```
+services:
+  db:
+  build: db/
+  environment:
+    # Übergabe der DB_PW-Umgebungs-Variable an einen Container
+    - POSTGRES_PASSWORD=${DB_PW}
+```
+
+<i class="far fa-hand-point-right"></i> So können Sie Ihren Code unabhängig vom System und vor allem ohne sicherheitsrelevante
+Daten gestalten. Diese werden später als env-Variable konfiguriert.
+
+**Beachten Sie:**
+
+Die `.env`-Datei gehört **NICHT** in die Source-Code-Verwaltung, und muss pro Installation gesetzt / geschrieben werden!
+
+</textarea>
+</section>
+
+{% endblock %}

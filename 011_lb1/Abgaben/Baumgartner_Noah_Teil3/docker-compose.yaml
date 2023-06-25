@@ -1,0 +1,19 @@
+version: '3'
+services:
+  chuck-api:
+    image: marcnuri/chuck-norris
+    networks:
+      - dockerNetwork
+    ports: []    
+
+  cowsay:
+    build: Docker/cowsay/
+    networks:
+      - dockerNetwork
+    ports:
+      - 8000:3000 
+    environment:
+      - API_URL=http://chuck-api:8080/
+
+networks:
+  dockerNetwork:

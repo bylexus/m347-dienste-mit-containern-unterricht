@@ -118,7 +118,7 @@ docker> npm install --save http-proxy
 const httpProxy = require('http-proxy');
 const proxy = httpProxy.createProxyServer();
 
-// Die Basis-URL unseres Feedback-Dienstes. Achtung: der Hostname ist der Docker-Container-interne Hostname:
+// Die Basis-URL unseres Feedback-Dienstes. Achtung: der Hostname ist der Docker-Container-Name:
 const feedbackServer = 'http://feedback:3000';
 // wir können auch weiterhin unseren Monolithen anziehen:
 const backendServer = 'http://monolith:3000';
@@ -151,18 +151,18 @@ Sicherheitsfeature "by design". Damit sie miteinander via Netzwerk kommunizieren
 
 <https://docs.docker.com/network/>
 
-1. Wir geben unseren Containern "erkennbare" Hostnamen
+1. Wir geben unseren Containern "erkennbare" Namen
 
 Beim Starten des Containers können wir einen eigenen Hostnamen definieren. Machen wir das nicht, "erfindet" Docker selber einen,
 und wir müssen bei jedem Container-Start unsere Applikationsparameter anpassen. Das wollen wir nicht. Wir starten also unsere Container mit richtigen Namen:
 
 ```sh
-shell > docker run --rm -ti --name frontend --hostname frontend ....
-shell > docker run --rm -ti --name feedback --hostname feedback ....
-shell > docker run --rm -ti --name monolith --hostname monolith ....
+shell > docker run --name frontend -ti --name frontend ....
+shell > docker run --name feedback -ti --name feedback ....
+shell > docker run --name monolith -ti --name monolith ....
 ```
 
-Nun sind sowohl Container- wie interne Docker-Hostnamen fix definiert.
+Nun sind die Container-Hostnamen fix definiert.
 
 2. Wir erstellen ein eigenes Docker Network
 

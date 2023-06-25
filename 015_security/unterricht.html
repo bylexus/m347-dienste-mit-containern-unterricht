@@ -1,0 +1,94 @@
+
+{% extends "../_base_template.html" %}
+{% block title %}Lektion 15 - Sicherheits-Aspekte{% endblock %}
+
+{% block sections %}
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> M347 - Sicherheits-Aspekte
+
+## Heutiges Ziel
+
+- Sie kennen Begriffe rund um das Thema "Container-Sicherheit"
+- Sie kennen die wichtigsten Sicherheits-Aspekte, welche es im Zusammenhang mit Containern zu beachten gilt
+- Sie können die wichtigsten Sicherheitsmassnahmen selber umsetzen
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Sicherheitsaspekte von Containern
+
+Container hosten Applikationen, und sind somit meist "der Aussenwelt" ausgesetzt.
+
+Sicherheit der Container ist also wichtig - Nur:
+
+**Was bedeutet in diesem Zusammenhang Sicherheit?**
+
+<i class="far fa-hand-point-right"></i> Sammeln Sie Stichworte auf dem Flipchart, und erläutern Sie diese danach:
+
+* Welche Stichworte kommt Ihnen zu **Container-Sicherheit** in den Sinn?
+* Wen oder was soll sicher sein?
+* Wie erreichen wir das?
+
+**Zeit:** ca. 10-15min
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Sicherheitsaspekte von Containern
+
+Container und deren gehosteten Applikationen sind genauso anfällig für Sicherheitslücken aller Art.
+Wir schauen uns heute drei Aspekte an, welche Sie beim Bau und Verteilen von Container-Applikationen beachten sollten:
+
+* Software-Updates der (Basis-)Container (Lehrer-Thema)
+* Non-Root-Container (Schüler-Thema)
+* Sensible Konfigurationsdaten verwalten (Schüler-Thema)
+
+Ich zeige Ihnen einen Aspekt, während Sie in Gruppen die anderen beiden Begriffe erarbeiten.
+Am Schluss tauschen wir uns zu den Themen aus - als eine Art "Experten-Runde".
+
+**Vorgehen:**
+
+* Informieren Sie sich selbständig über das Thema (Internet, ChatGPT, Experimente)
+* Bereiten Sie Ihre Informationen für die anderen vor:
+  * Um was geht es? Was ist das Problem?
+  * Wie können wir das Problem beheben / wie gehen wir dagegen vor?
+  * Live-Beispiel / Zeigen am Beamer
+
+<i class="far fa-hand-point-right"></i> Ziel ist, dass die restliche Klasse eine gute Idee hat,
+um was es geht und wie man den Sicherheitsaspekt mit Docker umsetz, gezeigt an einem konkreten Beispiel.
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Sicherheitsaspekte von Containern - Themen
+
+## Thema: Software-Updates der (Basis-)Container
+
+Container bestehen aus externen Software-Komponenten, welche von Basis-Images geliefert werden.
+Dieses Thema behandelt die Problematik, welche "man sich damit einhandelt".
+
+## Thema: Non-Root-Container
+
+Docker läuft als System-Dienst, Container sowie der Docker-Dienst und die Applikationen darin werden standardmässig als **root*-User (Administrator unter Unix-Systemen)
+ausgeführt. Dieses Thema behandelt die Sicherheits-Problematik, welches dieses Konzept mit sich bringt, und zeigt
+Gegenmassnahmen auf.
+
+## Thema: Sensible Konfigurationsdaten verwalten
+
+Ihre Container-Applikationen benötigen für den Betrieb meist sensible Daten wie Usernamen, Passwörter, Verschlüsselungs-
+Schlüssel etc. Dieses Thema zeigt die Problematik dieser sensiblen "Datenübergabe" auf, und zeigt, wie diese Daten sicher an Ihre Applikationen "übergeben" werden können.
+
+</textarea>
+</section>
+
+{% endblock %}

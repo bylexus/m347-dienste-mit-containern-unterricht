@@ -30,10 +30,19 @@ Unsere jetzige Architektur sieht folgendermassen aus:
 <img src="monolith_arch.svg" width="50%" >
 </div>
 
-Wir haben eine so genannte **"Monolithische Architektur:"**
+<div class="smaller">
+
+Sie wissen, wie Sie den "Monolithen" starten:
+
+```
+$ docker run --name monolith -ti -v "${pwd}":/app -w /app -p 3000:3000 node:16 node server.js
+```
+
+Wir haben hier eine so genannte **"Monolithische Architektur:"**
 
 * Die gesamte Applikation wird von einem Programm, einer Code-Basis, zur Verfügung gestellt
 * Frontend (Webseite) sowie Backend (Server-Dienste) kommen vom selben Programm
+
 
 Das ist grundsätzlich nicht falsch, oder auch kein Problem. Allerdings kann dies bei grösseren Projekten limitierend sein:
 
@@ -41,6 +50,8 @@ Das ist grundsätzlich nicht falsch, oder auch kein Problem. Allerdings kann die
 * Die verschiedenen Dienste verwenden alle dieselbe Programmiersprache, dieselbe Architektur. Das kann limitierend sein bei unterschiedlichen Anforderungen.
 * Das gesamte Team wirkt an derselben Code-Basis mit
 * Bei Wartungsarbeiten muss die ganze Applikation heruntergefahren werden
+
+</div>
 </textarea>
 </section>
 
@@ -152,7 +163,8 @@ Durch diesen Umbau haben wir nun folgendes erreicht:
 Der Formular-Feedback sowie die API-Abfrage funktionieren nun nicht mehr.<br>
 **Wir kümmern uns in den nächsten Lektionen um diese Dienste**.
 
-
+**<i class="far fa-hand-point-right"></i> Hausaufgabe:**<br>
+Stellen Sie das Image und Dockerfile für Ihren eigenen `frontend`-Container fertig!
 
 </textarea>
 </section>

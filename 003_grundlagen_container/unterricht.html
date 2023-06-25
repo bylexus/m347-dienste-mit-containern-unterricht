@@ -159,10 +159,11 @@ Docker ist eine so genannte "**Container Runtime**". Docker führt folgende Arch
 </figure>
 </div>
 
-<div class="rechts">
+<div class="rechts smaller">
 
 * ein **Docker Host** ist die (physische) Linux-Maschine, auf der Images und Container existieren/laufen
-* ein **Image** ist ein "Behälter" (Container), der Applikationen ausführen kann. Es definiert ebenfalls Metadaten wie Kapazitäten, Abhängigkeiten zu anderen Images, und weitere Komponenten.
+* ein **Image** ist ein "Behälter", der Ressourcen (Dateien + Config) beinhaltet. Es definiert ebenfalls Metadaten wie Kapazitäten, Abhängigkeiten zu anderen Images, und weitere Komponenten.
+  Ein Image ist die Grundlage für daraus erzeugte Container.
 * ein **Container** ist eine Art "Mini-Umgebung", in welcher Ihre Applikationen laufen: Sie basieren auf einem Image, und können nur
   auf die definierten Ressourcen zugreifen (z.B. Netzwerk, Filesystem, CPUs), der "Rest der Welt", also andere Ressourcen auf dem Host, sind abgeschottet.
 * ein **Client** bedient den Docker-Host mittels einer **API**.
@@ -205,14 +206,14 @@ Dies passiert beim Erstellen des Containers mittels des `-p` Parameters (siehe n
 
 <section data-markdown>
 <textarea data-template>
-# <i class="fas fa-graduation-cap"></i> Container-Architektur - Volume Mounts
+# <i class="fas fa-graduation-cap"></i> Container-Architektur - Volume Binds
 
 **Container** laufen mit einem eigenen Filesystem: Sie haben grundsätzlich keinen Zugriff auf externe
 Dateien, welche z.B. auf einem Host liegen:
 
 <img src="no_volume_mount.png" width="40%">
 
-Wir können aber ein externes **Volume** über einen Container-Pfad **mounten**: der Container "sieht" dann den Inhalt des 
+Wir können aber ein externes **Volume** über einen Container-Pfad **binden** (oder auch "mounting" genannt): der Container "sieht" dann den Inhalt des 
 angehängten Volumes:
 
 <div style="display: flex; gap: 10px">
@@ -349,12 +350,12 @@ docker volume .....
 
 * Sie erstellen einen Webserver-Container, welcher Ihr Webseiten-Projekt (Ihre statischen Seiten) vom Modul M293
   als Webseite unter http://localhost:8000/ ausliefert
-* Sie verwenden dazu das Image `http` (Apache HTTP Server, <https://hub.docker.com/_/httpd/>)
+* Sie verwenden dazu das Image `httpd` (Apache HTTP Server, <https://hub.docker.com/_/httpd/>)
 * Sie erarbeiten sich das Wissen dazu selbständig.
 
 ## Was müssen Sie sich für Wissen aneignen?
 
-* Grundsätzlich: wie erstellen Sie einen Container mit dem `http`-Image?<br>
+* Grundsätzlich: wie erstellen Sie einen Container mit dem `httpd`-Image?<br>
   <i class="far fa-hand-point-right"></i> Infos dazu: <https://hub.docker.com/_/httpd/>
 
 * Wie konfigurieren Sie ein **Port-Mapping**, damit Sie von Ihrem Host (localhost) TCP Port 8000 an den Container-Port 80 weiterleiten können?<br>
@@ -381,6 +382,12 @@ beim Öffnen des Links <http://localhost:8000> sollte Ihr Webseiten-Projekt von 
 * Überlegungen zu Volumes
 * Port-Freigaben
 * Erstellen des Containers
+
+<!--
+Lösung erarbeiten: docker run-Kommando
+
+docker run --rm -v "$(pwd)":/usr/local/apache2/htdocs/ -p 8000:80 httpd
+-->
 
 
 </textarea>

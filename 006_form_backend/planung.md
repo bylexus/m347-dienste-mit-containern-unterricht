@@ -29,8 +29,9 @@ Dauer: 90min
 | Dauer | Task                                                              | Sozform                     |
 | ----- | ----------------------------------------------------------------- | --------------------------- |
 | 10min | Folien zur gewünschten Ziel-Architektur erklären                  | Frontal, Erklärung          |
-| 5min  | Schüleraufabe: Erklärung der Aufgabe                              | Frontal, Erklärung          |
-| 60min | Schüleraufabe:                                                    | Einzelarbeit                |
+| 5min  | Erklärung der Schüler-Aufgabe                                     | Frontal, Erklärung          |
+| 10min | gemeinsam: http-proxy in frontend installieren/einrichten         | Frontal, Erklärung          |
+| 50min | Schüleraufabe:                                                    | Einzelarbeit                |
 |       | - Container für Feedback-Dienst, Dockerfile                       |                             |
 |       | - Feedback-Dienst in eigenen Container extrahieren                |                             |
 |       | - mittels Reverse-Proxy und Docker Network verbinden              |                             |
@@ -40,5 +41,6 @@ Dauer: 90min
 Ablauf:
 - Ziel-Architektur aufzeigen
 - Frontend-Reverse-Proxy-Konzept zeigen
+- Gemeinsam: Reverse-Proxy http-proxy gemeinsam konfigurieren.
 - Erstellen eigener Docker für Form-Service: server.js extrahieren, Dockerfile: Schülerarbeit
 - Form-Container starten, mit Network verbinden: zusammen / nach Anleitung selbständig

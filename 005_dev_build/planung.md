@@ -16,11 +16,11 @@ Nochmals Übersicht über Ziel: vom Monolith zur Microservice-Architektur
 
 ## Ziele
 
-- Sie können mittels Dockerfiles Container für die Entwicklung der Applikation bauen
-- Sie können Container mit den notwendigen Ressourcen (Bound Volumes, Networks) starten
-- Sie können Container als Entwicklungswerkzeug anwenden
-- Sie können verschiedene Container-Dienste miteinander verbinden (Networking)
-- Endziel: Sie haben das Frontend (statische Webseiten) als separaten Dienst konfiguriert
+* Sie können mittels Dockerfiles Container für die Entwicklung der Applikation bauen
+* Sie können Container mit den notwendigen Ressourcen (Bound Volumes, Networks) starten
+* Sie können Container als Entwicklungswerkzeug anwenden
+* Sie können verschiedene Container-Dienste miteinander verbinden (Networking)
+* Endziel: Sie haben das Frontend (statische Webseiten) als separaten Dienst konfiguriert
 
 Die Schüler versuchen im 1. Teil selbständig, den Frontend-Teil aus dem Monolithen zu extrahieren, und in einen eigenen Service zu verpacken.
 Im zweiten Teil schauen wir uns dies an, und erarbeiten die Endlösung gemeinsam, wo dies noch nicht der Fall ist.

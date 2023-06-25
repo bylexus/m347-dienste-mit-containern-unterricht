@@ -46,8 +46,10 @@ Wir beantworten am Schluss folgende Fragen gemeinsam (in eigenen Worten formulie
 <textarea data-template>
 # <i class="fas fa-graduation-cap"></i> Dockerfiles
 
+Wir können aus bestehenden Images neue, eigene Images bauen. Dazu schreiben wir ein **Dockerfile**.
+
 Ein **Dockerfile**  (Filename: `Dockerfile`) beinhaltet **Anweisungen zum Bau eines neuen Images**. Es wird das Basis-Image festgelegt und
-sämtliche Operationen und Konfigurationen, welche zum Bau des Images notwendig sind.
+sämtliche Operationen und Konfigurationen, welche zum Bau des neuen Images notwendig sind.
 
 **Ein sehr einfaches Beispiel:**
 
@@ -56,20 +58,17 @@ sämtliche Operationen und Konfigurationen, welche zum Bau des Images notwendig 
 # Wir bauen also auf einem minimalen Debian-Linux auf:
 FROM debian:stable-slim
 
-# Wir führen Linux-Kommandos aus. Hier: Wir installieren ein benötigtes
-# Software-Paket:
+# Wir führen Linux-Kommandos aus. Hier: Wir installieren ein benötigtes Software-Paket:
 # - apt-get update: aktualisiert den Debian Paket-Cache
 # - && führt rechtes Kommando aus, wenn linkes erfolgreich war
 # - apt-get install -y cowsay: Installiert das Paket "cowsay"
 RUN apt-get update && apt-get install -y cowsay
 
-# wir kopieren notwendige Files von unserem lokalen Filesystem in
-# das Image:
+# wir kopieren notwendige Files von unserem lokalen Filesystem in das Image:
 # Hier kopieren wir das lokale File message.txt ins Image unter /data/
 COPY message.txt /data/message.txt
 
-# Wir definieren, welcher Prozess beim Start eines Containers
-# laufen soll:
+# Wir definieren, welcher Prozess beim Start eines Containers laufen soll:
 # In unserem Beispiel ist es ein Prozess, der sich nach dem Start
 # auch gleich wieder beendet (Container bleibt also nicht laufen):
 # Dies ist optional, wenn das Parent-Image schon ein Kommando definiert:
@@ -111,9 +110,11 @@ ____________________
 <textarea data-template>
 # <i class="fas fa-flask"></i> Eigenes Dockerfile für `mkdocs`-Dokumentation
 
+<div class="smaller">
+
 **Nun sind Sie dran:** Sie erarbeiten in den nächsten Minuten selbständig (Sie dürfen sich auch austauschen) ein **Dockerfile** für ein eigenes Image:
 
-* Das Image soll die `mkdocs`-Dokumentation Ihres Projektes (Fodler `mkdocs`) als Webseite ausliefern können
+* Das Image soll die `mkdocs`-Dokumentation Ihres Start-Projektes (Folder **`mkdocs`**) als Webseite ausliefern können.
 * Vorgaben:
   * Der damit gestartete Container hört auf Port 10000
   * Ihre Dokumentation (Verzeichnis `mkdocs/` in Ihrem classroom-git) soll dem Container als **Bound Volume** von aussen zur Verfügung gestellt werden
@@ -122,9 +123,9 @@ ____________________
   * die notwendigen Pakete für `mkdocs` installiert: 
     * python3
     * python3-pip
-  * die notwendigen Kommandos zum Installieren von `mkdocs` ausführt:
-    Siehe <https://www.mkdocs.org/user-guide/installation/>
-  * beim Container-Start `mkdocs serve --dev-addr 0.0.0.0:8000` startet (siehe Dokumentation mkdocs)
+  * die notwendigen Kommandos zum Installieren von mkdocs ausführt: Siehe https://www.mkdocs.org/user-guide/installation/#installing-mkdocs:
+    * <code>pip3 install mkdocs</code>
+  * mkdocs beim Container-Start startet. Das Kommando dazu lautet:<br> **`mkdocs serve --dev-addr 0.0.0.0:8000`**<br> startet (siehe Dokumentation mkdocs)
 
 **Lesen Sie sich selbständig in die entsprechenden Dockerfile-Kommandos ein!** (<https://docs.docker.com/engine/reference/builder/>)
 Sie benötigen in etwa: `FROM`, `RUN`, `WORKDIR`, `COPY`, `CMD`.
@@ -136,10 +137,12 @@ Am Schluss sollten Sie ein Image haben, welches Ihre `mkdocs`-Dokumentation als 
 Nach Ausführen von:
 
 ```sh
-docker run --name mkdocs -v [.....] -p [.....] my-doc
+docker run --name mkdocs -v [.....] -p [.....] ihr-image-name
 ```
 
 sollten Sie unter <http://localhost:10000/> Ihre Dokumentation sehen.
+
+</div>
 
 </textarea>
 </section>
@@ -158,6 +161,19 @@ Wir gehen das Beispiel gemeinsam durch.
 
 
 <i class="far fa-hand-point-right"></i> Sie haben nun Ihren ersten Docker-Dienst selbständig aufgebaut.
+
+**<i class="far fa-hand-point-right"></i> Hausaufgabe:**<br>
+Stellen Sie das Image für Ihren eigenen `mkdocs`-Container fertig!
+
+## Wozu dient nun der `mkdocs`-Service?
+
+`mkdocs` ist ein einfach zu nutzendes System, um aus Markdown-Dateien HTML-Seiten zu erstellen. Wir nutzen dies in diesem Modul:
+
+* für Ihre eigenen Notizen
+* für die Dokumentation der Projektarbeit im 2. Teil des Semesters
+
+**Nutzen Sie mkdocs!** Schreiben Sie sich wichtige Dinge, Kommandos, Konzepte etc auf, als mkdocs-Eintrag!
+
 
 
 </textarea>

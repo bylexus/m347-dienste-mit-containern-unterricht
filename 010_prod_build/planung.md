@@ -21,8 +21,7 @@ Prod-Build Frontend:
 ## Material
 
 - git-Repo https://github.com/bylexus/m347-dienste-mit-containern-code.git
-  - Branch 005_frontend_service --> 006_prod_build
-
+  - Branch 009_orchestrierung --> 009_prod_build
 
 
 ## Detailplan
@@ -31,12 +30,13 @@ Prod-Build Frontend:
 Lektion: xx:xx - yy:yy
 Dauer: 90min
 
-| Dauer | Task                                                                              | Sozform              |
-| ----- | --------------------------------------------------------------------------------- | -------------------- |
-| 10min | 2 Folien "Monolith -> Microservice"                                               | Frontal, Erklärung   |
-| 5min  | Erklärung / Abgabe Aufgabe "Frontend-Dienst entwickeln"                           | Erklärung            |
-| 55min | Schülerarbeit: Service entwickeln                                                 | Einzelarbeit         |
-|       | Ziel: Schüler haben selbständig ein Dockerfile für den Frontend-Dienst entworfen, |                      |
-|       | und haben daraus einen Container gebaut, der die statische Site ausliefern kann.  |                      |
-| 20min | Review, Aufgabe zusammen besprechen / anschauen                                   | zusammen, interaktiv |
+| Dauer | Task                                                                             | Sozform              |
+| ----- | -------------------------------------------------------------------------------- | -------------------- |
+| 5min  | Folien zu Production/Multistage-Builds                                           | Frontal, Erklärung   |
+| 5min  | Erklärung / Abgabe Aufgabe "Produktions-Image"                                   | Erklärung            |
+| 55min | Schülerarbeit: Multistage-Dockerfile entwickeln                                  | Einzelarbeit         |
+|       | Ziel: Schüler haben ein Multistage-Dockerfile für den Frontend-Dienst entwickelt |                      |
+|       | welches ein minimales Image mit allen Files beinhaltet.                          |                      |
+| 5min  | Review, Aufgabe zusammen besprechen / anschauen                                  | zusammen, interaktiv |
+| 20min | Einführung Projektarbeit                                                         | Frontal, Folien      |
 
