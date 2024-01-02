@@ -124,7 +124,8 @@ ____________________
     * python3
     * python3-pip
   * die notwendigen Kommandos zum Installieren von mkdocs ausführt: Siehe https://www.mkdocs.org/user-guide/installation/#installing-mkdocs:
-    * <code>pip3 install mkdocs</code>
+    * <code>pip3 install mkdocs --break-system-packages</code><br>
+    (--break-system-packages ist notwendig, um ein von Debian zur Verfügung gestelltes Paket zu überschreiben)
   * mkdocs beim Container-Start startet. Das Kommando dazu lautet:<br> **`mkdocs serve --dev-addr 0.0.0.0:8000`**<br> startet (siehe Dokumentation mkdocs)
 
 **Lesen Sie sich selbständig in die entsprechenden Dockerfile-Kommandos ein!** (<https://docs.docker.com/engine/reference/builder/>)

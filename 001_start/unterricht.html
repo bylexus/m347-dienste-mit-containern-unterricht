@@ -112,7 +112,7 @@ Die restlichen Applikationen installieren wir uns im Verlauf des Moduls als Dock
 
 Sie erhalten ein Github Repository über Github Classroom. Dazu benötigen Sie ein **Github Login**: <https://github.com/signup>
 
-Danach können Sie sich im Classroom-Repo registrieren: <https://classroom.github.com/a/kMtz3BEb>
+Danach können Sie sich im Classroom-Repo registrieren: <https://classroom.github.com/a/G8tDzbCY>
 
 </textarea>
 </section>
@@ -122,14 +122,14 @@ Danach können Sie sich im Classroom-Repo registrieren: <https://classroom.githu
 <i class="fas fa-graduation-cap"></i> M347 - Setup
 =============================
 
-* Erstellen und Klonen des github-Classroom-Repositories: <https://classroom.github.com/a/kMtz3BEb>
+* Erstellen und Klonen des github-Classroom-Repositories: <https://classroom.github.com/a/G8tDzbCY>
 * Konfigurieren der Github-Credentials: Personal Access Token, <https://github.com/settings/tokens>
 * Starten des Monolith-Projektes als Docker-Container:
 
 ```sh
 # unter Windows Powershell:
 shell > cd /pfad/zum/projekt/monolith
-shell > docker run --rm -ti -v "${pwd}":/app -w /app -p 3000:3000 node:16 bash
+shell > docker run --rm -ti -v "$pwd":/app -w /app -p 3000:3000 node:16 bash
 
 docker> npm install
 docker> npm run build
@@ -149,16 +149,16 @@ Sie sollten nun <http://localhost:3000/> aufrufen können, und eine Demo-Webseit
 .
 ├── README.md
 ├── mkdocs                    # Haupt-Verzeichnis der mkdocs-Dokumentations-Site
-│   ├── docs                  # Markdown-Dokumentation (Sourcen)
-│   ├── mkdocs.yml            # mkdocs-Konfigurationsdatei
-│   └── site                  # gebildete / kompilierte statische Dok-Files
+│   ├── docs                  # Markdown-Dokumentation (Sourcen)
+│   ├── mkdocs.yml            # mkdocs-Konfigurationsdatei
+│   └── site                  # gebildete / kompilierte statische Dok-Files
 └── monolith                  # Die Demo-Monolith-Applikation
-    ├── config                # Website-Build-System: Konfiguration
-    ├── gulpfile.js           # Website-Build-System: Build-Tasks
+    ├── .eleventy.js          # Das 11ty-Config-File, kennen Sie bereits aus M293
+    ├── config.js             # Konfiguration der Monolith-App
     ├── package.json
     ├── server.js             # Die Monolith-Server-Applikation
-    ├── site                  # Hier kommt Ihre statische Webseite rein
-    └── src                   # Webseiten-Templates, falls genutzt
+    ├── site                  # Hier kommt Ihre statische, fertig gebildete Webseite rein
+    └── src                   # 11ty-Webseiten-Templates, falls genutzt
 ```
 </textarea>
 </section>
@@ -189,12 +189,12 @@ Sie können die monolithische Demo-App jederzeit mittels Docker wieder starten:
 ```sh
 # wie bisher, mittels Shell, dann manuell starten (Empfiehlt sich während Entwicklung)
 shell > cd /pfad/zum/projekt/monolith
-shell > docker run --rm -ti -v "${pwd}":/app -w /app -p 3000:3000 node:16 bash
+shell > docker run --rm -ti -v "$pwd":/app -w /app -p 3000:3000 node:16 bash
 docker> node server.js
 
 # Oder Sie starten direkt die server.js-Applikation:
 shell > cd /pfad/zum/projekt/monolith
-shell > docker run --rm -ti -v "${pwd}":/app -w /app -p 3000:3000 node:16 node server.js
+shell > docker run --rm -ti -v "$pwd":/app -w /app -p 3000:3000 node:16 node server.js
 ```
 </textarea>
 </section>
@@ -203,7 +203,7 @@ shell > docker run --rm -ti -v "${pwd}":/app -w /app -p 3000:3000 node:16 node s
 <textarea data-template>
 # <i class="fas fa-graduation-cap"></i> Funktionsweise des Skelett-Projektes
 
-Die **Infrastruktur** des Skelett-Projektes kennen Sie bereits aus M293: Wir verwenden dieselbe **Toolchain**:
+Die **Infrastruktur** des Skelett-Projektes kennen Sie bereits aus M293: Wir verwenden dieselbe **Toolchain** (11ty):
 
 * Der Ordner **"monolith/src/"** beinhaltet Ihre Webseiten (-Vorlagen) und -Templates
 * Der Befehl **`npm run build`** erstellt aus den Vorlagen fertige statische Webseiten in **"monolith/site"**

@@ -21,7 +21,6 @@
 
 
 <!-- ----------------------------------------------------------------------------- -->
-<section>
 <section data-markdown>
 <textarea data-template>
 # <i class="fas fa-graduation-cap"></i> Auf dem Weg zur Microservice-Architektur
@@ -35,6 +34,7 @@ Bei diesem Szenario haben wir nun einen eigenen Frontend-Dienst, aber immer noch
 
 </textarea>
 </section>
+
 <section data-markdown>
 <textarea data-template>
 # <i class="fas fa-graduation-cap"></i> Auf dem Weg zur Microservice-Architektur
@@ -64,7 +64,6 @@ vom Client 1:1 an den Feedback-Dienst weiterleitet.
 
 </textarea>
 </section>
-</section>
 
 <!-- -----------------------------------------------------------------  -->
 <section data-markdown>
@@ -78,7 +77,7 @@ und diesen danach dem Frontend zur Verfügung stellen.
 
 Wie in der letzten Lektion mit dem Fontend, wollen wir den Feedback-Dienst in einen eigenen Container verpacken:
 
-1. Erstellen Sie einen eigenen Container (mit Dockerfile) für den Feedback-Dienst (Basis-Image: `node:16`).
+1. Erstellen Sie einen eigenen Container (mit Dockerfile) für den Feedback-Dienst (Basis-Image: `node:20`).
 2. Kopieren Sie die notwendigen Dateien vom `/monolith`-Ordner (server.js, und was noch?)
 3. Minimieren Sie den neuen Server-Dienst (`server.js`), sodass dieser NUR noch den Code für den
    **`/feedback`-Dienst** beinhaltet
@@ -183,7 +182,6 @@ shell > docker network connect m347 monolith
 unser Reverse-Proxy kann somit die Anfragen an den richtigen Host weiterleiten.
 
 </textarea>
-</section>
 </section>
 
 <section data-markdown>

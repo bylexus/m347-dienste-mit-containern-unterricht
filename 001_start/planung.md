@@ -4,8 +4,10 @@
 
 * Jeder Schüler hat Docker lokal installiert, oder nutzt die abgegebene VM
 * Github Classroom Repo für jeden Schüler, mit Template aus (github classroom url), beinhaltet:
-  * Invitation URL: <https://classroom.github.com/a/kMtz3BEb>
-  * Classroom URL: <https://classroom.github.com/classrooms/50485268-m347-in21-25c/assignments/m347>
+  * Starter-Repo: https://github.com/bylexus/m347-dienste-mit-containern-starter
+  * Classroom URL: <https://classroom.github.com/classrooms/50485268-m347-in22-26c>
+  * Assignement URL: <https://classroom.github.com/classrooms/50485268-m347-in22-26c/assignments/m347>
+  * Invitation URL: <https://classroom.github.com/a/G8tDzbCY>
   * Inhalt:
     * `mkdocs`-Template
     * Web-Infrastruktur aus M293 (static site build)

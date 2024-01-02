@@ -19,7 +19,6 @@
 </section>
 
 <!-- ----------------------------------------------------------------------------- -->
-<section>
 <section data-markdown>
 <textarea data-template>
 # <i class="fas fa-graduation-cap"></i> Auf dem Weg zur Microservice-Architektur
@@ -35,7 +34,7 @@ Unsere jetzige Architektur sieht folgendermassen aus:
 Sie wissen, wie Sie den "Monolithen" starten:
 
 ```
-$ docker run --name monolith -ti -v "${pwd}":/app -w /app -p 3000:3000 node:16 node server.js
+$ docker run --name monolith -ti -v "$pwd":/app -w /app -p 3000:3000 node:16 node server.js
 ```
 
 Wir haben hier eine so genannte **"Monolithische Architektur:"**
@@ -144,7 +143,6 @@ Dieser Container dient dazu, unsere Frontend-Webseite zu entwickeln: Wir überre
 So können wir lokal in unserem gewohnten Code-Editor die Webseite editeren, und sie (vom Container ausgeliefert) testen.
 Zudem starten wir den Container manuell, damit wir den Server-Teil einfach stoppen/neu starten können.
 </textarea>
-</section>
 </section>
 
 <section data-markdown>
