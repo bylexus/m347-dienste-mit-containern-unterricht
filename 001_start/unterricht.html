@@ -129,7 +129,7 @@ Danach können Sie sich im Classroom-Repo registrieren: <https://classroom.githu
 ```sh
 # unter Windows Powershell:
 shell > cd /pfad/zum/projekt/monolith
-shell > docker run --rm -ti -v "$pwd":/app -w /app -p 3000:3000 node:16 bash
+shell > docker run --rm -ti -v "$(pwd):/app" -w /app -p 3000:3000 node:20 bash
 
 docker> npm install
 docker> npm run build
@@ -189,12 +189,12 @@ Sie können die monolithische Demo-App jederzeit mittels Docker wieder starten:
 ```sh
 # wie bisher, mittels Shell, dann manuell starten (Empfiehlt sich während Entwicklung)
 shell > cd /pfad/zum/projekt/monolith
-shell > docker run --rm -ti -v "$pwd":/app -w /app -p 3000:3000 node:16 bash
+shell > docker run --rm -ti -v "$(pwd):/app" -w /app -p 3000:3000 node:20 bash
 docker> node server.js
 
 # Oder Sie starten direkt die server.js-Applikation:
 shell > cd /pfad/zum/projekt/monolith
-shell > docker run --rm -ti -v "$pwd":/app -w /app -p 3000:3000 node:16 node server.js
+shell > docker run --rm -ti -v "$(pwd):/app" -w /app -p 3000:3000 node:20 node server.js
 ```
 </textarea>
 </section>

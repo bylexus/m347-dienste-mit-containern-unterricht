@@ -7,7 +7,8 @@ module.exports = function(grunt) {
     var nunjucks = require('nunjucks');
 
     var today = dayjs().format('YYYY-MM-DD');
-    var builddir = 'm347-build-' + today;
+    // var builddir = 'm347-build-' + today;
+    var builddir = 'm347-build';
 
     nunjucks.configure('.', {
         noCache: true
@@ -92,7 +93,9 @@ module.exports = function(grunt) {
                         '!css/theme/source/**',
                         '!node_modules*/**',
                         '!test/**',
+                        '!m347-build/**',
                         '!m347-build*/**',
+                        '!m347-build.zip',
                         '!__prepare/**',
                         '!CONTRIBUTING.md',
                         '!Gruntfile.js',

@@ -34,7 +34,7 @@ Unsere jetzige Architektur sieht folgendermassen aus:
 Sie wissen, wie Sie den "Monolithen" starten:
 
 ```
-$ docker run --name monolith -ti -v "$pwd":/app -w /app -p 3000:3000 node:16 node server.js
+$ docker run --name monolith -ti -v "$(pwd):/app" -w /app -p 3000:3000 node:16 node server.js
 ```
 
 Wir haben hier eine so genannte **"Monolithische Architektur:"**
