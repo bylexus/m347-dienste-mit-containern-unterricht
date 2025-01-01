@@ -28,6 +28,9 @@
 
 ## Detailplan
 
+zum Start: Input zu Notizen: mkdocs-Dok anlegen, für später: ab Lektion 4 bauen wir ein
+Dockerfile, um mkdocs zu starten
+
 | Zeit          | Task                                            | Form                       |
 | ------------- | ----------------------------------------------- | -------------------------- |
 | ( 5min )      | Begrüssung, Ziel                                | Frontal                    |

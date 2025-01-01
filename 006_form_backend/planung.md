@@ -44,3 +44,10 @@ Ablauf:
 - Gemeinsam: Reverse-Proxy http-proxy gemeinsam konfigurieren.
 - Erstellen eigener Docker für Form-Service: server.js extrahieren, Dockerfile: Schülerarbeit
 - Form-Container starten, mit Network verbinden: zusammen / nach Anleitung selbständig
+
+Notizen: 
+
+- für die meisten Schüler ist dies noch zu komplex - wir werden die nächste Lektion (DB mit Postgres)
+vereinfachen / API-Dienst und Form-Dienst zusmamenfassen.
+
+

@@ -1,6 +1,6 @@
 
 {% extends "../_base_template.html" %}
-{% block title %}Lektion 10 - Production Container und Multistage Builds{% endblock %}
+{% block title %}Lektion 11 - Production Container und Multistage Builds{% endblock %}
 
 {% block sections %}
 <section data-markdown>
@@ -13,13 +13,13 @@
 - Sie können Dockerfiles erstellen, welche Ihre Applikation in mehreren Schritten bildet und startet
 - Sie wissen, was "Multistage-Builds" sind und für was sie verwendet werden
 - **Endziel**:
-  - Sie haben einen Production-Build, welcher Ihre gesamte Frontend-Applikation (inkl. statischer Files) beinhaltet
+  - Sie haben einen Production-Build, welcher Ihre gesamte Frontend-Applikation (inkl. statischer Files) beinhaltet,
+    **aber ohne unnötigen Build-Schritt-Artefakte**
 
 </textarea>
 </section>
 
 <!-- ----------------------------------------------------------------------------- -->
-<section>
 <section data-markdown>
 <textarea data-template>
 # <i class="fas fa-graduation-cap"></i> Bis anhin: Entwicklungs-Container
@@ -29,7 +29,7 @@ Bis jetzt haben wir unsere(n) Container als Entwicklungs-Werkzeug verwendet. Wir
 entweder manuell IM Container:
 
 ```sh
-shell > docker run ..... node:16 bash
+shell > docker run ..... node:20 bash
 docker> npm install       # Pakete installieren
 docker> npm run build     # statische Webseite builden
 docker> node server.js    # Server starten
@@ -46,7 +46,7 @@ Zwischenschritte ausführen zu können.
 
 **<i class="far fa-hand-point-right"></i> Für ein produktives Image wollen wir dies aber nicht:**
 
-1. Ich möchte ein möglichst schlankes Image: Ich benötige darin kein Build-System für die Webseite mehr
+1. Ich möchte ein möglichst schlankes Image: Ich benötige darin z.B. kein Build-System für die Webseite mehr
 2. Ich möchte ein Image, welches möglichst die **gesamte Applikation** bereits beinhaltet, OHNE dass ich die Ressourcen von extern anbinden muss
 3. Ich möchte das "Bauen" des Produktions-Images möglichst automatisieren (Wiederholbarkeit)
 4. Ich möchte in einem Produktionsbetrieb mein Container möglichst einfach, z.b. so, starten können:
@@ -86,7 +86,7 @@ Ein "Multistage-Build" wird in einem einzigen `Dockerfile` umgesetzt, und funkti
 
 ```Dockerfile
 # Wir benennen unsere erste "Phase", hier stage1
-FROM node:16 AS stage1
+FROM node:20 AS stage1
 COPY lokale/websiten/files/ /build/
 RUN npm install             # wenn notwendig
 # Hier bilden wir die statischen Files der Webseite:
@@ -94,20 +94,26 @@ RUN mein-build-kommando-1
 RUN mein-build-kommando-2
 RUN builde-meine-webseite
 ...
-
+#-------------------------------------------------------------------------
 # Nun beginnt die 2. Phase, das nächste Image: Hier haben wir Zugriff auf
 # das erste Image:
-FROM node:16 AS finalStage
+FROM node:20-alpine AS finalStage
+
+WORKDIR /app
 
 # Hier können wir auf die Files aus der stage1 zugreifen:
 # Wir kopieren die fertigen statischen Files aus dem ersten Image:
-COPY --from=stage1 /build/site/ /site/
-COPY --from=stage1 /pfad/zum/package.json /site/package.json
+COPY --from=stage1 /build/site/ site/
+COPY --from=stage1 /build/server.js server.js
+COPY --from=stage1 /build/config.js config.js
+# ... und kopieren ev. benötigte Dateien aus dem lokalen Ordner in das Image:
+COPY package-production.json /site/package.json
+
+# notwendige Build-Schritte ausführen:
+RUN npm install --production
 
 # nun definieren wir die Startparameter für unser Image:
 EXPOSE 3000                    # automatisch exponierter TCP-Port
-WORKDIR /site                  # beim Container-Start wird in dieses Verzeichnis gewechselt
-RUN npm install --production   # wir installieren nur noch die notwendigen Bibliotheken
 CMD mein-run-commmand          # ... und dieses Kommando beim Container-Start ausgeführt
 ```
 
@@ -127,18 +133,21 @@ shell> docker build -t prod-image pfad/zum/dockerfile/
 
 Erzeugen Sie ein Dockerfile mit 2 Phasen:
 
-1. in der ersten Phase erzeugen / bauen Sie Ihre statische Seite, wenn notwendig
-2. in der zweiten Phase erstellen Sie ein MINIMALES, lauffähiges Image: Mit minimal ist gemeint:
+1. in der **ersten Phase** erzeugen / bauen Sie Ihre statische Seite, wenn notwendig, wie gewohnt (npm install, 11ty-Build)
+2. in der **zweiten Phase** erstellen Sie ein Produktions-Image, ein minimales, lauffähiges Image: Mit minimal ist gemeint:
   - das Image beinhaltet nur noch die notwendigen Files, Pakete, ....
-  - das betrifft z.B. auch die NodeJS-Pakete, welche in "package.json" verzeichnet sind: Sie benötigen
-    keine Build-Pakete mehr: Installieren Sie im 2. Schritt nur noch die notwendigen Bibliotheken (`npm install --production`)
+  - das betrifft z.B. auch die NodeJS-Pakete, welche Sie zur Laufzeit nicht mehr benötigen:<br>
+    Zur Laufzeit ist KEIN 11ty mehr notwendig
+  - Das erreichen Sie mit einem **separaten package.json**, welches NUR die für die fertige Seite notwendigen Pakete enthält:
+    Kopieren Sie ein modifiziertes package.json-File in das Image, bevor Sie dann `npm install --production` ausführen. 
+    
 
 **Ziele:**
 
 - Das Bauen Ihres Images soll mit einem einzigen Kommando erfolgen (ein Dockerfile)
-- Das fertige Image soll die gesamte Applikation beinhalten, also kein externes Volume mehr benötigen: Alle Files sind Teil des Images.
-- Der letzte Build-Stage soll das Image so klein wie möglich behalten: Nur noch Notwendiges wird installiert.
-- Das Starten soll ohne Zuweisung von Volumes und Ports auskommen, und auch kein Kommando definieren müssen:<br>
+- Das fertige Image soll die gesamte Applikation beinhalten, **also kein externes Volume mehr benötigen: Alle Files sind Teil des Images.**
+- **Der letzte Build-Stage soll das Image so klein wie möglich behalten**: Nur noch Notwendiges wird installiert.
+- Das Starten soll ohne Zuweisung von Volumes auskommen, und auch kein Kommando definieren müssen:<br>
 ```sh
 #  (-P mappt die im Dockerfile angegebenen Ports auf zufällige externe Ports):
 shell> docker run -d --name prod-frontend -P prod-frontend-image
@@ -147,7 +156,6 @@ shell> docker run -d --name prod-frontend -P prod-frontend-image
   Produktionsumgebung konfigurieren.
 
 </textarea>
-</section>
 </section>
 
 <section data-markdown>
@@ -174,16 +182,13 @@ shell> docker run -d --name prod-frontend -P prod-frontend-image
   * Container-Kommandos (praktisches Anwenden)
   * Container-Dienst aufbauen (eigenen Dienst nach Vorgabe implementieren)
 
-## Projektarbeit, 3x2 Lektionen
+## Projektarbeit, 4x2 Lektionen
 
 Siehe **mkdocs-Dokumentation** im Starter-Projekt: Ordner **Projektarbeit**
 
 **Abgabe des Projektes erfolgt via Github-Classroom!**
 
-**Abgabedatum**: Freitag, 23.06.2023, 23:55 (git-commit-Datum)
-
-
+**Abgabedatum**: **Mittwoch**, 19.06.2024, 23:59 (git-commit-Datum)
 </textarea>
 </section>
-
 {% endblock %}

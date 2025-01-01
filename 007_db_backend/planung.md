@@ -6,7 +6,7 @@ Wir extrahieren den API-Demo-Service:
 
 1. in einen eigenen Container / Dienst
 2. wir bauen diesen um, sodass er nicht mehr eine In-Memory-Datenbank, sondern
-   eine richtige PostgreSQL-Datenbank verwendet.
+   eine file-basierte (oder optional richtige PostgreSQL-Datenbank) verwendet.
 3. Dies ist die Wissensbasis für Ihre spätere Projektarbeit.
 
 Dazu behandeln wir die benötigten neuen Themen: Docker Networks, Docker Volumes:
@@ -19,7 +19,7 @@ mittels Network mit unserem Backend-Server.
 - Sie kennen das **Networking**-Konzept in Docker und können Dienste via Netzwerk miteinander verbinden
 - Sie kennen das **Volumes**-Konzept in Docker und können Daten persistent für Container zur Verfügung stellen
 - Sie haben den API-Backend-Dienst vom Monolithen in einen eigenen Container / Dienst "verpackt"
-- Der API-Dienst speichert / liest die Daten von einem (persistenten) PostgreSQL-Datenbank-Dienst
+- Der API-Dienst speichert / liest die Daten von einem (persistenten) sqlite/PostgreSQL-Datenbank-Dienst
 
 **Dafür nehmen wir uns 2 Lektionen Zeit, da dies recht viel Stoff beinhaltet.**
 
@@ -46,7 +46,7 @@ Dauer: 90min
 | 10min | Zusammenfassen, Hilfestellung                                   | gemeinsam, Vorzeigen |
 | 5min  | Abschluss,  Stand aufnehmen, für nächstes Mal planen            |                      |
 
--> Implementation / Setup des Postgres-Dienstes erfolgt in der nächsten Lektion
+-> Implementation / Setup der persistenten DB erfolgt in der nächsten Lektion
 
 Ablauf:
 - Ziel-Architektur aufzeigen
@@ -55,19 +55,21 @@ Ablauf:
 - Form-Container starten, mit Network verbinden: zusammen / nach Anleitung selbständig
 
 
-Lektion 8: Ziel: 2. Teil PostgreSQL-Datenbank
+Lektion 8: Ziel: 2. Teil persistente SQLite -Datenbank ODER PostgreSQL
 
-| Dauer | Task                                                      | Sozform              |
-| ----- | --------------------------------------------------------- | -------------------- |
-| 5min  | Auftrag erklären: Anhand Folien 5-7 von Lektion 7         | Frontal, Erklärung   |
-| 55min | Schüleraufgabe Auftrag 1 (Postgres-Container erstellen):  | Einzelarbeit         |
-|       | - Container für Postgres-Dienst, Dockerfile               |                      |
-|       | - Netzwerk konfigurieren                                  |                      |
-|       | - Port exponieren                                         |                      |
-|       | - PGAdmin installieren, verbinden                         |                      |
-| 20min | Schüleraufgabe Auftrag 2 (Umbau API-Service):             | Einzelarbeit         |
-|       | - Datenbank-Config anpassen, sodass Postgres genutzt wird |                      |
-| 10min | Zusammenfassen, Hilfestellung                             | gemeinsam, Vorzeigen |
-| 5min  | Abschluss,  Stand aufnehmen, für nächstes Mal planen      |                      |
+--> die Schüler können wählen, ob sie die einfache Variante mit sqlite / named volume, oder
+    die komplexere Variante mit PostgreSQL-Datenbank nutzen.
 
+| Dauer | Task                                                 | Sozform              |
+| ----- | ---------------------------------------------------- | -------------------- |
+| 5min  | Auftrag erklären: Anhand Folien 5-7 von Lektion 7    | Frontal, Erklärung   |
+| 70min | Schüleraufgabe Auftrag 1 (Umbau für SQLite):         | Einzelarbeit         |
+|       | - Named Volume                                       |                      |
+|       | - Config-Anpassung                                   |                      |
+| 10min | Zusammenfassen, Hilfestellung                        | gemeinsam, Vorzeigen |
+| 5min  | Abschluss,  Stand aufnehmen, für nächstes Mal planen |                      |
+
+
+--> das Thema hat sich als zu komplex erwiesen, sodass wir auf einen eigenen DB-Service verzichten.
+Schüler, welche bereits weiter sind, können aber die Postgresql-Lösung umsetzen, wenn sie wollen.
 
