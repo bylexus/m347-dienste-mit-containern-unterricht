@@ -250,14 +250,29 @@ Der Status "Erfolgreich" stellt Linux über den so genannten "Exit Code" fest:
 
 
 
+### apt-Paketmanager (1)
+
+(Kurzantwort)
+
+`apt` ist der Paket-Manager unter debian-basierten Linux-Systmen (Debian, Ubuntu, Mint, ...). Damit verwalten Sie Programmpakete, anstatt diese manuell aus dem Internet laden zu müssen.
+
+Sie suchen ein Programmpaket, wissen aber nicht genau, wie es heisst. Finden Sie ein Programm, welches aus Ihrem Text eine "sprechende Kuh" (Kuh mit Sprechblase) macht.
+Suchen Sie mittels apt danach! (Achtung, Englisch suchen)
+
+Wie lautet / lauten die Kommandos dazu? Hinweis: Die Paketquellen sind noch NICHT aktuell.
 
 
-### apt-Paketmanager
+- apt update && apt search cow talk
+- apt-get update && apt-cache search cow talk
+
+
+
+### apt-Paketmanager (2)
 
 (Kurzantwort)
 
 `apt` ist der Paket-Manager unter debian-basierten Linux-Systmen (Debian, Ubuntu, Mint, ...).
-Installieren Sie das Paket `cowsay` mit apt.
+Installieren Sie das Paket `cowsay` mit apt. Hinweis: Die Paketquellen sind noch NICHT aktuell.
 
 Wie heisst / heissen die dazu notwendigen Kommandos?
 
@@ -268,3 +283,4 @@ docker> /usr/games/cowsay 'Mooooh!'
 ```
 
 - apt-get update && apt-get install -y cowsay
+- apt update && apt install -y cowsay
