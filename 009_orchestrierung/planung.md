@@ -23,7 +23,7 @@ mit dem Ziel, alle notwendigen Container zusammen zu erstellen / zu starten
 ## Detailplan
 
 Lektion: xx:xx - yy:yy
-Dauer: 90min
+Dauer: 90min - 2x (2 Lektionen dafür einplanen)
 
 | Dauer | Task                                                      | Sozform            |
 | ----- | --------------------------------------------------------- | ------------------ |

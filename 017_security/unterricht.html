@@ -1,6 +1,6 @@
 
 {% extends "../_base_template.html" %}
-{% block title %}Lektion 15 - Sicherheits-Aspekte{% endblock %}
+{% block title %}Lektion 17 - Sicherheits-Aspekte{% endblock %}
 
 {% block sections %}
 <section data-markdown>
@@ -46,20 +46,21 @@ Sicherheit der Container ist also wichtig - Nur:
 Container und deren gehosteten Applikationen sind genauso anfällig für Sicherheitslücken aller Art.
 Wir schauen uns heute drei Aspekte an, welche Sie beim Bau und Verteilen von Container-Applikationen beachten sollten:
 
-* Software-Updates der (Basis-)Container (Lehrer-Thema)
-* Non-Root-Container (Schüler-Thema)
-* Sensible Konfigurationsdaten verwalten (Schüler-Thema)
+* Software-Updates der (Basis-)Container
+* Non-Root-Container
+* Sensible Konfigurationsdaten verwalten
 
-Ich zeige Ihnen einen Aspekt, während Sie in Gruppen die anderen beiden Begriffe erarbeiten.
-Am Schluss tauschen wir uns zu den Themen aus - als eine Art "Experten-Runde".
+Wir bilden **Experten-Gruppen**, welche sich mit diesen Aspekten beschäftigt, und am Schluss vortragt.
 
 **Vorgehen:**
 
+* Bilden Sie 3 Gruppen
 * Informieren Sie sich selbständig über das Thema (Internet, ChatGPT, Experimente)
 * Bereiten Sie Ihre Informationen für die anderen vor:
   * Um was geht es? Was ist das Problem?
   * Wie können wir das Problem beheben / wie gehen wir dagegen vor?
   * Live-Beispiel / Zeigen am Beamer
+* Max. 10min Vortrag pro Thema!
 
 <i class="far fa-hand-point-right"></i> Ziel ist, dass die restliche Klasse eine gute Idee hat,
 um was es geht und wie man den Sicherheitsaspekt mit Docker umsetz, gezeigt an einem konkreten Beispiel.
@@ -74,8 +75,8 @@ um was es geht und wie man den Sicherheitsaspekt mit Docker umsetz, gezeigt an e
 
 ## Thema: Software-Updates der (Basis-)Container
 
-Container bestehen aus externen Software-Komponenten, welche von Basis-Images geliefert werden.
-Dieses Thema behandelt die Problematik, welche "man sich damit einhandelt".
+Container bestehen aus externen Software-Komponenten, welche von Basis-Images geliefert werden: Die meisten Images (z.B. "node") erben von anderen Images (z.B. "alpine").
+Dieses Thema behandelt die Problematik, welche "man sich damit einhandelt", und was man dagegen tun kann.
 
 ## Thema: Non-Root-Container
 

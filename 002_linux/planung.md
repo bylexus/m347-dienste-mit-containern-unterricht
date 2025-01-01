@@ -18,6 +18,12 @@
 
 * Moodle-Quiz "Linux-Grundlagen"
 
+## Ideen für Quiz-Fragen:
+
+- Kommandos bedingt ausführen ('&&'-Verknüpfung)
+- mehr praxis-relevante Fragen, welche sich auf den Docker-Alltag beziehen
+
+
 ## Ziele
 
 * Sie wissen, was "Linux" ist
@@ -27,6 +33,9 @@
 * Sie kennen die wichtigsten Befehle auf einem debian-basierten Linux-Befehl
 
 ## Detailplan
+
+zum Start: Input zu Notizen: mkdocs-Dok anlegen, für später: ab Lektion 4 bauen wir ein
+Dockerfile, um mkdocs zu starten
 
 | Zeit          | Task                                            | Form                       |
 | ------------- | ----------------------------------------------- | -------------------------- |

@@ -27,16 +27,15 @@ Unsere jetzige Architektur umfasst nun folgende Dienste:
 <div class="d-flex gap-10">
   <div style="flex-basis: 50%;">
 
-<img src="./api_service.svg">
+<img src="./api_service_sqlite.svg">
   </div>
   <div style="flex-basis: 50%">
 
 * Frontend-Service mit statischen Webseiten
 * API-Service für das Speichern/Laden von Text-Strings
 * Formular-Service zum Verarbeiten von User-Input
-* PostgreSQL-Datenbank-Server
+* (optional PostgreSQL-Datenbank-Server)
 * zusätzlich, für den Betrieb nicht unbedingt notwendig:
-    * Postgresql-Verwaltung mit pgAdmin
     * mkdocs-Dokumentations-Seite
   </div>
 </div>
@@ -174,6 +173,36 @@ docker compose up -d
 <!-- ----------------------------------------------------------------------------- -->
 <section data-markdown>
 <textarea data-template>
+# <i class="fas fa-graduation-cap"></i> docker-compose - Default Network
+
+`docker compose` erstellt ein eigenes Default-Netzwerk, mit dem alle Dienste gemeinsam verbunden sind.
+Alle Dienste, welche Sie mit `docker compose up` starten, werden bereits mit dem Default-Netzwerk verbunden.
+
+<i class="far fa-hand-point-right"></i> **Sie müssen Ihre Dienste also nicht mehr manuell zu einem Netzwerk hinzufügen!**
+
+Die **Hostnamen** der Container entsprechen dabei dem **Dienst-Name**. Sie müssen dazu gar nicht weiteres tun.
+
+Falls Sie den Hostnamen manuell setzen / überschreiben wollen, können Sie dies ebenfalls in der `docker-compose.yaml` mit der `hostname`-Anweisung tun:
+
+
+```yaml
+version: "3.9"  # optional since v1.27.0
+services:
+    frontend:
+      # ......
+      hostname: m347-frontend
+      # ......
+    
+```
+
+Dies ist aber optional.
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
 # <i class="fas fa-graduation-cap"></i> docker-compose.yaml für weitere Dienste
 
 ## Aufgabe
@@ -181,12 +210,11 @@ docker compose up -d
 Definieren Sie nun im compose-File die weiteren Dienste:
 
 * API-Dienst für Textspeicherung
+* Named Volume für die persistenten Daten der Datenbank
 * Feedback-Dienst für Feedback-Formular
-* Datenbank-Dienst für die Postgresql-Datenbank
 
 zusätzlich (abert nicht so wichtig):
 
-* Dienst für pgAdmin
 * Dienst für die mkdocs-Dokumentationsseite
 
 Sie haben die einzelnen Images/Container nun ja bereits erstellt. Sie müssen diese nun "nur" noch
@@ -202,6 +230,7 @@ Doku-Hint:
 
 * Dokumentation zu `docker compose` CLI: https://docs.docker.com/compose/reference/
 * `docker-compose.yml`-Referenz: https://docs.docker.com/compose/compose-file/
+* Named Volumes im Compose-File: https://docs.docker.com/compose/compose-file/07-volumes/
 
 </textarea>
 </section>

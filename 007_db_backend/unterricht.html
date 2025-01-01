@@ -11,7 +11,7 @@
 - Sie kennen das **Networking**-Konzept in Docker und können Dienste via Netzwerk miteinander verbinden
 - Sie kennen das **Volumes**-Konzept in Docker und können Daten persistent für Container zur Verfügung stellen
 - Sie haben den API-Backend-Dienst vom Monolithen in einen eigenen Container / Dienst "verpackt"
-- Der API-Dienst speichert / liest die Daten von einem (persistenten) PostgreSQL-Datenbank-Dienst
+- Der API-Dienst speichert / liest die Daten von einer (persistenten) Datenbank (optional PostgreSQL-Datenbank-Dienst)
 
 Dafür nehmen wir uns 2 Lektionen Zeit, da dies recht viel Stoff beinhaltet.
 </textarea>
@@ -50,20 +50,16 @@ Wir gehen nun den letzten Schritt, und lösen den letzten Dienst von unserem Mon
 anhin die Routen **`/api/save-text`** und **`/api/get-texts`** zur Verfügung gestellt hat. Unsere Ziel-Architektur sieht so aus:
 
 <div style="display: flex; gap:10px">
-  <img src="api_service.svg" width="80%">
+  <img src="api_service_sqlite.svg" width="80%">
   <div style="flex-grow: 1;">
 
 Der Umbau beinhaltet 2 Schritte:
 
 1. Unsere API erhält einen **eigenen Dienst / Container** (der letzte Schritt unserer Extraktion)
-2. Wir speichern die Daten (Texte) in **einer eigenen, richtigen PostgreSQL-Datenbank**, anstatt
-   in einem In-Memory-Container
+2. Wir speichern die Daten (Texte) in **einer eigenen, richtigen sqlite-Datenbank**, anstatt
+   in einem In-Memory-Container. Dazu verwenden wir ein **Volume**, welches die Datenbank-Daten speichert.
   </div>
 </div>
-
-
-
-
 </textarea>
 </section>
 
@@ -75,7 +71,7 @@ Der Umbau beinhaltet 2 Schritte:
 ## Aufgabe
 
 Extrahieren Sie den Teil des Monolithen, der die Routen **`/api/save-text`** und **`/api/get-texts`** abhandelt, in einen eigenen Docker-Dienst (Container).
-Ziel ist die Implementation der Architektur auf der vorhergehenden Folie, noch ohne die Datenbank.
+Ziel ist die Implementation der Architektur auf der vorhergehenden Folie, noch ohne die Konfiguration der persistenten Datenbank.
 
 ## Vorgehen
 
@@ -118,11 +114,88 @@ Die nun umgesetzte Architektur sieht folgendermassen aus:
 </textarea>
 </section>
 
+<!-- -----------------------------------------------------------------  -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-flask"></i> Teil 2 - Persistente Datenbank mit sqlite
+
+Wir wollen nun in einem weiteren Schritt unsere Daten, welche an die API geliefert kommen, **persistieren**,
+also speichern, sodass sie auch einen Applikations-Neustart überleben.
+
+Dazu passen wir unsere Datenbank-Konfiguration an:
+
+* anstatt "in-memory" verwenden wir nun eine Datenbank-Datei
+* dazu konfigurieren wir ein [**Named Docker Volume**](https://docs.docker.com/storage/volumes/), welches die Daten ausserhalb des Containers speichert
+
+## Auftrag 1
+
+* Passen Sie im **api-Dienst** die Datenbank-Konfiguration an:<br>
+  In der Datei **`config.js`** finden Sie die Konfiguration für die Datenbank. <br>
+  Passen Sie dies so an, dass sqlite eine Datei zum Speichern verwendet:<br>
+    ```
+    module.exports = {
+      // sqlite mit Datei:
+      database: {
+        client: "sqlite3",
+        connection: {
+          // diese Zeile zeigt nun auf eine Datei:
+          filename: "/data/api.sqlite",
+        },
+        // ....
+      },
+    };
+    ```
+  * Erstellen Sie ein [**Named Docker Volume**](https://docs.docker.com/storage/volumes/), welches die Datenbank-Daten speichert: 
+    ```
+    docker volume create api-data
+    ```
+  * Beim Erstellen des Containers können Sie nun wie gewohnt das Volume in den Container hineinreichen (in unserem Fall: ins Verzeichnis "/data/"):
+    ```
+    docker run -v api-data:/data ......
+    ```
+
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-flask"></i> Teil 2 - Named Volume
+
+Sie kennen nun 2 Möglichkeiten, Daten mittels Volumes zu persistieren:
+
+* ein [**Bound Volume**](https://docs.docker.com/storage/bind-mounts/) ist ein lokalers Verzeichnis,
+  welches in den Container "hineingereicht" wird.
+* Ein [**Named Docker Volume**](https://docs.docker.com/storage/volumes/) ist ein von Docker verwaltetes Volume,
+  welches genauso in den Container "hineingereicht" wird.
+
+Im Gegensatz zum _Bound Volume_ sind _Named Volumes_ von Docker verwaltet: Sie wissen also nicht, "wo" Ihre Daten genau liegen.
+Named Volumes unterstützen ebenfalls alternative Dateisysteme, wie z.B. Cloud-Storage oder Block Storages: Damit
+können Sie Ihre persistenten Daten sogar in einem Cloud-Dienst speichern!
+
+## Wie kommen Sie an die Daten im Named Volume?
+
+Um diese Daten nun anderweitig zugänglich zu machen, z.B. für Backups, benötigen Sie einen Hilfs-Container, in dem Sie dieses Volume auch
+"anschnallen" können. Als Beispiel führe ich hier auf, wie Sie Ihre sqlite-DB nun von extern sichern können: 
+
+```shell
+docker run --rm -v api-data:/data -v "$(pwd):/backup" debian cp /data/data.sqlite /backup/
+```
+
+* Wir erstellen einen temporären Container vom **`debian`**-Image
+* dazu binden wir das Named Volume (**`api-data`**) nach **`/data`** im Container
+* ebenso binden wir einen lokalen Folder (aktuelles Dir, **`$(pwd)`**) nach **`/backup`** im Container
+* Dann führen wir das Kommando **`cp`** (copy) im Container aus und kopieren unsere Datenbank vom Named Volume auf das Bound Volume
+
+</textarea>
+</section>
+
 
 <!-- -----------------------------------------------------------------  -->
 <section data-markdown>
 <textarea data-template>
-# <i class="fas fa-flask"></i> Teil 2 - Persistente Datenbank
+# <i class="fas fa-flask"></i> Teil 3 - ALTERNATIVE: Persistente Postgres-Datenbank
+
+Als Alternativlösung (Schüler, welche schon weiter sind, können diese wählen) können wir eine "richtige" Datenbank für die Persistierung verwenden, anstatt sqlite:
 
 Wir wollen nun in einem weiteren Schritt unsere Daten, welche an die API geliefert kommen, **persistieren**,
 also speichern, sodass sie auch einen Applikations-Neustart überleben.
@@ -157,7 +230,7 @@ PostgreSQL-Datenbanken, um den Zugriff zu testen.
 <!-- -----------------------------------------------------------------  -->
 <section data-markdown>
 <textarea data-template>
-# <i class="fas fa-flask"></i> Teil 2 - Persistente Datenbank - PGAdmin
+# <i class="fas fa-flask"></i> Teil 3 - Persistente Datenbank - PGAdmin
 
 Damit Sie nun zur Entwicklungszeit auf die Datenbank zugreifen können, brauchen wir noch ein Client-Programm.
 Dazu eignet sich [ "**PGAdmin**" ](https://www.pgadmin.org/), welches ebenfalls als Docker-Container installiert werden kann:
@@ -180,7 +253,7 @@ docker run --name pgadmin -p 9999:80 \
 <!-- -----------------------------------------------------------------  -->
 <section data-markdown>
 <textarea data-template>
-# <i class="fas fa-flask"></i> Teil 2 - Persistente Datenbank - Umbau API-Service
+# <i class="fas fa-flask"></i> Teil 3 - Persistente Datenbank - Umbau API-Service
 
 Nun ist es Zeit, unseren API-Service umzubauen, damit dieser die Daten auch in der persistenten Datenbank speichert.
 

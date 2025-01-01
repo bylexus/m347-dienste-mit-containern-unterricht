@@ -3,6 +3,9 @@
 ## Beschreibung
 
 Das folgende Quiz dient dazu, dass Sie sich selbständig mit den Linux-Shell-Grundlagen vertraut machen können.
+Sie werden in diesem Modul viel mit Linux-Kommandos zu tun haben: Docker ist eine Linux-Technologie, und
+die Docker-Container sind laufende Linux-Prozesse. Dieses Quiz soll Ihnen einen kleinen Eindruck / Einstieg in
+einige wichtige Konzepte geben.
 
 * Recherchieren Sie im Internet, damit Sie die Fragen beantworten können
 * Diskutieren Sie mit dem Nachbarn!
@@ -209,6 +212,42 @@ Dies ist ein Klassiker: Hier werden verschiedene Kommandos geschickt miteinander
 Das kombinieren wir mittels Pipes:
 
 find / -type f -printf "%s %p\n" | sort -nr | head -n 10
+
+### Kommandos verbinden
+
+(Kurzantwort)
+
+In Docker-Files werden Sie vor allem einzelne Linux-Kommandos ausführen. Manchmal aber möchte man mehrere Kommandos hintereinander ausführen, aber nur, wenn das vorgängige erfolgreich war.
+
+Beispiel:
+
+Sie möchten die Datei `"mein-dokument.txt"` in das Verzeichnis `"/home/user/dokumente/2024/10/"` kopieren. Das Verzeichnis dazu müssen Sie aber erst erstellen. Und der Kopiervorgang macht nur Sinn, wenn das Erstellen des Verzeichnisses geklappt hat.
+
+Recherchieren Sie somit, wie Sie diese Aufgabe lösen können:
+
+- Erstellen des Verzeichnisses `/home/user/dokumente/2024/10/`
+- danach, wenn das geklappt hat, Kopieren der Datei `mein-dokument.txt` in das Verzeichnis `"/home/user/dokumente/2024/10/"`
+- Zusatzfrage: Wie wissen Sie (unter Linux), ob ein Befehl "erfolgreich" war?
+
+Hinweis: Dies können Sie mit einem "Einzeiler" auf Shell-Ebene lösen (also keine grossen Scripte schreiben!)
+
+Antwort:
+
+Dies ist eine Grundfunktion der Linux-Shell: Das Kombinieren von Kommandos mittels `&&`-Operator: `&&` verbindet den linken und den rechten Befehl, führt den rechten Befehl aber nur aus, wenn der erste erfolgreich war.
+
+Hier also so:
+
+`mkdir -p /home/user/dokumente/2024/10/ && cp /home/user/mein-dokument.txt /home/user/dokumente/2024/10`
+
+Sie können auch mehrere Kommandos so miteinander verknüpfen.
+
+Der Status "Erfolgreich" stellt Linux über den so genannten "Exit Code" fest:
+
+- jedes Linux-Programm beendet mit einem Exit-Code
+- 0 bedeutet, dass der Befehl erfolgreich war
+- > 0 bedeutet, dass der Befehl nicht erfolgreich war
+- Sie können den Exit-Code des letzen ausgeführten Programms mit `$?` (nicht mit `exit`!)
+
 
 
 

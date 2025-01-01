@@ -8,7 +8,7 @@
 * Überblick Kubernetes
 * Überblick Cloud-Provider
 
-* Portainer + Watchtwer als Gruppenarbeit, dann Vorstellen als Experten
+* Portainer + Watchtower als Gruppenarbeit, dann Vorstellen als Experten
 * Überblick Kubernetes + Cloud-Dienste als Folien
   * Amazon ECS
   * Azure AKS

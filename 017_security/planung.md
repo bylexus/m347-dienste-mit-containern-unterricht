@@ -28,6 +28,11 @@
 Lektion: xx:xx - yy:yy
 Dauer: 90min
 
+Dieses Jahr: 8 Schüler. Die 3 Themen sollen in einer Experten-Gruppe erarbeitet und vorgetragen werden.
+Einteilen in 3 Gruppen (2-3 Schüler), 1. Lektion Vorbereitung, 2. Lektion Vortragen am Beamer
+Max. 10 min pro Lektion.
+
+
 | Dauer    | Task                                             | Sozform                   |
 | -------- | ------------------------------------------------ | ------------------------- |
 | 15min    | Begriff-Sammlung, Thema "Container-Sicherheit"   | Brainstorming, Diskussion |
