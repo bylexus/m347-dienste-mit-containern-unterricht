@@ -66,8 +66,6 @@ Daten und Bewertung siehe Moodle
 <textarea data-template>
 # <i class="fas fa-graduation-cap"></i> M347 - Dienste mit Containern
 
-## Projektarbeit
-
 Wir bauen dazu eine **monolithische** Beispiel-Applikation zu mehreren Einzeldiensten,
 so genannten **Microservices**, um.
 
@@ -81,11 +79,11 @@ Container-Microservice-Architektur zu gelangen:
 
 <div style="display: flex;gap:5px;align-items: center;">
   <img src="monolith_arch.svg" width="45%" />
-  ==>
+  ➡
   <img src="microservice_arch.svg" width="45%" />
 </div>
 
-Sie liefern den gesamten Code in einem **github Classroom-Repository** ab.
+Sie liefern den gesamten Code inkl. dazu notwendiger Docker- und Compose-File und Dokumentation als zip ab.
 
 
 </textarea>
@@ -97,22 +95,15 @@ Sie liefern den gesamten Code in einem **github Classroom-Repository** ab.
 
 ## Benötigte Software für den Unterricht
 
-Sie benötigen eine lauffäige **Docker**-Installation auf Ihrem Rechner, sowie eine **Entwicklungsumgebung** und einen **GIT-Client**.
+Sie benötigen eine lauffäige **Docker**-Installation auf Ihrem Rechner, sowie eine **Entwicklungsumgebung**.
 
 Software | Details
 ---------|---------
 **Docker Desktop** inkl. `docker compose` | Installationsanleitung unter: <https://docs.docker.com/desktop/install/windows-install/>
 **Visual Studio Code** | <https://code.visualstudio.com/Download>
 **VS Code Plugins** | Markdown All In One (empfohlen)
-**GIT-Client** | VS-Code, oder SourceTree: <https://www.sourcetreeapp.com/>
 
 Die restlichen Applikationen installieren wir uns im Verlauf des Moduls als Docker-Images (bsp: Datenbank-Client)
-
-## Github Classroom Repository
-
-Sie erhalten ein Github Repository über Github Classroom. Dazu benötigen Sie ein **Github Login**: <https://github.com/signup>
-
-Danach können Sie sich im Classroom-Repo registrieren: <https://classroom.github.com/a/eTREMAc->
 
 </textarea>
 </section>
@@ -138,6 +129,8 @@ docker> node server.js
 
 Sie sollten nun <http://localhost:3000/> aufrufen können, und eine Demo-Webseite sehen.
 
+<img src="./webapp-screen.png" alt="Screenshot Demo-App" width="30%" />
+
 </textarea>
 </section>
 
@@ -148,10 +141,9 @@ Sie sollten nun <http://localhost:3000/> aufrufen können, und eine Demo-Webseit
 ```text
 .
 ├── README.md
-├── mkdocs                    # Haupt-Verzeichnis der mkdocs-Dokumentations-Site
-│   ├── docs                  # Markdown-Dokumentation (Sourcen)
-│   ├── mkdocs.yml            # mkdocs-Konfigurationsdatei
-│   └── site                  # gebildete / kompilierte statische Dok-Files
+├── docsify                   # Haupt-Verzeichnis der docsify-Dokumentations-Site
+│   ├── README.md             # docsify-Homepage
+│   └── _sidebar.md           # Inhaltsverzeichnis
 └── monolith                  # Die Demo-Monolith-Applikation
     ├── .eleventy.js          # Das 11ty-Config-File, kennen Sie bereits aus M293
     ├── config.js             # Konfiguration der Monolith-App
@@ -160,6 +152,21 @@ Sie sollten nun <http://localhost:3000/> aufrufen können, und eine Demo-Webseit
     ├── site                  # Hier kommt Ihre statische, fertig gebildete Webseite rein
     └── src                   # 11ty-Webseiten-Templates, falls genutzt
 ```
+
+### ⚠️ Wichtig für Sie ⚠️ 
+
+Der NodeJS-Webserver, welcher mit 
+
+`node server.js` 
+
+gestartet wird, liefert NUR statische Webseiten im Verzeichnis `site/` aus!
+Wenn Sie also Ihre Seiten mit 11ty oder einer anderen Strategie verwenden, müssen Sie diese nach Modifikation erst wieder builden.
+
+Das abgegebene 11ty-Setup macht dies durch Ausführen von 
+
+`npm run build` 
+
+im `monolith`-Verzeichnis (Wie damals im M293).
 </textarea>
 </section>
 

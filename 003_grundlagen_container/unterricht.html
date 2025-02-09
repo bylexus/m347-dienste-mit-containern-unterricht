@@ -87,7 +87,10 @@ Sie "blockieren" viele Ressourcen, die sie ev. gar nicht benötigen (RAM, CPUs, 
 Hier kommt "**Containerisierung**" ins Spiel: anstatt eine vollwertige Hardware zu emulieren, verpacken wir unsere
 Applikationen in kleine "Container":
 
-* Die Applikation wird normal auf dem Betriebssystem ausgeführt 
+<div class="d-flex flex-gap-5">
+<div class="flex-basis-0 flex-grow-1">
+
+* Die Applikation wird normal auf dem Betriebssystem (Linux-Kernel) ausgeführt 
 * Das Betriebssystem limitiert jedoch den Zugriff auf Ressourcen, welche die Applikation nicht zugreifen darf:
   * Die Applikation sieht nur einen Teil des Filesystems
   * Die Applikation kann nur auf einen abgeschotteten Bereich des Speichers zugreifen
@@ -95,14 +98,14 @@ Applikationen in kleine "Container":
   * Die Applikation erhält nur Zugriff auf ausgewählte Netzwerk-Ressourcen.
 * Die Applikation läuft jedoch **auf derselben physischen CPU, mit demselben Betriebssystem-Kernel** wie der Host.
 
+</div>
+<div class="flex-basis-0 flex-grow-1">
+<img style="margin: 0" src="container_arch.png">
+</div>
+</div>
+
 Diese Technologie **ist nur auf bestimmten Betriebssystemen möglich**: die Containerisierung ist also eine Technologie, welche zwingend
 an eine Betriebssystem-Technologie gebunden ist. **Die bekannteste Container-Lösung besteht für Linux-Betriebssysteme**.
-
-**Architektur**
-
-<img src="container_arch.png" width="200">
-
-
 
 </textarea>
 </section>
@@ -112,9 +115,11 @@ an eine Betriebssystem-Technologie gebunden ist. **Die bekannteste Container-Lö
 # <i class="fas fa-graduation-cap"></i> Virtuelle Maschinen vs Container
 
 Virtualisierung und Container sind 2 grundverschiedene Technologien, welche beide ihre
-Vor- und Nachteile aufweisen:
+Vor- und Nachteile aufweisen: Welche?<br> **(Frage in die Klasse: tragen wir zusammen)**
 
 ## Virtuelle Maschinen
+
+<div class="fragment">
 
 | Vorteile | Nachteile |
 |----------|------------|
@@ -123,18 +128,21 @@ Vor- und Nachteile aufweisen:
 | Unterschiedliche CPU-Architekturen möglich | Ressourcenverbrauch auch wenn ungenutzt |
 | für viele Betriebssysteme erhältlich | Guest-OS muss auch gemanagt werden  |
 | Interaktive Entwicklung | nicht (einfach) portierbar |
+</div>
 
 ## Container
 
+<div class="fragment">
+
 | Vorteile | Nachteile |
 |----------|------------|
-| Portabel (zwischen Container-Runtimes) | Läuft nur auf 1 Betriebssystem |
+| Portabel (zwischen Container-Runtimes) | Läuft nur auf Linux |
 | Leichtgewichtig (effektiver Ressourcenverbrauch | eingeschränkte Sicherheit (shared resources) |
 | Einfach zu warten |  |
 | Einfach zu entwickeln | |
+| Einfach zu deployen | |
 | Hochskalierbar, automatisierbar | |
-
-
+</div>
 </textarea>
 </section>
 
@@ -345,7 +353,8 @@ docker volume .....
 
 * Sie erstellen einen Webserver-Container, welcher Ihr Webseiten-Projekt (Ihre statischen Seiten) vom Modul M293
   als Webseite unter http://localhost:8000/ ausliefert
-* Sie verwenden dazu das Image `httpd` (Apache HTTP Server, <https://hub.docker.com/_/httpd/>)
+* Sie verwenden dazu das Image `httpd` (Apache HTTP Server, <https://hub.docker.com/_/httpd/>):<br>
+  Apache HTTP ist ein leichtgewichtiger Webserver, der statische HTML-Seiten ausliefern kann.
 * Sie erarbeiten sich das Wissen dazu selbständig.
 
 ## Was müssen Sie sich für Wissen aneignen?

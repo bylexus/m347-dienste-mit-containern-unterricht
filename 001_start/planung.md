@@ -9,7 +9,7 @@
   * Assignement URL: <https://classroom.github.com/classrooms/50485268-m347-in24-28c/assignments/m347-project>
   * Invitation URL: <https://classroom.github.com/a/eTREMAc->
   * Inhalt:
-    * `mkdocs`-Template
+    * `docsify`-Template
     * Web-Infrastruktur aus M293 (static site build)
     * einfache api für form-daten (nodejs, ein server.js)
 

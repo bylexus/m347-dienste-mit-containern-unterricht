@@ -4,10 +4,9 @@
 
 - Grundsätzlich: Thema ist sehr komplex, Schüler brauchen mehr Anleitung / Führung
 
+- kein git-Repo: Die Schüler kennen im 1. Lehrjahr git noch nicht - ich werde das Skeleton-Projekt als zip abgeben.
+
 - Frontend-Infrastruktur: 
-  - Ohne Reverse-Proxy, sondern direkt Zugriff auf API via CORS
-  - kein HTML Post, sondern ein htmx-Post für das Form / für die Kommentare?
-- mkdocs: Umbauen: Docsify verwenden ( keine neue Sprache einführen )
 
 - Lektion 9 / Docker-compose:
   - mehr Zeit einplanen, 2 Lektionen, Schüler brauchen Anleitung / Debugging
