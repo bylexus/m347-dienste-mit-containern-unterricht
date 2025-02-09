@@ -37,20 +37,24 @@ Linux: Einfacher geht es mit einem ssh public key, den man auf dem Github-Profil
 * Sie kennen die Aufgabenstellung der Projektarbeit
 * Sie haben eine lauffähige Entwicklungsumgebung, und das Projekt-Skelett funktioniert
 
+Schüler, welche im M293 keine statische Seite, sondern eine Seite mit VueJS gemacht haben:
+Ziel: Integration der beiden Demo-Seiten (Formular + DB-Demo), welche auf den Monolith-Server zeigen (Form send). App selber noch nicht als Docker, das kommt dann im Verlauf des Semesters.
+
 ## Detailplan
 
-| Zeit         | Task                                                                                      |
-| ------------ | ----------------------------------------------------------------------------------------- |
-| ( 5min )     | Begrüssung, Beschreibung des Moduls, Ziel                                                 |
-| ( ca. 5min ) | Jahresplan, Hinweise auf Prouektarbeit und Abgabetermine, Moodle                          |
-| (rest)       | Setup Entwicklungsumgebung mit Docker                                                     |
-|              | * Schüler installieren Docker lokal                                                       |
-|              | * ssh-key generieren, in github hinterlegen, oder access token generieren                 |
-|              | * Clone des Classroom-Repos (github authentication sicherstellen (access token, ssh key)) |
-|              | * Test der Infrastruktur:                                                                 |
-|              | ** Start des Monolith-Servers mittels Docker                                              |
-|              | ** VS Code mit PlantUML                                                                   |
-| Ende         |
+| Zeit           | Task                                                                                      |
+| -------------- | ----------------------------------------------------------------------------------------- |
+| ( 5min )       | Begrüssung, Beschreibung des Moduls, Ziel                                                 |
+| ( ca. 5min )   | Jahresplan, Hinweise auf Prouektarbeit und Abgabetermine, Moodle                          |
+| (rest)         | Setup Entwicklungsumgebung mit Docker                                                     |
+|                | * Schüler installieren Docker lokal                                                       |
+|                | * ssh-key generieren, in github hinterlegen, oder access token generieren                 |
+|                | * Clone des Classroom-Repos (github authentication sicherstellen (access token, ssh key)) |
+|                | * Test der Infrastruktur:                                                                 |
+|                | ** Start des Monolith-Servers mittels Docker                                              |
+|                | ** VS Code mit PlantUML                                                                   |
+| wenn noch Zeit | Docsify manuell installieren / starten (npm install -g docsify-cli), Struktur erklären    |
+| Ende           |
 
 Ziel
 ----

@@ -4,16 +4,22 @@
 
 Wir extrahieren den Feedback-Service (Form-Endpoint) vom Monolithen in einen eigenen Container.
 - Ausbau Form-Service, eigener Container bauen
-- Frontend soll mit Form-Sevice via Reverse Proxy kommunizieren (node http proxy)
+- Frontend soll mit Form-Sevice direkt kommunizieren (cors, ohne Reverse Proxy)
+- für Schüler, welche eine VueJS / Nuxt-App entwickeln:
+  - Forms-service ebenfalls separat
+  - Entweder ebenfalls direkt kommunizieren (via Client)
+  - oder kleinen Server-Side-Dienst bauen, der mit dem Forms-Service kommuniziert
 - Einführung Networking: Frontend-Proxy und Forms-Service sollen miteinander via Docker Network kommunizieren
+- Dazu Aufbau des eigenen Mail-Dienstes (smtp4dev), und Feedback-Dienst damit verbinden
 - Ziel: Schüler wissen über Networks und Sicherheits-Aspekte diesbezüglich bescheid
 
 ## Ziele
 
 - Sie kennen das **Networking**-Konzept in Docker
 - Sie können Container-Dienste mittels Network miteinander verbinden
-- Sie haben aus dem bestehenden Monolithen den Feedback-Formular-Dienst in einen
-  eigenen Container extrahiert, welcher vom Frontend-Dienst via Reverse Proxy bedient wird.
+- Sie haben aus dem bestehenden Monolithen den **Feedback-Formular-Dienst in einen
+  eigenen Container extrahiert**, welcher von der Client-App aus (Browser) direkt angesprochen werden kann
+- Sie haben einen **eigenen Mail-Dienst (anstatt ethereal) gebaut** und den Feedback-Dienst mit diesem verbunden
 
 
 ## Material
@@ -26,16 +32,16 @@ Wir extrahieren den Feedback-Service (Form-Endpoint) vom Monolithen in einen eig
 Lektion: xx:xx - yy:yy
 Dauer: 90min
 
-| Dauer | Task                                                              | Sozform                     |
-| ----- | ----------------------------------------------------------------- | --------------------------- |
-| 10min | Folien zur gewünschten Ziel-Architektur erklären                  | Frontal, Erklärung          |
-| 5min  | Erklärung der Schüler-Aufgabe                                     | Frontal, Erklärung          |
-| 10min | gemeinsam: http-proxy in frontend installieren/einrichten         | Frontal, Erklärung          |
-| 50min | Schüleraufabe:                                                    | Einzelarbeit                |
-|       | - Container für Feedback-Dienst, Dockerfile                       |                             |
-|       | - Feedback-Dienst in eigenen Container extrahieren                |                             |
-|       | - mittels Reverse-Proxy und Docker Network verbinden              |                             |
-| 15min | Zusammenfassung, Hilfestellung, Durchführen der Schritte zusammen | falls notwendig, Vorführung |
+| Dauer | Task                                                                                      | Sozform                     |
+| ----- | ----------------------------------------------------------------------------------------- | --------------------------- |
+| 10min | Folien zur gewünschten Ziel-Architektur erklären                                          | Frontal, Erklärung          |
+| 5min  | Erklärung der Schüler-Aufgabe                                                             | Frontal, Erklärung          |
+| 60min | Schüleraufabe:                                                                            | Einzelarbeit                |
+|       | - Container für Feedback-Dienst, Dockerfile                                               |                             |
+|       | - Feedback-Dienst in eigenen Container extrahieren                                        |                             |
+|       | - smtp4dev als Docker-Container bereitstellen, mit Network mit dem Forms-Dienst verbinden |                             |
+|       | - forms/Feedback-Dienst umkonfigurieren, damit er den smtp4dev-Host benutzt               |                             |
+| 15min | Zusammenfassung, Hilfestellung, Durchführen der Schritte zusammen                         | falls notwendig, Vorführung |
 
 
 Ablauf:

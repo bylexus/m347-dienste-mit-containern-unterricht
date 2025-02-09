@@ -11,8 +11,9 @@
 
 - Sie kennen das **Networking**-Konzept in Docker
 - Sie können Container-Dienste mittels Network miteinander verbinden
-- Sie haben aus dem bestehenden Monolithen den Feedback-Formular-Dienst in einen
-  eigenen Container extrahiert, welcher vom Frontend-Dienst via Reverse Proxy bedient wird.
+- Sie haben aus dem bestehenden Monolithen den **Feedback-Formular-Dienst in einen
+  eigenen Container extrahiert**, welcher von der Client-App aus (Browser) direkt angesprochen werden kann
+- Sie haben einen **eigenen Mail-Dienst (anstatt ethereal) gebaut** und den Feedback-Dienst mit diesem verbunden
 </textarea>
 </section>
 
@@ -27,10 +28,21 @@
 
 Wir erinnern uns an die Architektur der letzten Lektion:
 
-<img src="frontend_service.svg" width="60%">
+<div class="d-flex gap-10">
+<img src="frontend_service_bisher.png" width="60%" class="flex-grow-1 flex-basis-0">
+<div class="flex-grow-1 flex-basis-0">
 
 Bei diesem Szenario haben wir nun einen eigenen Frontend-Dienst, aber immer noch zahlreiche Backend-Dienste
-(Feedback, API) in unserem Monolithen "gefangen".
+(Feedback, API) in unserem Monolithen "gefangen":
+
+* Der **Forms- resp. Feedback-Dienst** ist noch Teil des Monolithen
+* Der **API- (und spätere Kommentar-)Dienst** ist noch Teil des Monolithen
+* Ein **eigener Maildienst** ist noch nicht mit dem Forms-Dienst verbunden: Der Forms-Dienst kann keine Mails an diesen senden
+</div>
+</div>
+
+<i class="far fa-hand-point-right"></i> Das heutige Ziel ist, den Forms-/Feedback-Dienst sowie den Maildienst zu extrahieren und miteinander zu verbinden.
+
 
 </textarea>
 </section>
@@ -39,27 +51,16 @@ Bei diesem Szenario haben wir nun einen eigenen Frontend-Dienst, aber immer noch
 <textarea data-template>
 # <i class="fas fa-graduation-cap"></i> Auf dem Weg zur Microservice-Architektur
 
-Wir wollen nun einen Schritt weitergehen, und den Formularservice als eigenen Dienst aus unserem Monolithen extrahieren:
+<i class="far fa-hand-point-right"></i> Das heutige Ziel ist, den Forms-/Feedback-Dienst sowie den Maildienst zu extrahieren und miteinander zu verbinden:
 
-<div style="display: flex; gap:10px">
-  <img src="frontend_form_service.svg" width="70%">
-  <div style="flex-grow: 1;">
+  <img src="frontend_service_ziel.png" width="90%">
 
 * Dazu sollen Sie **den Feedback-Code vom Monolithen extrahieren** und
 * in einen **eigenen Docker-Container verpacken** (eigenes Image dazu bauen)
-* Danach verbinden wir den Frontend-Dienst mittels **HTTP Reverse Proxy** mit dem Feedback-Dienst
-
-  </div>
-</div>
-
-**<i class="far fa-hand-point-right"></i> Warum Reverse-Proxy?**<br />
-Wir verwenden hier einen "Reverse Proxy", damit der Client (Browser) nur einen Server "kontaktieren" muss:
-Wir verhindern damit ein gängiges Problem von Web-Applikationen, das so genannte Cross-Origin-Problem: <br>
-Ein Browser darf standardmässig nur Requests zur Ursprungsdomain, zum Ursprungshost, der Seite machen, nicht zu anderen Domains: Das wäre bei uns aber der Fall:
-Wir haben nun verschiedene Dienste unter anderen Hosts am Laufen.
-
-In unserem Fall übernimmt nun die Kommunikation mit dem Feedback-Dienst ein kleines Stückchen Code, ein Reverse-Proxy, der einfach alle Anfragen
-vom Client 1:1 an den Feedback-Dienst weiterleitet.
+* Ebenso erstellen wir einen eigenen **Maildienst** mit **smtp4dev**
+* Wir exponieren die notwendigen Ports, damit der Browser die Dienste erreicht
+* Wir bauen die Frontend-Applikation um, damit die korrekten URL's für die Dienste geliefert werden
+* Damit der ***Feedback-Dienst** Mails versenden kann, müssen wir die Dienste miteinander verbinden: Wir erstellen ein **Docker-Network**.
 
 
 </textarea>
@@ -73,69 +74,58 @@ vom Client 1:1 an den Feedback-Dienst weiterleitet.
 Als Erstes wollen wir den Feedback-Dienst, also die **`/feedback`**-Route, wiederum als eigenen Dienst extrahieren,
 und diesen danach dem Frontend zur Verfügung stellen.
 
-## Extrahieren Sie den Feedback-Dienst
+## 1. Extrahieren Sie den Feedback-Dienst
 
-Wie in der letzten Lektion mit dem Fontend, wollen wir den Feedback-Dienst in einen eigenen Container verpacken:
+Wie in der letzten Lektion mit dem Fontend, wollen wir den Feedback-Dienst in einen eigenen Container verpacken. Dazu wollen wir den Monolith-Code kopieren (der kann ja schon alles),
+und dann alles "rausschmeissen", was wir für den Feedback-Dienst nicht mehr benötigen:
 
 1. Erstellen Sie einen eigenen Container (mit Dockerfile) für den Feedback-Dienst (Basis-Image: `node:20`).
-2. Kopieren Sie die notwendigen Dateien vom `/monolith`-Ordner (server.js, und was noch?)
+2. Kopieren Sie die notwendigen Dateien vom `/monolith`-Ordner (server.js, und was noch? --> Schauen Sie sich den Code an!)
 3. Minimieren Sie den neuen Server-Dienst (`server.js`), sodass dieser NUR noch den Code für den
-   **`/feedback`-Dienst** beinhaltet
+   **`/feedback`-Dienst** beinhaltet: Schmeissen Sie unnötigen Code raus!
 4. Starten Sie damit einen Container, der den Dienst über einen TCP-Port verfügbar macht!
+5. Passen Sie im Frontend-Formular (formular/index.html) die URL für den Formularversand an, sodass die Applikation den Feedback-Dienst wieder findet!
+
+==> Puh, das ist ganz schön viel! Versuchen Sie diesen Umbau (ev. mit Hilfe Ihrer Kollegen) selbständig auszuführen! Der Schlüssel dabei ist: Gehen Sie schrittweise vor!
 
 </textarea>
 </section>
 
 <!-- -----------------------------------------------------------------  -->
 <section data-markdown>
-<textarea data-template>
-# <i class="fas fa-flask"></i> Umbau - Proxy für Backend-Zugriff, Networking
+  <textarea data-template>
+  # <i class="fas fa-flask"></i> Umbau - Eigener Maildienst
+  
+  Wir wollen nun einen zweiten Dienst erstellen: Anstelle des externen `ethereal`-Maildienstes wollen wir 
+  einen lokalen Mailserver verwenden. Dazu verwenden wir [`smtp4dev`](https://github.com/rnwood/smtp4dev), ein Dummy-Mailserver für Entwickler.
 
-Unser Formular-Dienst (URL bisher: '`/feedback`') läuft nun in einem eigenen Container-Dienst:<br>
-**wir wollen aber, dass der Client (Browser) weiterhin diese URL "anziehen" kann.**
+  --> Ev. haben Sie dies schon in der letzten Lektion erledigt - umso besser!
+  
+  <div class="d-flex gap-10 flex-align-start">
+  <img src="./frontend_service_mail.png" width="30%">
+  <div class="flex-basis-0 flex-grow-1">
+  
+  ### Ziel:
+  
+  * **`smtp4dev` als Docker-Container** bereitstellen
+  
+  * Konfiguration sowie Maildaten mittels eines **Docker Volumes** persistent machen
+  
+  * Netzwerkdienste gegen aussen exponieren:
+    - Web-Oberfläche: HTTP Port 80, exponiert als Port 5000
+    - Mail-Versand: SMTP Port 25, dieser soll vom Feedback-Dienst erreicht werden. Wir brauchen dazu ein Docker Network (siehe nächste Folie)
+  * Mails vom **Feedback-Dienst gehen an den `smtp4dev`-Dienst** (Umkonfigurieren des Feedback-Dienstes)
+  </div>
+  </div>
+  
+  <i class="far fa-hand-point-right"></i> `smtp4dev` wird praktischerweise ebenfalls als Docker-Image bereitgestellt:
+  
+  <https://github.com/rnwood/smtp4dev/wiki/Installation#how-to-run-smtp4dev-in-docker>
+  
+  Wir erfahren dort, welche Ports exponiert werden, **sowie den Speicherort der lokalen Maildaten: `/smtp4dev`**.
 
-Da der Frontend-Dienst diese URLs nun aber nicht mehr selber anbietet, reichen wir diese URL's an unser Backend "durch":
-Dazu richten wir folgendes ein:
-
-* ein **HTTP-Proxy** nimmt auf unserem Frontend-Dienst weiterhin Anfragen zu den genannten URL's entgegen
-* Dieser Proxy leitet diese Anfragen 1:1 an unseren Feedback-Dienst weiter
-* Damit Front- und Feedback-Dienst miteinander kommunizieren können, verbinden wir diese mit einem **Docker-Network**.
-
-## Schritt 1: HTTP-Proxy auf Frontend-Dienst einrichten
-
-1. Wir installieren im **Frontend-Dienst** das NodeJS-Paket **http-proxy**:
-
-```sh
-shell > docker exec -ti frontend bash
-docker> npm install --save http-proxy
-```
-
-2. Wir richten den Proxy im Frontend-Code (`frontend/server.js`) ein:
-
-```js
-// ... zuoberst: Import der notwendigen Pakete:
-const httpProxy = require('http-proxy');
-const proxy = httpProxy.createProxyServer();
-
-// Die Basis-URL unseres Feedback-Dienstes. Achtung: der Hostname ist der Docker-Container-Name:
-const feedbackServer = 'http://feedback:3000';
-// wir können auch weiterhin unseren Monolithen anziehen:
-const backendServer = 'http://monolith:3000';
-
-/** -------------- Reverse Proxy für Backend-Routen --------------- */
-app.all("/feedback", function(req, res) {
-  console.log('Reverse-Proxy für Feedback-Form');
-  proxy.web(req, res, {target: feedbackServer});
-});
-app.all("/api/save-text", function(req, res) {
-  console.log('Reverse-Proxy für API: save-text');
-  proxy.web(req, res, {target: backendServer});
-});
-app.all("/api/get-texts", function(req, res) {
-  console.log('Reverse-Proxy für API: get-texts');
-  proxy.web(req, res, {target: backendServer});
-});
-```
+--> Erstellen Sie den Container!
+  
 </textarea>
 </section>
 
@@ -143,25 +133,24 @@ app.all("/api/get-texts", function(req, res) {
 <textarea data-template>
 # <i class="fas fa-flask"></i> Umbau - Proxy für Backend-Zugriff, Networking
 
-## Schritt 2: Frontend- und Backend-Dienst via Network verbinden
+## 3: Feedback-Dienst mit smtp4dev mittels Docker Network verbinden
 
 Die laufenden Container "leben" in isolierten Umgebungen: Sie können untereinander nicht kommunizieren. Dies ist ein
-Sicherheitsfeature "by design". Damit sie miteinander via Netzwerk kommunizieren können, müssen wir ein Docker Network dazu erstellen:
+Sicherheitsfeature "by design". Damit der Feedback-Dienst Mails an den SMTP-Dienst von smtp4dev auf Port 25 senden kann, müssen wir diese mit einem Docker Network verbinden.
 
 <https://docs.docker.com/network/>
 
+Ein Docker-Network kann man sich als virtuellen Netzwerk-Switch vorstellen, an dem Container angeschlossen werden können. 
+
 1. Wir geben unseren Containern "erkennbare" Namen
 
-Beim Starten des Containers können wir einen eigenen Hostnamen definieren. Machen wir das nicht, "erfindet" Docker selber einen,
+Beim Starten des Containers können wir einen eigenen Hostnamen definieren. Machen wir das nicht, "erfindet" Docker ev. selber einen,
 und wir müssen bei jedem Container-Start unsere Applikationsparameter anpassen. Das wollen wir nicht. Wir starten also unsere Container mit richtigen Namen:
 
 ```sh
-shell > docker run --name frontend -ti --name frontend ....
-shell > docker run --name feedback -ti --name feedback ....
-shell > docker run --name monolith -ti --name monolith ....
+shell > docker run --name feedback -ti ....
+shell > docker run --name smtp4dev -ti ....
 ```
-
-Nun sind die Container-Hostnamen fix definiert.
 
 2. Wir erstellen ein eigenes Docker Network
 
@@ -173,13 +162,12 @@ shell > docker network create m347
 3. Wir verbinden die beiden Container via Netzwerk
 
 ```sh
-shell > docker network connect m347 frontend
 shell > docker network connect m347 feedback
-shell > docker network connect m347 monolith
+shell > docker network connect m347 smtp4dev
 ```
 
 <i class="far fa-hand-point-right"></i> So können unsere Container intern via TCP-Netzwerk über den Hostnamen "miteinander reden",
-unser Reverse-Proxy kann somit die Anfragen an den richtigen Host weiterleiten.
+unser Feedback-Dienst kann nun so konfiguriert werden, dass er den smtp4dev-Mailserver verwendet.
 
 </textarea>
 </section>
@@ -198,6 +186,11 @@ Wir haben in diesem Kapitel diverse neue Konzepte eingeführt:
 
 - **Networks**: Container via ein TCP-Netzwerk untereinander verbinden:<br>
   siehe: <https://docs.docker.com/network/>
+
+
+--> Versuchen Sie nun selbständig, die Ziel-Architektur umzusetzen!
+
+<img src="frontend_service_ziel.png" width="90%">
 
 </textarea>
 </section>

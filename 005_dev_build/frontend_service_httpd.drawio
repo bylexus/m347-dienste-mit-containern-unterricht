@@ -1,0 +1,33 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.9 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="26.0.9">
+  <diagram name="Seite-1" id="7bKytpLX8oQXFNBWNCe9">
+    <mxGraphModel dx="1114" dy="878" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="zrkLti2_21iboYvxLovH-1" value="&lt;b&gt;Frontend-Service&lt;/b&gt;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=10;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="40" y="280" width="290" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="zrkLti2_21iboYvxLovH-2" value="&lt;p style=&quot;margin:0px;margin-top:4px;margin-left:10px;text-align:left;&quot;&gt;&lt;b&gt;Apache httpd-Server&lt;/b&gt;&lt;/p&gt;" style="html=1;shape=mxgraph.sysml.package;html=1;overflow=fill;whiteSpace=wrap;labelX=137;" vertex="1" parent="1">
+          <mxGeometry x="60" y="310" width="230" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="zrkLti2_21iboYvxLovH-3" value="statische Seiten erwartet&lt;div&gt;im Container unter:&lt;/div&gt;&lt;div&gt;&lt;pre tabindex=&quot;0&quot; class=&quot;MuiBox-root css-15znsqi&quot;&gt;&lt;code data-highlighted=&quot;yes&quot; class=&quot;MuiTypography-root MuiTypography-code-block language-dockerfile css-za673k hljs&quot;&gt;/usr/local/apache2/htdocs/&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="70" y="350" width="210" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="zrkLti2_21iboYvxLovH-4" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" vertex="1" parent="zrkLti2_21iboYvxLovH-3">
+          <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+            <mxPoint x="-27" y="7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zrkLti2_21iboYvxLovH-5" value=":80" style="html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="290" y="310" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="zrkLti2_21iboYvxLovH-7" value="" style="ellipse;html=1;fontSize=11;align=center;fillColor=none;points=[];aspect=fixed;resizable=0;verticalAlign=bottom;labelPosition=center;verticalLabelPosition=top;flipH=1;" vertex="1" parent="1">
+          <mxGeometry x="301" y="252" width="8" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="zrkLti2_21iboYvxLovH-8" value="" style="endArrow=none;html=1;rounded=0;align=center;verticalAlign=top;endFill=0;labelBackgroundColor=none;endSize=2;" edge="1" parent="1" source="zrkLti2_21iboYvxLovH-5" target="zrkLti2_21iboYvxLovH-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

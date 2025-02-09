@@ -1,12 +1,23 @@
 # Notizen M347 - Dienste mit Containern
 
+Doppellektion am 3.3.2025 / abtausch mit Thomas Graber:
+
+Umbau der Lektion:
+
+- Frontend extrahieren, wie gehabt, aber ohne Reverse Proxy, sondern mittels direktem Zugriff client/dienst und cors()
+- 2. Teil / 2. Lektion: Umbau externer Maildienst ethereal zu eigenem Container "smtp4dev". Docker Volume
+  für `/smtp4dev`, 
+  dann nächste Lektion Anbindung an Netzwerk, ev. noch in dieser Lektion, sonst nächste Lektion.
+  smtp4dev: https://github.com/rnwood/smtp4dev/wiki/Installation#how-to-run-smtp4dev-in-docker
+  docker run --rm -it -p 8888:80 -p 2525:25 rnwood/smtp4dev
+
 ## Anpassungen für nächstes Jahr
 
 - Grundsätzlich: Thema ist sehr komplex, Schüler brauchen mehr Anleitung / Führung
 
 - Frontend-Infrastruktur: 
   - Ohne Reverse-Proxy, sondern direkt Zugriff auf API via CORS
-  - kein HTML Post, sondern ein htmx-Post für das Form / für die Kommentare?
+  - Form-Handling via javascript post
 - mkdocs: Umbauen: Docsify verwenden ( keine neue Sprache einführen )
 
 - Lektion 9 / Docker-compose:
