@@ -42,7 +42,7 @@ Dauer: 90min
 | 60min | Schüleraufgabe:                                                 | Einzelarbeit         |
 |       | - Container für API-Dienst, Dockerfile                          |                      |
 |       | - API-Dienst in eigenen Container extrahieren                   |                      |
-|       | - Frontend darauf "zeigen" (via ReverseProxy)                   |                      |
+|       | - Frontend darauf "zeigen" (Anpassung HTML)                     |                      |
 | 10min | Zusammenfassen, Hilfestellung                                   | gemeinsam, Vorzeigen |
 | 5min  | Abschluss,  Stand aufnehmen, für nächstes Mal planen            |                      |
 
@@ -50,7 +50,6 @@ Dauer: 90min
 
 Ablauf:
 - Ziel-Architektur aufzeigen
-- Frontend-Reverse-Proxy-Konzept zeigen
 - Erstellen eigener Docker für Form-Service: server.js extrahieren, Dockerfile: Schülerarbeit
 - Form-Container starten, mit Network verbinden: zusammen / nach Anleitung selbständig
 

@@ -28,16 +28,13 @@ Dafür nehmen wir uns 2 Lektionen Zeit, da dies recht viel Stoff beinhaltet.
 
 Was haben wir bis jetzt erreicht?
 
-<div style="display: flex; gap:10px">
-  <img src="frontend_form_service.svg" width="70%">
-  <div style="flex-grow: 1;">
+<img src="frontend_service_bisher.png" width="70%">
 
 * Wir haben bereits folgende Dienste von unserem Monolithen extrahiert:
     * **Frontend**, welches unsere statische Webseite liefert
     * **Feedback-Service**, welcher die Formulardaten vom Frontend entgegennimmt und via Mail verschickt
-* noch offen ist der API-Dienst, welcher in unserem Demo kleine Texte speichert / ausliefert
-  </div>
-</div>
+
+* **noch offen ist der API-Dienst, welcher in unserem Demo kleine Texte speichert / ausliefert**
 
 </textarea>
 </section>
@@ -49,17 +46,13 @@ Was haben wir bis jetzt erreicht?
 Wir gehen nun den letzten Schritt, und lösen den letzten Dienst von unserem Monolithen: Den **API-Dienst**, welcher bis
 anhin die Routen **`/api/save-text`** und **`/api/get-texts`** zur Verfügung gestellt hat. Unsere Ziel-Architektur sieht so aus:
 
-<div style="display: flex; gap:10px">
-  <img src="api_service_sqlite.svg" width="80%">
-  <div style="flex-grow: 1;">
+  <img src="frontend_service_sqlite.png" width="80%">
 
 Der Umbau beinhaltet 2 Schritte:
 
 1. Unsere API erhält einen **eigenen Dienst / Container** (der letzte Schritt unserer Extraktion)
-2. Wir speichern die Daten (Texte) in **einer eigenen, richtigen sqlite-Datenbank**, anstatt
+2. Wir speichern die Daten (Texte) in **einer eigenen, persistierten sqlite-Datenbank**, anstatt
    in einem In-Memory-Container. Dazu verwenden wir ein **Volume**, welches die Datenbank-Daten speichert.
-  </div>
-</div>
 </textarea>
 </section>
 
@@ -68,14 +61,14 @@ Der Umbau beinhaltet 2 Schritte:
 <textarea data-template>
 # <i class="fas fa-flask"></i> Umbau - API-Dienst als eigener Container
 
-## Aufgabe
+## Aufgabe, Schritt 1 (API aus Monolith-Code extrahieren)
 
 Extrahieren Sie den Teil des Monolithen, der die Routen **`/api/save-text`** und **`/api/get-texts`** abhandelt, in einen eigenen Docker-Dienst (Container).
 Ziel ist die Implementation der Architektur auf der vorhergehenden Folie, noch ohne die Konfiguration der persistenten Datenbank.
 
 ## Vorgehen
 
-1. Erstellen Sie einen eigenen Ordner mit einem Dockerfile für den neuen Dienst.
+1. Erstellen Sie einen eigenen Ordner (zb. **`api_service/`**) mit einem Dockerfile für den neuen Dienst.
 1. Analysieren Sie im File **`monolith/server.js`**, welche Code-Teile Sie für den API-Dienst benötigen.
 1. Erstellen Sie dann ein neues `server.js` und zugehörige, notwendige Files (z.B. package.json) im neuen Dienst-Verzeichnis
 1. Erstellen Sie ein Docker-File und damit einen eigenen Container, und bringen Sie den API-Dienst darin zum Laufen.
@@ -97,10 +90,7 @@ Gegen Ende der Lektion tragen wir zusammen, wo Sie stehen, und führen ev. gewis
 
 Die nun umgesetzte Architektur sieht folgendermassen aus:
 
-<div class="d-flex gap-10">
-  <img src="./api_service_partial.svg" width="600">
-  <div>
-    <br />
+  <img src="./frontend_service_sqlite_step1.png" width="80%">
     
 * Unser Monolith ist nun aufgetrennt in die 3 Services
   * Frontend
@@ -109,8 +99,6 @@ Die nun umgesetzte Architektur sieht folgendermassen aus:
   aufgetrennt
 * **Der Monolith ist somit komplett in Micro-Services überführt! <i class="far fa-smile"></i>**
 * Es fehlt noch eine persistente Datenbank für unsere Textsammlung (API).
-  </div>
-</div>
 </textarea>
 </section>
 
@@ -178,12 +166,12 @@ Um diese Daten nun anderweitig zugänglich zu machen, z.B. für Backups, benöti
 "anschnallen" können. Als Beispiel führe ich hier auf, wie Sie Ihre sqlite-DB nun von extern sichern können: 
 
 ```shell
-docker run --rm -v api-data:/data -v "$(pwd):/backup" debian cp /data/data.sqlite /backup/
+docker run --rm -v api-data:/data -v "${pwd}:/backup" debian cp /data/data.sqlite /backup/
 ```
 
 * Wir erstellen einen temporären Container vom **`debian`**-Image
 * dazu binden wir das Named Volume (**`api-data`**) nach **`/data`** im Container
-* ebenso binden wir einen lokalen Folder (aktuelles Dir, **`$(pwd)`**) nach **`/backup`** im Container
+* ebenso binden wir einen lokalen Folder (aktuelles Dir, **`${pwd}`**) nach **`/backup`** im Container
 * Dann führen wir das Kommando **`cp`** (copy) im Container aus und kopieren unsere Datenbank vom Named Volume auf das Bound Volume
 
 </textarea>
