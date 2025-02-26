@@ -37,6 +37,10 @@ Dauer: 90min
 
 | Dauer | Task                                                                                   | Sozform                       |
 | ----- | -------------------------------------------------------------------------------------- | ----------------------------- |
+| 10min | Einstieg Zusammenfassung vom letzten Mal:                                              | Plenum                        |
+|       | - Frontend mit Seiten aus M293 kann gestartet werden                                   |                               |
+|       | - Formular- und API-Demo sind in Page integriert                                       |                               |
+|       | - Monolith kann gestartet werden                                                       |                               |
 | 10min | Einstieg Images: Schüler [lesen Artikel][1]                                            | Einzelarbeit                  |
 | 10min | Wir beantworten die gestellten fragen zusammen                                         | Plenum                        |
 | 10min | Einführung Dockerfiles: Anschauen eines einfachen Beispiels. Schüler machen gleich mit | Zeigen auf Folien+Interaktion |

@@ -1,4 +1,4 @@
-# Lektion 6 - Production-Container, Multistage-Builds
+# Lektion 11 - Production-Container, Multistage-Builds
 
 ## Themen
 

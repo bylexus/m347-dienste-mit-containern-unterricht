@@ -42,18 +42,20 @@ shell > docker run ..... frontend-image node server.js
 ```
 
 Für die Entwicklung unserer Dienste ist dieses Vorgehen akzeptabel, ja sogar einfacher / besser, um allfällige Entwicklungs-
-Zwischenschritte ausführen zu können.
+Zwischenschritte ausführen zu können: Ich kann so lokal Dateien ändern, und dies ist sofort im Container reflektiert.
 
-**<i class="far fa-hand-point-right"></i> Für ein produktives Image wollen wir dies aber nicht:**
+**<i class="far fa-hand-point-right"></i> Wenn unsere Seite (Frontend) aber mal fertig ist, wollen wir das nicht mehr:**
 
-1. Ich möchte ein möglichst schlankes Image: Ich benötige darin z.B. kein Build-System für die Webseite mehr
-2. Ich möchte ein Image, welches möglichst die **gesamte Applikation** bereits beinhaltet, OHNE dass ich die Ressourcen von extern anbinden muss
+1. Ich möchte ein möglichst schlankes Image: Ich benötige darin z.B. kein Build-System für die Webseite mehr: Ich möchte nur noch die statischen Seiten ausliefern.
+2. Ich möchte ein Image, welches möglichst die **gesamte Applikation** bereits beinhaltet, OHNE dass ich die Ressourcen von extern anbinden muss: Ich muss die Seite nicht mehr editieren.
 3. Ich möchte das "Bauen" des Produktions-Images möglichst automatisieren (Wiederholbarkeit)
-4. Ich möchte in einem Produktionsbetrieb mein Container möglichst einfach, z.b. so, starten können:
+4. Ich möchte in einem Produktionsbetrieb meinen Frontend-Container möglichst einfach, z.b. so, starten können:
 
 ```sh
 shell > docker run -p 80:3000 frontend-image
 ```
+
+--&gt; in diesem Beispiel wird KEIN externes Volume mehr angehängt, da die Daten bereits IM Image sind!
 </textarea>
 </section>
 
@@ -63,9 +65,9 @@ shell > docker run -p 80:3000 frontend-image
 
 <img src="dev-to-prod.png" alt="Produktions-Images mit Multistage Builds" width="50%">
 
-Wir möchten also unsere Applikation möglichst schlank und "selbst-genügsam" verpacken. Das Vorgehen dazu ist folgendes:
+Wir möchten also unsere Frontend-Applikation möglichst schlank und "selbst-genügsam" verpacken. Das Vorgehen dazu ist folgendes:
 
-1. **Bilden der Applikation** (in unserem Fall: Bilden der statischen Webseite aus Templates):<br>
+1. **Bilden der Applikation** (in unserem Fall: Bilden der statischen Webseite aus Templates, falls noch notwendig):<br>
    Wir bauen ein Hilfs-Image, welches mit unseren Entwickler-Tools unsere Applikation fertig baut (statische Seiten generiert)
 2. **Bilden eines minimalen Produktions-Images**:<br>
    Aus dem Ergebnis des ersten Schritts bauen wir das finale Produktions-Image
@@ -83,6 +85,8 @@ Containern, "zusammengebaut". (Siehe <https://docs.docker.com/develop/develop-im
 # <i class="fas fa-graduation-cap"></i> Produktions-Images mit "Multistage Builds"
 
 Ein "Multistage-Build" wird in einem einzigen `Dockerfile` umgesetzt, und funktioniert grundsätzlich so:
+
+(Achtung, dies ist nur ein BEISPIEL!!)
 
 ```Dockerfile
 # Wir benennen unsere erste "Phase", hier stage1
@@ -129,11 +133,12 @@ shell> docker build -t prod-image pfad/zum/dockerfile/
 <textarea data-template>
 # <i class="fas fa-flask"></i> Produktions-Image: Nun sind Sie dran!
 
-**Aufgabe:** Erstellen Sie ein Produktions-Image mit einem Multistage-Dockerfile für Ihre Frontend-Seite:
+**Aufgabe:** Erstellen Sie ein Produktions-Image mit einem Multistage-Dockerfile für Ihren Frontend-Dienst:
 
 Erzeugen Sie ein Dockerfile mit 2 Phasen:
 
-1. in der **ersten Phase** erzeugen / bauen Sie Ihre statische Seite, wenn notwendig, wie gewohnt (npm install, 11ty-Build)
+1. in der **ersten Phase** erzeugen / bauen Sie Ihre statische Seite, wenn notwendig, wie gewohnt (npm install, 11ty-Build)<br>
+   Ev. ist dies nicht mehr notwendig, wenn Sie bereits eine (fertige) statische Seite haben.
 2. in der **zweiten Phase** erstellen Sie ein Produktions-Image, ein minimales, lauffähiges Image: Mit minimal ist gemeint:
   - das Image beinhaltet nur noch die notwendigen Files, Pakete, ....
   - das betrifft z.B. auch die NodeJS-Pakete, welche Sie zur Laufzeit nicht mehr benötigen:<br>
@@ -146,7 +151,7 @@ Erzeugen Sie ein Dockerfile mit 2 Phasen:
 
 - Das Bauen Ihres Images soll mit einem einzigen Kommando erfolgen (ein Dockerfile)
 - Das fertige Image soll die gesamte Applikation beinhalten, **also kein externes Volume mehr benötigen: Alle Files sind Teil des Images.**
-- **Der letzte Build-Stage soll das Image so klein wie möglich behalten**: Nur noch Notwendiges wird installiert.
+- **Der letzte Build-Stage soll das Image so klein wie möglich behalten**: Nur noch Notwendiges wird installiert, und von früheren Build-States kopiert.
 - Das Starten soll ohne Zuweisung von Volumes auskommen, und auch kein Kommando definieren müssen:<br>
 ```sh
 #  (-P mappt die im Dockerfile angegebenen Ports auf zufällige externe Ports):
@@ -184,11 +189,11 @@ shell> docker run -d --name prod-frontend -P prod-frontend-image
 
 ## Projektarbeit, 4x2 Lektionen
 
-Siehe **mkdocs-Dokumentation** im Starter-Projekt: Ordner **Projektarbeit**
+Siehe **Dokumentation** auf Moodle (Aufgabenstellung Projektarbeit - LBV M347-1)
 
 **Abgabe des Projektes erfolgt via Github-Classroom!**
 
-**Abgabedatum**: **Mittwoch**, 19.06.2024, 23:59 (git-commit-Datum)
+**Abgabedatum**: **Montag abend**, 23.06.2025, 23:59 (git-commit-Datum)
 </textarea>
 </section>
 {% endblock %}

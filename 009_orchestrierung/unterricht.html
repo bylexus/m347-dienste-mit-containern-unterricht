@@ -24,21 +24,14 @@
 
 Unsere jetzige Architektur umfasst nun folgende Dienste:
 
-<div class="d-flex gap-10">
-  <div style="flex-basis: 50%;">
 
-<img src="./api_service_sqlite.svg">
-  </div>
-  <div style="flex-basis: 50%">
+<img src="./frontend_service_sqlite.png" width="80%">
 
 * Frontend-Service mit statischen Webseiten
 * API-Service für das Speichern/Laden von Text-Strings
 * Formular-Service zum Verarbeiten von User-Input
 * (optional PostgreSQL-Datenbank-Server)
-* zusätzlich, für den Betrieb nicht unbedingt notwendig:
-    * mkdocs-Dokumentations-Seite
-  </div>
-</div>
+* zusätzlich, für den Betrieb nicht unbedingt notwendig: mkdocs-Dokumentations-Seite
 
 <i class="far fa-hand-point-right"></i> **Was müssen Sie alles tun, um Ihre gesamte Infrastruktur hochzufahren / zu starten?** 
 <br>Wer kann das kurz zusammenfassen?
@@ -46,7 +39,7 @@ Unsere jetzige Architektur umfasst nun folgende Dienste:
 <div class="fragment">
 
 <i class="far fa-hand-point-right"></i> Networks erstellen, alle Images builden, alle Container starten, dabei die korrekten Kommandos anwenden, Container in Netzwerke konfigurieren...
-<br>Puh, ganz schön viel! Das scheint doch recht umständlich und fehleranfällig.
+**Puh, ganz schön viel! Das scheint doch recht umständlich und fehleranfällig.**
 </div>
 
 </textarea>
@@ -116,8 +109,8 @@ volumes:
 Dies ist ein compose-File für zwei fiktive Services, "web" und "redis", welche mittels docker-compose zusammen
 gestartet werden können.
 
-Wir definieren nun beispielhaft zusammen den Frontend-Dienst in einem yaml-file. Ziel ist, dass Sie die 
-übrigen Container (api, feedback, db, ...) selbständig konfigurieren können.
+**Wir definieren nun beispielhaft zusammen den Frontend-Dienst in einem yaml-file. Ziel ist, dass Sie die 
+übrigen Container (api, feedback, db, ...) selbständig konfigurieren können.**
 
 </textarea>
 </section>
@@ -127,28 +120,27 @@ Wir definieren nun beispielhaft zusammen den Frontend-Dienst in einem yaml-file.
 <textarea data-template>
 # <i class="fas fa-graduation-cap"></i> docker-compose.yaml für frontend-Dienst
 
-Wir definieren ein Compose-file, und darin die Definition des ersten Dienstes ('frontend'):
+Wir definieren ein Compose-file, und darin die Definition des ersten Dienstes ('frontend'), also der Dienst, der Ihre statischen Webseiten mittels `httpd` ausliefert:
 
 1. erstellen Sie das File `(projektfolder)/docker-compose.yaml`
 2. definieren Sie unseren ersten Service, den Frontend-Service:
 ```yaml
-version: "3.9"  # optional since v1.27.0
 # Definition der einzelnen Services / Containers:
 services:
     # wir definieren den frontend-Service:
     frontend:
-        # das Docker-Image soll ab dem lokalen Folder frontend/ gebuildet werden:
-        # dort befindet sich das Dockerfile:
-        build: frontend/
-        # wir mappen den Host-Port 8020 auf den Container-Port 3000:
+        # Benutze das httpd-Image vom Dockerhub, in der Version 2.4:
+        image: httpd:2.4
+        # wir mappen den Host-Port 8080 auf den Container-Port 80:
         ports:
-            - "8020:3000"
-        # Wir hängen den frontend-Folder als Volume ein:
+            - "8080:80"
+        # Wir hängen den frontend/site/-Folder als Volume in den Container,
+        # und zwar in das Verzeichnis, in dem Apache httpd seine Webseiten sucht:
         volumes:
-            - ./frontend:/server
+            - ./frontend/site:/usr/local/apache2/htdocs
         # optional: falls CMD im Dockerfile nicht definiert ist,
         # definieren wir hier, was beim Start ausgeführt werden soll:
-        command: node server.js
+        # command: ..... z.B. node server.js, aber nicht für diesen Dienst
         # oder besser: im dockerfile entsprechend setzen
 ```
 3. Starten der (resp. des, für den Moment) Service(s):
@@ -212,10 +204,12 @@ Definieren Sie nun im compose-File die weiteren Dienste:
 * API-Dienst für Textspeicherung
 * Named Volume für die persistenten Daten der Datenbank
 * Feedback-Dienst für Feedback-Formular
+* (Maildienst mit smtp4dev)
+* (Datenbank-Dienst, falls eigener Dienst erstellt)
 
-zusätzlich (abert nicht so wichtig):
+zusätzlich (aber nicht so wichtig):
 
-* Dienst für die mkdocs-Dokumentationsseite
+* Dienst für die docsify-Dokumentationsseite
 
 Sie haben die einzelnen Images/Container nun ja bereits erstellt. Sie müssen diese nun "nur" noch
 im compose-File zusammenstellen.
