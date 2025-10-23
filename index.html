@@ -7,40 +7,46 @@
 </style>
 
 <section>
-<section id="home" data-markdown style="font-size: 10pt">
+<section id="home" data-markdown style="font-size: 12pt">
 <textarea data-template>
-# M347 - Dienste mit Containern | Jahresplan 2025 - IN24-28c
+# M347 - Dienste mit Containern<br><small>Jahresplan 2025/2026 - IN25-29c</small>
 
-**LBV**: 1. Wissensprüfung (40%), 2. Projektarbeit (60%)
+**LBV 342-2**: 2 handlungsorientierte LBs, à je 50%<br>
+(<https://www.modulbaukasten.ch/module/347/1/de-DE?title=Dienst-mit-Container-anwenden&lbv=2>)
 
 | Lekt. | Datum       | Thema | Detail                                            |
 |-------|-------------|--------------|--------------------------------------------|
-|<td colspan="3"><strong>Sportferien 27.02. - 02.02.2025</strong> |
-| [ 001 ](001_start/unterricht.html)               | 06.02.2025  | Einführung | Jahresplan, Verteilung Classroom / Docker-Setup, Abgabe Projektaufgabe |
-| [ 002 ](002_linux/unterricht.html)               | 13.02.2025  | Linux | Schnellbleiche Linux-Konsole, Dateisystem, wichtige Kommandos |
-| [ 003 ](003_grundlagen_container/unterricht.html)| 20.02.2025  | Container-Grundlagen | Was sind Container? Architektur, Docker, erste Images von Dockerhub nutzen |
-| [ 004 ](004_images/unterricht.html)              | 27.02.2025  | Container-Grundlagen | Images mit Dockerfiles selber bauen (am Beispiel docsify) |
-| [ 005 ](005_dev_build/unterricht.html)           | 06.03.2025  | Microservice, Container für Entwicklung| vom Monolith zu Micro-Services, Docker für die Entwicklung, Networking |
-| [ 006 ](006_form_backend/unterricht.html)        | 13.03.2025  | mehrere Dienste, Ports | Form-Versand-Applikation, Port-Weiterleitung für Container, Networking |
-| [ 007 ](007_db_backend/unterricht.html)          | 20.03.2025  | Docker Volumes &amp; Networks, Micro-API | Anbindung einer Datenbank, Aufbau API für Daten-Einträge |
-| [ 008 ](007_db_backend/unterricht.html)          | 27.03.2025  | Docker Volumes &amp; Networks, Micro-API | Anbindung einer Datenbank, Aufbau API für Daten-Einträge (Teil 2) |
-| [ 009 ](009_orchestrierung/unterricht.html)      | 03.04.2025  | Dienst-Orchestrierung | docker compose, Orchestrierung der einzelnen Services, `.env`-Konfiguration |
-|<td colspan="3"><strong>Frühlingsferien 07.04.2025 - 21.04.2025</strong></td>|
-| [ 010 ](009_orchestrierung/unterricht.html)      | 24.04.2025  | Dienst-Orchestrierung | docker compose, Orchestrierung der einzelnen Services, `.env`-Konfiguration (Teil 2) |
-| [ 011 ](011_prod_build/unterricht.html)          | 08.05.2025  | Produktions-Images | Applikation für Produktion in Container packen, Multi-Stage-Builds |
-| [ 012 ](012_lb1_pruefung.html)                   | **15.05.2025**  | **LB 1 - Wissensprüfung** |  |
-| [ 013 ](013/projektarbeit.html)                  | 22.05.2025  | Projektarbeit (LB 2) | Micro-Service-App mit Kommentar-Funktion selber (aus)bauen |
-|<td colspan="3"><strong>Pfingstferien 29.05.2025 - 09.06.2025</strong></td>|
-| [ 014 ](014/projektarbeit.html)                  | 12.06.2025  | Projektarbeit (LB 2) | Micro-Service-App mit Kommentar-Funktion selber (aus)bauen |
-| [ 015 ](014/projektarbeit.html)                  | 19.06.2025  | Projektarbeit (LB 2) | Micro-Service-App mit Kommentar-Funktion selber (aus)bauen |
-| [ 016 ](014/projektarbeit.html)                  | 26.06.2025  | Projektarbeit (LB 2)<br>Abgabe: Montag abend, 23.06.2025 | Micro-Service-App mit Kommentar-Funktion selber (aus)bauen |
-| [ 017 ](017_security/unterricht.html)            | 03.07.2025  | Sicherheitsaspekte |  Umgang mit Konfigurationsdaten, non-root-Container |
-|<td colspan="3"><strong>Sommerferien 05.07. - 10.08.2025</strong></td>|
+|<td colspan="3"><strong>Sportferien 26.02. - 01.02.2026</strong> |
+| [ 001 ](001_start/unterricht.html)               | 05.02.2026  | Einführung | Jahresplan, Docker-Setup/Test, PlantUML |
+| [ 002 ](002_linux/unterricht.html)               | 12.02.2026  | Linux      | Schnellbleiche Linux-Konsole, Dateisystem, wichtige Kommandos |
+| [ 003 ](003_netzwerk/unterricht.html)            | 19.02.2026  | Netzwerk   | Schnellbleiche TCP/IP-Networking |
+| [ 004 ](004_grundlagen_container/unterricht.html)| 26.02.2026  | Container-Grundlagen | Was sind Container? Architektur, Docker, erste Images von Dockerhub nutzen |
+| [ 005 ](005_docker_networks/unterricht.html)     | 05.03.2026  | Netzwerke      | Container-Netzwerke kennen, konfigurieren, anwenden |
+| [ 006 ](006_volumes/unterricht.html)             | 12.03.2026  | Volumes        | Bound Volumes, managed volumes, Persistenz |
+| [ 007 ](007_volumes2/unterricht.html)            | 19.03.2026  | Volumes        | Bound volumes für Entwicklung, Zugriff/Backup auf managed volumes |
+| [ 008 ](008_dockerfiles/unterricht.html)         | 26.03.2026  | Images         | eigene Images mit Dockerfiles erstellen |
+| [ 009 ](009_dockerfiles2/unterricht.html)        | 02.04.2026  | Images         | Übungen zu Dockerfiles, Container |
+|<td colspan="3"><strong>🌼 Frühlingsferien 03.04.2026 - 19.04.2026 🌼</strong></td>|
+| [ 010 ](010_lb1/index.html)                      | **23.04.2026**  | **LB 1** |**praktische Prüfung 50%** |
+|<td colspan="3"><strong>😎 Pfingstferien 29.05.2025 - 09.06.2025 👒</strong></td>|
+| [ 016 ](016_lb2/index.html)                      | **xx.xx.2026**  | **LB 2** |**praktische Prüfung 50%** |
+|<td colspan="3"><strong>🏝️ Sommerferien 05.07. - 10.08.2025 🌊</strong></td>|
 
-<!-- Fällt weg: -->
-<!-- 
-| [ 018 ](018_management/unterricht.html)          | 01.07.2024  | Management-Tools, Ausblick | Portainer, Übersicht Cloud-Infrastruktur  mit Kubernetes |
--->
+<!-- | [ 004 ](004_images/unterricht.html)              | 27.02.2025  | Container-Grundlagen | Images mit Dockerfiles selber bauen (am Beispiel docsify) | -->
+<!-- | [ 005 ](005_dev_build/unterricht.html)           | 06.03.2025  | Microservice, Container für Entwicklung| vom Monolith zu Micro-Services, Docker für die Entwicklung, Networking | -->
+<!-- | [ 006 ](006_form_backend/unterricht.html)        | 13.03.2025  | mehrere Dienste, Ports | Form-Versand-Applikation, Port-Weiterleitung für Container, Networking | -->
+<!-- | [ 007 ](007_db_backend/unterricht.html)          | 20.03.2025  | Docker Volumes &amp; Networks, Micro-API | Anbindung einer Datenbank, Aufbau API für Daten-Einträge | -->
+<!-- | [ 008 ](007_db_backend/unterricht.html)          | 27.03.2025  | Docker Volumes &amp; Networks, Micro-API | Anbindung einer Datenbank, Aufbau API für Daten-Einträge (Teil 2) | -->
+<!-- | [ 009 ](009_orchestrierung/unterricht.html)      | 03.04.2025  | Dienst-Orchestrierung | docker compose, Orchestrierung der einzelnen Services, `.env`-Konfiguration | -->
+<!-- | [ 018 ](018_management/unterricht.html)          | 01.07.2024  | Management-Tools, Ausblick | Portainer, Übersicht Cloud-Infrastruktur  mit Kubernetes | -->
+<!-- | [ 010 ](009_orchestrierung/unterricht.html)      | 24.04.2025  | Dienst-Orchestrierung | docker compose, Orchestrierung der einzelnen Services, `.env`-Konfiguration (Teil 2) | -->
+<!-- | [ 011 ](011_prod_build/unterricht.html)          | 08.05.2025  | Produktions-Images | Applikation für Produktion in Container packen, Multi-Stage-Builds | -->
+<!-- | [ 012 ](012_lb1_pruefung.html)                   | **15.05.2025**  | **LB 1 - Wissensprüfung** |  | -->
+<!-- | [ 013 ](013/projektarbeit.html)                  | 22.05.2025  | Projektarbeit (LB 2) | Micro-Service-App mit Kommentar-Funktion selber (aus)bauen | -->
+<!-- | [ 014 ](014/projektarbeit.html)                  | 12.06.2025  | Projektarbeit (LB 2) | Micro-Service-App mit Kommentar-Funktion selber (aus)bauen | -->
+<!-- | [ 015 ](014/projektarbeit.html)                  | 19.06.2025  | Projektarbeit (LB 2) | Micro-Service-App mit Kommentar-Funktion selber (aus)bauen | -->
+<!-- | [ 016 ](014/projektarbeit.html)                  | 26.06.2025  | Projektarbeit (LB 2)<br>Abgabe: Donnerstat abend, 26.06.2025 | Micro-Service-App mit Kommentar-Funktion selber (aus)bauen | -->
+<!-- | [ 017 ](017_security/unterricht.html)            | 03.07.2025  | Sicherheitsaspekte |  Umgang mit Konfigurationsdaten, non-root-Container | -->
 
 </textarea>
 </section>

@@ -1,0 +1,26 @@
+@startuml docker-example
+
+title 'Getting-Started'-Container
+
+component "Browser" as client
+
+() "127.0.0.1:80" as hport
+
+node "Docker-Host" as host {
+	() "192.168.xx.yy:80" as cport
+	component "getting-started" as container {
+	}
+}
+
+client --> hport
+hport --> cport
+cport -- container
+
+note right of host 
+- Container startet TCP-Dienst (Webserver) auf TCP-Port 80
+- dieser ist aber isoliert, von aussen nicht erreichbar
+- beim Start konfigurieren wir eine **Port-Weiterleitung**
+  vom **Docker-Host**, Port 80, zum **Container-Port 80**. 
+end note
+
+@enduml

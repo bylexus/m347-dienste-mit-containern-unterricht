@@ -2,59 +2,37 @@
 
 ## Infrastruktur
 
-* Jeder Schüler hat Docker lokal installiert, oder nutzt die abgegebene VM
-* Github Classroom Repo für jeden Schüler, mit Template aus (github classroom url), beinhaltet:
-  * Starter-Repo: https://github.com/bylexus/m347-dienste-mit-containern-starter
-  * Classroom URL: <https://classroom.github.com/classrooms/50485268-m347-in24-28c>
-  * Assignement URL: <https://classroom.github.com/classrooms/50485268-m347-in24-28c/assignments/m347-project>
-  * Invitation URL: <https://classroom.github.com/a/eTREMAc->
-  * Inhalt:
-    * `docsify`-Template
-    * Web-Infrastruktur aus M293 (static site build)
-    * einfache api für form-daten (nodejs, ein server.js)
+* Jeder Schüler hat Docker lokal (unter Windows, Docker for Windows) installiert
+* kein Starter-Projekt. Wir bauen alles im Unterricht, keine Projektarbeit.
+
 
 ## Material
 
 * Jahresplan (Moodle)
-* Projekt-Beschrieb (Moodle)
-* Github Classroom-Repos parat
-* Projekt-Skelett (Code, Repo)
 * Infos zum Setup auf Moodle:
   * VS Code: https://code.visualstudio.com/
-  * git: SourceTree (https://www.sourcetreeapp.com/)
-  * Github classroom Invitation URL: 
+  * PlantUML mit VS Code: jebbs.plantuml-Plugin
+  * PlantUML-Docker, um VS Code-Plugin gleich damit zu verbinden (<https://hub.docker.com/r/plantuml/plantuml-server/>)
 
-**ACHTUNG!** Seit Mitte August 2021 muss ein Personal Access Token für github erstellt werden, um
-auf github repositories zuzugreifen:
-
-https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token
-
-Linux: Einfacher geht es mit einem ssh public key, den man auf dem Github-Profil hinterlegt
 
 ## Ziele
 
 * Jahresplan: Sie kennen die wichtigsten Daten des Jahres
-* Sie kennen die Aufgabenstellung der Projektarbeit
-* Sie haben eine lauffähige Entwicklungsumgebung, und das Projekt-Skelett funktioniert
+* Sie wissen, was Sie in diesem Semester lernen
+* Sie haben eine lauffähige Docker-Umgebung auf Ihrem Rechner
+* Sie haben einen lauffähigen PlantUML-Server, mit dem Sie mit VS Code Diagramme erstellen können
 
 ## Detailplan
 
-| Zeit         | Task                                                                                      |
-| ------------ | ----------------------------------------------------------------------------------------- |
-| ( 5min )     | Begrüssung, Beschreibung des Moduls, Ziel                                                 |
-| ( ca. 5min ) | Jahresplan, Hinweise auf Prouektarbeit und Abgabetermine, Moodle                          |
-| (rest)       | Setup Entwicklungsumgebung mit Docker                                                     |
-|              | * Schüler installieren Docker lokal                                                       |
-|              | * ssh-key generieren, in github hinterlegen, oder access token generieren                 |
-|              | * Clone des Classroom-Repos (github authentication sicherstellen (access token, ssh key)) |
-|              | * Test der Infrastruktur:                                                                 |
-|              | ** Start des Monolith-Servers mittels Docker                                              |
-|              | ** VS Code mit PlantUML                                                                   |
-| Ende         |
+| Zeit          | Task                                                                              |
+| ------------- | --------------------------------------------------------------------------------- |
+| ( ca. 5min )  | Begrüssung, erste 3 Folien (Ziel, Thema/Org, LBV)                                 |
+| ( ca. 10min ) | Folie Thema. Frage in den Raum stellen: Wer kennt Container/Docker/Linux bereits? |
+| ( ca. 30min)  | Setup Docker                                                                      |
+|               | * Schüler installieren Docker for Windows                                         |
+|               | * Test der Infrastruktur: docker run hello-world muss laufen                      |
+| ( ca. 5min )  | Plantuml-Docker (plantuml/plantuml-server) als Container konfigurieren            |
+| ( ca. 5min )  | VS Code-Plugin für PlantUML konfigurieren, erste Demo                             |
+| ( rest )      | Moodle-Übung PlantUML-Diagramm erstellen                                          |
+| Ende          |
 
-Ziel
-----
-
-- Alle Schüler haben das Skeleton-Projekt von Git Classroom geklont
-- Alle Schüler haben eine lauffähige Entwicklungsumgebung mit Docker
-- Alle Schüler konnten das Skeleton-Projekt mit Docker in Betrieb nehmen

@@ -1,0 +1,28 @@
+@startuml
+title Container-Darstellung
+
+actor "Benutzer" as User
+component "Webbrowser" as WB
+
+' () ":10000" as p1
+package "Docker Host" as host {
+	' () ":8080" as p2
+	node "Container" as C1 {
+		portin ":10000" as p1
+		component "PlantUML Server" as PU <<plantuml/plantuml-server:jetty>> #62db72ff {
+			portin ":8080" as p2
+		}
+		database "lokale Daten" as DB
+		PU -down-> DB : "Lese-/Schreibzugriff"
+	}
+}
+
+note top of host
+	Der Host verwaltet die Container
+	und schottet den Netzwerkverkehr ab.
+end note
+
+User -right-> WB : "öffnet URL"
+WB --> p1 : "HTTP-Anfrage"
+p1 -right-> p2 : "Port-Weiterleitung"
+@enduml

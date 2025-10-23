@@ -3,24 +3,24 @@
 
 {% block sections %}
 <section data-markdown>
-<textarea data-template>
+  <textarea data-template>
 <i class="fas fa-graduation-cap"></i> M347 - Dienste mit Containern
 =============================
 
 Heutiges Ziel
 --------------
 
-* Sie wissen, was wir in diesem Modul / Semester tun
-* Sie kennen die Aufgabenstellung der Projektarbeit
-* Sie haben eine lauffähige Entwicklungsumgebung, und das Projekt-Skelett funktioniert
+* Jahresplan: Sie kennen die wichtigsten Daten des Jahres
+* Sie wissen, was Sie in diesem Semester lernen
+* Sie haben eine lauffähige Docker-Umgebung auf Ihrem Rechner
+* Sie haben einen lauffähigen PlantUML-Server, mit dem Sie mit VS Code Diagramme erstellen können
 
 </textarea>
 </section>
 
 <section data-markdown>
-<textarea data-template>
-<i class="fas fa-graduation-cap"></i> M347 - Dienste mit Containern
-=============================
+  <textarea data-template>
+# <i class="fas fa-graduation-cap"></i> M347 - Dienste mit Containern
 
 Thema &amp; Jahresplan
 --------------
@@ -31,6 +31,11 @@ Thema &amp; Jahresplan
 * Sie kennen die Grundkonzepte von Linux-Container-Anwendungen
 * Sie können selber Container erstellen
 * Sie können bestehende Applikationen in Container-Anwendungen überführen
+* Sie können mehrere Container zu einem Gesamtdienst orchestrieren
+
+**Organisation Unterlagen**:
+
+Alles wird digital auf Moodle bereitgestellt. Auch Prüfungen finden digital als Moodle-Tests statt.
 
 
 **Jahresplan**:
@@ -40,184 +45,194 @@ Siehe Moodle
 </section>
 
 <section data-markdown>
-<textarea data-template>
+  <textarea data-template>
 <i class="fas fa-graduation-cap"></i> M347 - LBV und Erwartungen, Hausaufgaben
 =============================
 
-## LBV - M347 - 1:
+## LBV - M347-2:
 
-* 1 Wissensprüfung 40%
-* 1 kurze Projektarbeit 60%
+<https://www.modulbaukasten.ch/module/347/1/de-DE?title=Dienst-mit-Container-anwenden&lbv=2>
 
-Daten und Bewertung siehe Moodle
+* LB 1: handlungsorientierte Prüfung 50%
+* LB 2: handlungsorientierte Prüfung 50%
+* Termine: Moodle
 
 ## Erwartungen und Hausaufgaben
 
-* Als **Hausaufgaben** ist jeweils das Fertigstellen der Aufgabe aus dem Unterricht zu verstehen
-* Wir **bauen auf den letzten Lektionen auf**: Ich erwarte daher von Ihnen:
+* Als **Hausaufgaben** ist jeweils das **Fertigstellen der Aufgaben aus dem Unterricht** zu verstehen
+* Wir **bauen auf dem Wissen der letzten Lektionen auf**: Ich erwarte daher von Ihnen:
   * dass Sie die Aufgaben vom Unterricht bis zur nächsten Lektion **ausserhalb des Unterrichts** fertigstellen
   * dass Sie **Fragen vorbereiten**, oder mir via Teams/Mail stellen, wenn Sie nicht weiterkommen
 * Es werden keine Hausaufgaben bewertet. Es liegt an Ihnen, diese wie beschrieben zu machen.
 
+* **Ich wiederhole mich aber auch nicht gerne**: Wenn ich merke, dass Ihnen Wissen fehlt, welches wir 
+  im Unterricht erarbeitet haben, werde ich Sie darauf verweisen.
+
 </textarea>
 </section>
 
 <section data-markdown>
-<textarea data-template>
+  <textarea data-template>
 # <i class="fas fa-graduation-cap"></i> M347 - Dienste mit Containern
 
-Wir bauen dazu eine **monolithische** Beispiel-Applikation zu mehreren Einzeldiensten,
-so genannten **Microservices**, um.
+## Thema des Moduls: Applikationen als/in Containern bereitstellen
+<div style="margin-bottom:2rem"></div>
 
-Dies werden wir im Laufe des Semesters schrittweise tun, im Rahmen eines übergreifenden Projektes, welches
-Sie am Schluss als "Gesamtpaket" als Projektarbeit abliefern.
-
-## Ziel des Gesamtprojektes
-
-Wir bauen auf Ihrem **Webseiten-Projekt aus dem Modul M293** auf: Ziel ist, von einer monolithischen Architektur zu einer
-Container-Microservice-Architektur zu gelangen:
-
-<div style="display: flex;gap:5px;align-items: center;">
-  <img src="monolith_arch.svg" width="45%" />
-  ➡
-  <img src="microservice_arch.svg" width="45%" />
+* Sie lernen, wie Sie Applikationen mittels Docker in **Linux-Containern** bereitstellen können.
+* <!-- .element: class="fragment" --> <strong>Häh? Docker? Linux? Container?</strong> Was ist denn das?
+<div class="d-flex align-items-start">
+  <img class="flex-basis-0" src="./tux.png" alt="Linux-Maskottchen TUX" height="100"/>
+  <img class="flex-basis-0" src="./docker.png" alt="Docker-Maskottchen" height="100"/>
 </div>
-
-Sie liefern den gesamten Code inkl. dazu notwendiger Docker- und Compose-File und Dokumentation als zip ab.
-
+* <!-- .element: class="fragment" --> In diesem Modul geht es um eine schon länger bekannte Technologie, die in den letzten Jahren immer populärer wurde:<br><strong>Linux-Container</strong><i class="fab fa-linux"></i>
+* <!-- .element: class="fragment" --> Was ist das?<br>Einfach gesagt: Eine Möglichkeit, Applikationen und deren Abhängigkeiten in einem Paket zu bündeln, und auf beliebigen (Linux-)Systemen lauffähig zu machen.
+* <!-- .element: class="fragment" --> <strong>Aber ich hab doch Windows/MacOS!</strong><br><span class="fragment">Kein Problem, eine Container-Runtime, in Ihrem Fall "Docker for Windows", bringt eine kleine Linux-VM mit, in der die Container laufen.</span>
+* <!-- .element: class="fragment" --> Wir beschäftigen uns also mit folgenden Fragen:<br>
+  - Was ist Linux?
+  - Wie funktionieren Container?
+  - Was ist Docker?
+  - Wie erstelle ich Container?
+  - Wie orchestriere ich mehrere Container zu einem Dienst?
+  - Wie setze ich Container in der Praxis ein?
+* <!-- .element: class="fragment" --> <strong>Container-basierte Applikationen ist aktuell eine der wichtigsten Technologien im Web- und Cloud-Umfeld.</strong>
 
 </textarea>
 </section>
 
+
+
+
 <section data-markdown>
-<textarea data-template>
+  <textarea data-template>
 # <i class="fas fa-graduation-cap"></i> M347 - Dienste mit Containern
 
 ## Benötigte Software für den Unterricht
 
-Sie benötigen eine lauffäige **Docker**-Installation auf Ihrem Rechner, sowie eine **Entwicklungsumgebung**.
+Sie benötigen eine lauffähige **Docker**-Installation auf Ihrem Rechner, sowie eine **Entwicklungsumgebung**.
 
 Software | Details
 ---------|---------
-**Docker Desktop** inkl. `docker compose` | Installationsanleitung unter: <https://docs.docker.com/desktop/install/windows-install/>
+**Docker Desktop**<br>inkl. `docker compose` | Installationsanleitung unter: <https://docs.docker.com/desktop/install/windows-install/>
 **Visual Studio Code** | <https://code.visualstudio.com/Download>
-**VS Code Plugins** | Markdown All In One (empfohlen)
+**VS Code Plugins** | [Markdown All In One (empfohlen)](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)<br>[PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
 
-Die restlichen Applikationen installieren wir uns im Verlauf des Moduls als Docker-Images (bsp: Datenbank-Client)
+**Docker for Windows** bringt eine kleine Linux-VM mit, in der die Container laufen. Sie benötigen also kein Linux auf Ihrem Rechner.
+
 
 </textarea>
 </section>
 
 <section data-markdown>
-<textarea data-template>
-<i class="fas fa-graduation-cap"></i> M347 - Setup
-=============================
+  <textarea data-template>
+# <i class="fas fa-graduation-cap"></i> M347 - Docker for Windows-Setup
 
-* Erstellen und Klonen des github-Classroom-Repositories: <https://classroom.github.com/a/eTREMAc->
-* Konfigurieren der Github-Credentials: Personal Access Token, <https://github.com/settings/tokens>
-* Starten des Monolith-Projektes als Docker-Container:
+1. Installieren Sie **Docker Desktop** für Windows:<br>
+   <https://docs.docker.com/desktop/install/windows-install/>
+   - Wählen Sie während der Installation die Option **"Use WSL 2 instead of Hyper-V"** aus
+   - Folgen Sie den Anweisungen zu Installation - vor allem die Installation der WSL2-Komponente
+
+2. nach dem Setup: Erster Versuch, einen Container zu starten:
+   - Öffnen Sie eine **PowerShell**-Eingabeaufforderung
+   - Führen Sie den Befehl `docker run hello-world` aus
+   - Wenn alles geklappt hat, sollten Sie eine Erfolgsmeldung sehen
 
 ```sh
-# unter Windows Powershell:
-shell > cd /pfad/zum/projekt/monolith
-shell > docker run --rm -ti -v "$(pwd):/app" -w /app -p 3000:3000 node:20 bash
+PS C:\> docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+198f93fd5094: Pull complete
+Digest: sha256:a0dfb02aac212703bfcb339d77d47ec32c8706ff250850ecc0e19c8737b18567
+Status: Downloaded newer image for hello-world:latest
 
-docker> npm install
-docker> npm run build
-docker> node server.js
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (arm64v8)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
 ```
-
-Sie sollten nun <http://localhost:3000/> aufrufen können, und eine Demo-Webseite sehen.
-
-<img src="./webapp-screen.png" alt="Screenshot Demo-App" width="30%" />
-
 </textarea>
 </section>
 
 <section data-markdown>
-<textarea data-template>
-# <i class="fas fa-graduation-cap"></i> Repository-Struktur
+  <textarea data-template>
+# <i class="fas fa-flask"></i> M347 - Erster Docker-Container: PlantUML-Server
 
-```text
-.
-├── README.md
-├── docsify                   # Haupt-Verzeichnis der docsify-Dokumentations-Site
-│   ├── README.md             # docsify-Homepage
-│   └── _sidebar.md           # Inhaltsverzeichnis
-└── monolith                  # Die Demo-Monolith-Applikation
-    ├── .eleventy.js          # Das 11ty-Config-File, kennen Sie bereits aus M293
-    ├── config.js             # Konfiguration der Monolith-App
-    ├── package.json
-    ├── server.js             # Die Monolith-Server-Applikation
-    ├── site                  # Hier kommt Ihre statische, fertig gebildete Webseite rein
-    └── src                   # 11ty-Webseiten-Templates, falls genutzt
-```
+Wir starten unseren ersten eigenen Container: Einen PlantUML-Server, mit dem wir UML-Diagramme erstellen können.
 
-### ⚠️ Wichtig für Sie ⚠️ 
-
-Der NodeJS-Webserver, welcher mit 
-
-`node server.js` 
-
-gestartet wird, liefert NUR statische Webseiten im Verzeichnis `site/` aus!
-Wenn Sie also Ihre Seiten mit 11ty oder einer anderen Strategie verwenden, müssen Sie diese nach Modifikation erst wieder builden.
-
-Das abgegebene 11ty-Setup macht dies durch Ausführen von 
-
-`npm run build` 
-
-im `monolith`-Verzeichnis (Wie damals im M293).
-</textarea>
-</section>
-
-<section data-markdown>
-<textarea data-template>
-# <i class="fas fa-graduation-cap"></i> Funktionsweise des Skelett-Projektes
-
-Sie haben eine kleine, monolithische Web-Applikation "vor sich":
-
-<div style="display: flex;gap:5px;align-items: flex-start;">
-  <img src="monolith_arch.svg" width="40%">
+<div class="d-flex align-items-start gap-10">
+  <img src="./plantuml-server-demo.png" alt="PlantUML Server Demo" width="400"/>
   <div>
-    
-* Auf TCP Port 3000 hört ein **NodeJS-Server** auf Ihre Anfragen
-* Diese **Node-ExpressJS-Applikation** stellt eine monolithische Applikation dar:
-  * sie liefert statische Web-Dateien aus (alles unter `site/`)
-  * sie implementiert eine Demo-**Backend-API** (`/api/`-URLs)
-  * sie implementiert ein **Formular-Backend** (`/feeback`-URL)
-  * sie löst ein Email aus bei Formularversand
 
-* **Ziel** dieses Semesters ist, dass wir diese Applikation in kleinere **Micro-Services** auseinanernehmen.
+1. Starten Sie eine **PowerShell**-Eingabeaufforderung
+2. Starten Sie mit folgendem Kommando einen PlantUML-Server in einem Container:
+```sh
+docker run --name plantuml -d -p 10000:8080 plantuml/plantuml-server:jetty
+```
+3. Öffnen Sie in Ihrem Browser die URL <http://localhost:10000> - Sie sollten die Startseite des PlantUML-Servers sehen
+4. Fertig! Sie haben soeben:
+    - Ihr erstes Docker-Image vom Docker-Hub heruntergeladen
+    - Ihren ersten eigenen Container gestartet
+    - Einen Dienst in einem Container bereitgestellt
+    - Einen Port vom Container auf Ihren Rechner weitergeleitet
+
   </div>
 </div>
 
-Sie können die monolithische Demo-App jederzeit mittels Docker wieder starten:
+**Das war ziemlich einfach, oder?**<br>
+**In den nächsten Lektionen werden wir uns anschauen, wie das Ganze funktioniert, und wie Sie eigene Container erstellen können.**
 
-```sh
-# wie bisher, mittels Shell, dann manuell starten (Empfiehlt sich während Entwicklung)
-shell > cd /pfad/zum/projekt/monolith
-shell > docker run --rm -ti -v "$(pwd):/app" -w /app -p 3000:3000 node:20 bash
-docker> node server.js
+_Stoppen Sie den Container mit `docker stop plantuml`.<br>Starten Sie ihn erneut mit `docker start plantuml`.<br>Löschen Sie ihn mit `docker rm plantuml`._
 
-# Oder Sie starten direkt die server.js-Applikation:
-shell > cd /pfad/zum/projekt/monolith
-shell > docker run --rm -ti -v "$(pwd):/app" -w /app -p 3000:3000 node:20 node server.js
-```
 </textarea>
 </section>
 
 <section data-markdown>
 <textarea data-template>
-# <i class="fas fa-graduation-cap"></i> Funktionsweise des Skelett-Projektes
+# <i class="fas fa-flask"></i> M347 - PlantUML-Plugin in VS Code
 
-Die **Infrastruktur** des Skelett-Projektes kennen Sie bereits aus M293: Wir verwenden dieselbe **Toolchain** (11ty):
+Nun können Sie in VS Code mit dem PlantUML-Plugin Diagramme über Ihren eigen PlantUML-Server rendern:
 
-* Der Ordner **"monolith/src/"** beinhaltet Ihre Webseiten (-Vorlagen) und -Templates
-* Der Befehl **`npm run build`** erstellt aus den Vorlagen fertige statische Webseiten in **"monolith/site"**
-* Der Befehl **`node server.js`** startet einen kleinen Webserver, der Ihre statische Seite unter "monolith/site" ausliefert.
+|    |    |
+|----|----|
+| 1. Installieren Sie das PlantUML-Plugin in VS Code<br>(<https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml>) |<img src="./plantuml_plugin.png" alt="PlantUML Plugin in VS Code" width="300"/>|
+|<!-- .element colspan="2" --> 2. Öffnen Sie die Einstellungen `(Strg+,)` und suchen Sie nach `PlantUML Server`||
+| 3. Tragen Sie bei "PlantUML: Server" die URL Ihres PlantUML-Servers ein: <br>`http://localhost:10000`<br>4. Wählen Sie bei "PlantUML: Render" die Option `PlantUMLServer` | <img src="./plantuml_config.png" alt="PlantUML Plugin Config" width="400"/> |
+| 5. Erstellen Sie eine neue Datei `test.puml` mit nebenstehendem Inhalt.<br>6. Suchen Sie in der Befehlspalette (Ctrl-Shift-P)<br>`PlantUML: Preview Current Diagram` | <img src="./hello-plantuml.png" alt="Hello PlantUML" width="400"/> |
+ ||
+</textarea>
+</section>
 
-<i class="far fa-hand-point-right"></i> Kopieren Sie Ihre statische Webseite vom Modul M293 in den **src/**-Folder und probieren Sie dies aus!
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-flask"></i> M347 - PlantUML - Übungen
 
+Wir verwenden [**PlantUML**](https://plantuml.com/de/) für die Dokumentation unserer Container-Architekturen. Mit PlantUML 
+können Sie UML-Diagramme als Code definieren, und diese in Bilder rendern.
+
+### Dokumentation
+
+Sie finden die offizielle Dokumentation unter: <https://plantuml.com/de/>. Dort finden Sie auch ganz viele Beispiele zu den verschiedenen Diagrammtypen.
+
+**Wir verwenden hautpsächlich das Komponentendiagramm**, um unsere Container-Architekturen zu dokumentieren.
+
+### Übungen zu PlantUML
+
+Auf **Moodle** finden Sie ein paar Übungen zu PlantUML. Arbeiten Sie nun daran, und machen Sie diese als Hausaufgaben auf nächstes Mal fertig.
 
 </textarea>
 </section>

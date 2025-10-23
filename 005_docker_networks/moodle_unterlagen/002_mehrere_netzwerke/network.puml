@@ -1,0 +1,14 @@
+@startuml multi_networks
+
+nwdiag {
+	network skynet {
+		container1
+		container3
+	}
+
+	network groundnet {
+		container2
+		container3
+	}
+}
+@enduml

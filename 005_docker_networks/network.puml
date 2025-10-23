@@ -1,0 +1,36 @@
+@startuml network_alles
+title Default-Docker-Netzwerk
+
+nwdiag {
+	network default {
+		address = "192.168.x.y/24"
+
+		server1 [address = "192.168.x1.y1"]
+		server2 [address = "192.168.x2.y2"]
+		topsecret [address = "192.168.x3.y3"]
+	}
+}
+
+@enduml
+
+@startuml network_getrennt
+title getrennte Netzwerke
+
+nwdiag {
+	network mynet1 {
+		address = "aa.bb.cc.dd/24"
+
+		server1 [address = "aa.bb.cc.dd1"]
+		server2 [address = "aa.bb.cc.dd2"]
+		DNS [shape=database, description="DNS-Server"]
+	}
+
+	network secretnet {
+		address = "ee.ff.gg.hh/24"
+
+		topsecret [address = "ee.ff.gg.hh1"]
+		DNS2  [shape=database,description="DNS-Server"]
+	}
+}
+
+@enduml

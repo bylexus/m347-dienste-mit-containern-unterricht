@@ -3,14 +3,6 @@
 ## Infrastruktur
 
 * Jeder Schüler hat Docker lokal installiert
-* Github Classroom Repo für jeden Schüler, mit Template aus (github classroom url), beinhaltet:
-  * Classroom URL: <https://classroom.github.com/classrooms/50485268-m347-in22-26c>
-  * Assignement URL: <https://classroom.github.com/classrooms/50485268-m347-in22-26c/assignments/m347>
-  * Invitation URL: <https://classroom.github.com/a/G8tDzbCY>
-  * Inhalt:
-    * `mkdocs`-Template
-    * Web-Infrastruktur aus M293 (static site build 11ty)
-    * einfache api für form-daten (nodejs, ein server.js)
   * Wir benutzen ein `ubuntu`-Docker-Image für das Ausprobieren von Linux-Kommandos:
     `docker run --rm -ti ubuntu bash`
 
@@ -27,9 +19,6 @@
 * Sie kennen die wichtigsten Befehle auf einem debian-basierten Linux-Befehl
 
 ## Detailplan
-
-zum Start: Input zu Notizen: mkdocs-Dok anlegen, für später: ab Lektion 4 bauen wir ein
-Dockerfile, um mkdocs zu starten
 
 | Zeit          | Task                                            | Form                       |
 | ------------- | ----------------------------------------------- | -------------------------- |

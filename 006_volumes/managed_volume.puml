@@ -1,0 +1,23 @@
+@startuml managed_volume
+title Docker (Managed) Volume
+
+package "Docker Host" as docker {
+	database "Volume:db" as db #d2e2f7
+		
+	node pigallery {
+		interface ":80" as inport 
+		component "Webserver" {
+
+		}
+		database "/app/data/config" as config
+		' database "/app/data/db" as db
+		database "/app/data/images" as data
+
+		inport - Webserver
+		Webserver --> config
+		Webserver --> db: Mountpoint:\n/app/data/db
+		Webserver --> data
+	}
+}
+
+@enduml

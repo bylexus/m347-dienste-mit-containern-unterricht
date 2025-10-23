@@ -1,0 +1,253 @@
+{% extends "../_base_template.html" %}
+{% block title %}Lektion 8 - eigene Images erstellen{% endblock %}
+
+{% block sections %}
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Eigene Images erstellen
+
+## Heutiges Ziel
+
+- Sie wissen, wie Sie eigene Container-Images erstellen können
+- Sie kennen die Rolle von Dockerfiles und die wichtigsten Anweisungen darin
+- Sie können angepasste Applikations-Images mit eigenen Dockerfiles erstellen und dokumentieren 
+- Sie können eine ganze Applikation in einen Container verpacken
+
+Wir nehmen uns 2 Einheiten Zeit, um dies zu üben.
+
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Aufbau Docker-Images
+
+Wir wollen heute anschauen, wie Sie eigene Docker-Images erstellen können. **Doch was ist ein Docker-Image überhaupt?**
+
+<div class="fragment">
+
+> Ein Docker-Image ist eine **unveränderliche Vorlage**, die alle benötigten Dateien, Bibliotheken und Konfigurationen enthält, **um eine Anwendung in einem isolierten Container auszuführen**.
+</div>
+
+<div class="fragment">
+
+Zudem sind Docker-Images **schichtbasiert** aufgebaut. Das heisst, dass ein Image aus mehreren Schichten besteht, die übereinander gestapelt sind. Jede Schicht repräsentiert eine Änderung oder Ergänzung zum darunterliegenden Image.
+
+Wir können dies an einem Beispiel nachvollziehen:
+
+```text
+PS1> docker pull php:8.4-apache
+PS1> docker history php:8.4-apache
+
+IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT
+28c77fa0a8e1   4 weeks ago   CMD ["apache2-foreground"]                      0B        buildkit.dockerfile.v0
+<missing>      4 weeks ago   EXPOSE map[80/tcp:{}]                           0B        buildkit.dockerfile.v0
+<missing>      4 weeks ago   COPY apache2-foreground /usr/local/bin/ # bu…   1.35kB    buildkit.dockerfile.v0
+<missing>      4 weeks ago   RUN /bin/sh -c docker-php-ext-enable sodium …   17B       buildkit.dockerfile.v0
+<missing>      4 weeks ago   RUN /bin/sh -c docker-php-ext-enable opcache…   23B       buildkit.dockerfile.v0
+<missing>      4 weeks ago   COPY docker-php-ext-* docker-php-entrypoint …   7.22kB    buildkit.dockerfile.v0
+<missing>      4 weeks ago   RUN /bin/sh -c set -eux;   savedAptMark="$(a…   57MB      buildkit.dockerfile.v0
+<missing>      4 weeks ago   COPY docker-php-source /usr/local/bin/ # bui…   587B      buildkit.dockerfile.v0
+<missing>      4 weeks ago   RUN /bin/sh -c set -eux;   savedAptMark="$(a…   14.3MB    buildkit.dockerfile.v0
+... und noch viel mehr! ...
+```
+Das Image `php:8.4-apache` ist aus diversen weiteren **Image-Schichten** aufgebaut! Jede dieser Zeile repräsentiert ein
+(sehr kleines bis grosses) Zwischen-Image, welches gegenüber der vorherigen Schicht etwas verändert.
+</div>
+
+
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Eigene Images bauen - warum?
+
+Wir können also auch eigene Images bauen - **aber warum wollen wir dies tun?**
+
+<div class="fragment">
+
+Es gibt diverse Gründe, warum wir eigene Docker-Images bauen wollen:
+
+* **Anpassen oder Erweitern von Konfiguration/Funktion:**<br>
+  Uns reicht die vorkonfigurierte Funktionalität nicht, oder wollen eine Konfiguration anpassen
+* **Nutzen standardisierter Images für z.B. Entwicklungsumgebungen:**<br>
+  Wir wollen eine vorkonfigurierte Umgebung z.B. für Entwickler schaffen und diese automatisiert installieren können
+* **Es gibt einen gewünschten Dienst noch nicht als Image:**<br>
+  Sie wollen Ihren eigenen Dienst als Image anbieten, diesen gibt es aber noch nicht
+* **Aktualisieren von veralteten Images:**<br>
+  Sie benötigen aktualisierte Versionen von Tools, das Ursprungs-Image bietet aber nur veraltete Versionen
+
+Aber wie machen wir nun unser eigenes Image?
+</div>
+
+
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Eigene Images bauen - Dockerfile
+
+Um eigene Images zu bauen, brauchen wir 2 Dinge:
+
+1. Ein **Basis-Image**:<br>
+   Praktisch alle Images basieren auf bestehenden Images: Nur sehr wenige Images fangen "von Null auf" an. Suchen Sie sich also ein
+   Basis-Image, dass Sie als Grundlage nutzen und erweitern wollen.
+2. Ein **Dockerfile**:<br>
+   Images werden anhand von genauen Anweisungen erstellt - diese Anweisungen werden in einem **Dockerfile** geschrieben.
+
+<div class="fragment">
+
+Ein **Dockerfile** ist ein Anweisungsfile mit folgendem Aufbau:
+
+```dockerfile
+# Definieren des Basis-Images:
+FROM <name/version des Basis-Images>
+
+# Anweisungen für die Build-Schritte: Diese Schritte werden nacheinander abgearbeitet.
+# Sie definieren die Schritte so, wie Sie sie benötigen
+RUN <Linux-Befehl, der im Zwischen-Container ausgeführt wird>
+COPY <lokales File/Dir> <Container-File/Dir>
+WORKDIR <aktuelles Arbeitsverzeichnis im Container>
+ENV <Definieren von Umgebungsvariablen>
+ARG <Definieren von Build-Zeit-Variablen>
+...
+
+# Container-Start-Kommando (Optional, wenn das Basis-Image dies schon definiert):
+CMD [array, mit, kommandos]
+```
+</div>
+
+Die Referenz zu Dockerfiles mit allen Anweisungen und Erklärungen finden Sie hier:<br>
+<https://docs.docker.com/reference/dockerfile/>
+
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-flask"></i> Eigene Images bauen - PHP Webserver mit composer
+
+Wir bauen nun zusammen ein erstes eigenes Image: In der letzten Lektion haben wir einen Apache-HTTP-PHP-Container mit Composer
+manuell konfiguriert, sodass wir dann SlimPHP installieren konnten.
+
+Nun wollen wir daraus unser eigenes Image bauen, sodass Sie dies nicht mehr selber machen müssen.
+
+**Das Dockerfile**
+
+Erstellen Sie einen neuen Ordner, und erstellen Sie dort das File `Dockerfile` (ohne Endung, grosses D):
+
+```Dockerfile
+# 
+# Das Basis-Image: Wir starten mit dem bestehenden PHP-Image mit Apache Webserver:
+FROM php:8.4-apache
+
+# Installieren der notwendigen Pakete:
+RUN apt update
+RUN apt install -y git unzip
+
+# Aktivieren des Apache-Moduls "rewrite" (für "sprechende" URLs)
+RUN a2enmod rewrite
+
+# Installieren von php composer, dem Paketmanager für PHP:
+# Ich habe das Paket vorgängig von Hand heruntergeladen:
+# (siehe https://getcomposer.org/download/)
+# Wir kopieren das lokale File in das Image:
+COPY composer.phar /usr/local/bin/composer
+# ... und fügen "Executable"-Rechte hinzu, damit man composer einfach starten kann:
+RUN chmod +x /usr/local/bin/composer
+
+# Warum können wir die slimphp-Library nicht gleich hier
+# installieren?
+# RUN composer require  slim/slim:"4.*"
+# RUN composer require guzzlehttp/psr7 "^2"
+
+# Wir brauchen auch keine CMD-Anweisung: Dies übernimmt das Basis-Image
+# (Starten des Webservers) schon für uns.
+```
+
+Wir machen hier (fast) dasselbe, wie wir letztes Mal schon manuell via Kommandozeile gemacht haben.<br>
+Sie sehen, dass wir hier `composer.phar` vom lokalen Folder kopieren - Laden Sie also das notwendige File dazu hier herunter:<br>
+<https://getcomposer.org/download/>
+
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-flask"></i> Eigene Images bauen - PHP Webserver mit composer
+
+**Bau des Images**
+
+Im Folder mit dem Dockerfile führen Sie folgendes aus:
+
+```sh
+cd /pfad/zu/Ihrem/Ordner
+(so siehts darin aus)
+.
+├── composer.phar
+└── Dockerfile
+
+
+docker build -t php-composer-dev .  # <--- "." ist das aktuelle Verzeichnis
+```
+
+Damit bauen Sie Ihr eigenes Image, namens `php-composer-dev`.
+
+Nach Abschluss des Builds können Sie dies prüfen:
+
+```sh
+docker images
+
+REPOSITORY             TAG       IMAGE ID       CREATED             SIZE
+php-composer-dev       latest    1b84c97b279c   1 minute ago        600MB
+```
+
+Sie sehen, dass automatisch der Tag "latest" gesetzt wurde. Wenn Sie mehrere Versionen Ihres Images erstellen wollen,
+können Sie den Tag beim Build angeben:
+
+```sh
+docker build -t php-composer-dev:v1.2.0 .
+```
+
+Danach sehen Sie 2 verschiedene Versionen:
+
+```sh
+docker images
+
+REPOSITORY                                  TAG               IMAGE ID       CREATED             SIZE
+php-composer-dev                            latest            1b84c97b279c   1 minute ago        600MB
+php-composer-dev                            v1.2.0            28c77fa0a8e1   1 minute ago        600MB
+```
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-flask"></i> Eigene Images bauen - PHP Webserver mit composer
+
+**Erstellen eines Containers mit unserem Image**
+
+Nun da wir ein eigenes Image haben, können wir ganz einfach einen Container starten, und
+unsere SlimPHP-App damit ausliefern:
+
+```sh
+docker run -d --name slimtest -ti -p 8888:80 -v "${pwd}/phpprojekt:/var/www/html" php-composer-dev
+```
+
+Die manuellen Schritte wie beim ersten Mal entfallen, wir haben nun bereits ein fix-fertig "montiertes" Image!
+
+Sie können genau so wie beim vorherigen Image darin weitere Kommandos ausführen:
+
+```sh
+PS> docker exec -ti slimtest bash
+
+sh> composer require slim/slim:"4.*"
+sh> composer require guzzlehttp/psr7 "^2"
+```
+
+**<i class="far fa-hand-point-right"></i>Warum führen wir die beiden Composer-Befehle erst jetzt, im laufenden Container aus, und nicht schon zur Zeit des Image-Builds?**
+</textarea>
+</section>
+{% endblock %}

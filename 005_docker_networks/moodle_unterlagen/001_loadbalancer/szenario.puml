@@ -1,0 +1,31 @@
+@startuml szenario
+
+title Webseiten mit Load-Balancer
+
+component "Browser" as client
+() "localhost:80" as p0
+node "Docker-Umgebung" as docker {
+	component "LoadBalancer\nmit nginx" as lb
+	component "HTTP-Server\nserver1" as server1
+	component "HTTP-Server\nserver2" as server2
+	component "HTTP-Server\nserver3" as server3
+	() ":80" as p1
+	() ":80" as p2
+	() ":80" as p3
+	() ":80" as p4
+}
+
+
+client --> p0
+p0 --> p1
+lb --> p2
+lb --> p3
+lb --> p4
+
+p1 -- lb
+p2 -- server1
+p3 -- server2
+p4 -- server3
+
+
+@enduml

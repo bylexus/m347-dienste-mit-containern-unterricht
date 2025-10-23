@@ -1,0 +1,87 @@
+{% extends "../_base_template.html" %}
+{% block title %}Lektion 7 - Entwicklung, Bind Mount{% endblock %}
+
+{% block sections %}
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Zugriff auf Managed Volumes
+
+Wir haben das letzte Mal gesehen, dass wir **Managed Volumes** nutzen können, um Daten persistent zu speichern.
+
+So haben wir bsp. das DB- und Config-Verzeichnis der **PiGallery** oder auch die Daten des MySQL-Servers 
+in einem Managed Volume gespeichert.
+
+Die Managed Volumes werden von Docker verwaltet, und sind vielmals die performantere Alternative.
+
+<div class="border-1">
+
+**Nur**: Wie können wir auf die Daten in einem Managed Volume zugreifen, wenn wir diese sichern oder inspizieren wollen?
+</div>
+
+<div class="fragment">
+
+Wir brauchen also eine Möglichkeit, um auf die Daten in einem Managed Volume zuzugreifen, damit wir sie sichern oder auch
+manuell bearbeiten / zugreifen können. Beispielsweise wollen wir die Datenbank eines MySQL-Servers sichern, also ein Backup unserer Daten machen!
+</div>
+
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Zugriff auf Managed Volumes - Hilfscontainer
+
+Wir können einen **Hilfscontainer** starten, der das Managed Volume einbindet, und uns so Zugriff auf die Daten darin gibt.
+
+In diesem Hilfscontainer können Sie dann z.B. Daten ausgeben, oder in ein zusätzlch gemountetes, lokales Verzeichnis kopieren.
+
+**Beispiel anhand des PiGallery-Containers**
+
+Wir wollen das Managed-Volume `pigallery-config` (Daten für `/app/data/config`) inspizieren:
+
+```bash
+docker run --rm -it -v pigallery-config:/pigallery-config debian bash
+
+# nun, im Container:
+ls -l /pigallery-config
+# Ausgeben/Anzeigen der Datei:
+cat /pigallery-config/config.json
+```
+
+Sie könen dies nun auch nutzen, um die Daten zu sichern:
+
+1) Entweder durch Ausgeben der Dateien und Umleiten in eine lokale Datei:
+
+```bash
+docker run --rm -it -v pigallery-config:/pigallery-config debian cat /pigallery-config/config.json > config-backup.json
+```
+
+2) Oder durch zusätzliches Mounten eines lokalen Verzeichnisses, in das Sie die Daten kopieren können:
+
+```bash
+mkdir pigallery-backup
+docker run --rm -it -v pigallery-config:/pigallery-config -v "${pwd}/pigallery-backup:/backup" debian bash
+# nun, im Container:
+cp /pigallery-config/config.json /backup/
+```
+
+Volià, schon haben Sie ein Backup der Konfigurationsdatei des PiGallery-Containers!
+
+
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-flask"></i> Übung: Backup der MySQL-Datenbank
+
+Als Übung dazu versuchen Sie, mit den gelernten Techniken ein Backup der MySQL-Datenbank zu erstellen,
+welche Sie in der letzten Lektion in einem MySQL-Container mit Managed Volume gespeichert haben.
+
+Die Übung finden Sie auf Moodle am heutigen Datum.
+
+(TODO: Moodle-Übung Mysql-Backup  erstellen)
+
+</textarea>
+</section>
+{% endblock %}

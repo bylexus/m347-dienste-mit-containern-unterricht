@@ -1,0 +1,22 @@
+@startuml docker_no_volumes
+
+title PiGallery-Container
+
+package "Docker Host" as docker {
+	node pigallery {
+		interface ":80" as inport 
+		component "Webserver" {
+
+		}
+		database "/app/data/images" as data
+		database "/app/data/config" as config
+		database "/app/data/db" as db
+
+		inport - Webserver
+		Webserver --> data
+		Webserver --> config
+		Webserver --> db
+	}
+}
+
+@enduml

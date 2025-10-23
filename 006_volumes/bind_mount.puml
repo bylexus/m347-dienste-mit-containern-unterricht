@@ -1,0 +1,25 @@
+@startuml bind_mount
+title Docker Bind Mount
+
+package "Docker Host" as docker {
+	folder "C:\meine_bilder" as f1
+		
+	node pigallery {
+		interface ":80" as inport 
+		component "Webserver" {
+
+		}
+		database "/app/data/config" as config
+		database "/app/data/db" as db
+		database "/app/data/images\n(sieht: C:\\meine_bilder)" as data  #d2e2f7
+
+		inport - Webserver
+		Webserver --> config
+		Webserver --> db
+		Webserver --> data
+	}
+}
+f1 -right[#transparent]- pigallery
+f1 -right-> data: Bind Mount Host -> Container
+
+@enduml

@@ -4,5 +4,6 @@
 		"**/bower_components": true,
 		"**/*.code-search": true,
 		"m347-build/**": true
-	}
+	},
+	"workbench.colorTheme": "Visual Studio Light"
 }

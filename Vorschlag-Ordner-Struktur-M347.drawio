@@ -1,0 +1,49 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.9 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="26.0.9">
+  <diagram name="Seite-1" id="3oGqpT4h3HLlP0u1rSZy">
+    <mxGraphModel dx="1062" dy="721" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="kMrYlZqtYL_2l-ftVdS_-1" value="&lt;b&gt;Haupt-Ordner: Projekt-Ordner M347 /&lt;/b&gt;" style="whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="37" y="80" width="760" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="kMrYlZqtYL_2l-ftVdS_-2" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Vorschlag Ordner-Projektstruktur M347&lt;/font&gt;&lt;/b&gt;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="37" y="30" width="310" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kMrYlZqtYL_2l-ftVdS_-3" value="&lt;b&gt;monolith (Ordner)&lt;/b&gt;&lt;br&gt;server.js" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="57" y="120" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kMrYlZqtYL_2l-ftVdS_-4" value="&lt;b&gt;docsify (Ordner)&lt;/b&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="57" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kMrYlZqtYL_2l-ftVdS_-5" value="&lt;b&gt;frontend (Ordner, neu!)&lt;/b&gt;" style="whiteSpace=wrap;html=1;verticalAlign=top;align=left;" vertex="1" parent="1">
+          <mxGeometry x="57" y="280" width="550" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="kMrYlZqtYL_2l-ftVdS_-6" value="&lt;b&gt;M293-Ordner/&lt;/b&gt;" style="whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="67" y="360" width="480" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="kMrYlZqtYL_2l-ftVdS_-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="kMrYlZqtYL_2l-ftVdS_-7" target="kMrYlZqtYL_2l-ftVdS_-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kMrYlZqtYL_2l-ftVdS_-7" value="src/" style="whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="101" y="390" width="116" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="kMrYlZqtYL_2l-ftVdS_-8" value="site/" style="whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="397" y="390" width="116" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="kMrYlZqtYL_2l-ftVdS_-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="kMrYlZqtYL_2l-ftVdS_-10" target="kMrYlZqtYL_2l-ftVdS_-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kMrYlZqtYL_2l-ftVdS_-10" value="11ty serve/build" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="247" y="395" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kMrYlZqtYL_2l-ftVdS_-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="kMrYlZqtYL_2l-ftVdS_-13" target="kMrYlZqtYL_2l-ftVdS_-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kMrYlZqtYL_2l-ftVdS_-13" value="httpd-Docker-Container" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="617" y="280" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
