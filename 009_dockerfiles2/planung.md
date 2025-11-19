@@ -50,10 +50,8 @@ xx:yy Ende
 Lektion: xx:xx - yy:yy
 Dauer: 90min
 
-| Dauer             | Task                                                       | Sozform                     |
-| ----------------- | ---------------------------------------------------------- | --------------------------- |
-| 5min              | Rekapitulation / Fragen beantworten letzter Lektion        | zusammen                    |
-| 30min             | Foliensatz Dockerfiles, interaktiv 1. Dockerfile erstellen | Folien-Präsentation, plenum |
-| Rest              | Moodle-Übungen zu Dockerfiles                              | Schüler-Übungen             |
-| 10min vor Schluss | Rekapitulation, Stand, Fragen                              | Schüler-Übungen             |
+| Dauer | Task                                                | Sozform  |
+| ----- | --------------------------------------------------- | -------- |
+| 10min | Rekapitulation / Fragen beantworten letzter Lektion | zusammen |
+| min   | Thema Images erstellen, Dockerfiles                 |          |
 

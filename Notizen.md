@@ -56,7 +56,27 @@ Ablauf Semester:
    1. docker compose
       - volumes: bind, mount
       - netzwerke, Abgrenzung, Sicherheit
-   2. Testkonzept entwerfen, Dokumentation schreiben
+   2. QS, Testing, Dokumentation:
+      1. Build-Qualität:
+         1. dockerfile linting (siehe unten: hadolint)
+         2. layer-Optimierung: Image-Grösse-Reduzierung (Untersuchen mit dive),
+            multi-stage-builds
+         3. Sicherheitslücken (siehe trivy)
+      2. QS, Testing: Runtime-Checks:
+         1. Healthchecks, readiness probes, dependencies (depends_on)
+         2. Resource limits (cpu, memory)
+      3. Dokumentation (readme, docker-compose dokumentieren)
+      Ein Dockerfile mit hadolint auf Best Practices prüfen (https://github.com/hadolint/hadolint)
+      Ein Image mit Trivy auf Sicherheitslücken scannen (https://trivy.dev/, docker run --rm -ti -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image biso-ask-dev-db)
+      Checkliste für Schüler (als Lernhilfe):
+        ✓ Dockerfile folgt Best Practices, ist dokumentiert
+        ✓ Keine kritischen Sicherheitslücken im Image
+        ✓ Healthchecks definiert
+        ✓ Tests vorhanden und bestehen
+        ✓ Dokumentation vorhanden und aktuell (README, docker-compose-Kommentare)
+        ✓ Resource Limits gesetzt
+
+
    3. Preisunterschiede, was kostet es
 3. Weiteres:
    1. Konfiguration, Secrets
@@ -93,7 +113,7 @@ ca. 18 Lektionen (ev. nur 17?)
      - docsify für markdown-docs, lokaler mount
      - Entwicklungscontainer für PHP
      - fertige images mit reinkopieren der app/config, z.B. nginx proxy/webseite
-       https://novagallery.org/ --> eigene Bildergallerie, code in image, gallerie mit bind mount
+     - Jellyfin (einfacher media server): https://jellyfin.org/docs/general/installation/container/
        Etwas komplexer: https://hub.docker.com/r/linuxserver/piwigo: photo gallerie mit externer mysql-db
      - Docker für Entwicklung Webseite M293
 009: Übungen: Images mittels Dockerfile erstellen
@@ -101,10 +121,10 @@ ca. 18 Lektionen (ev. nur 17?)
       - bsp: Entwicklungscontainer für PHP
       - docsify mit lokalen Files
       - Docker für Entwicklung Webseite M293
-      - novagallery
+      - jellyfin
 10: LB 1
-Aufbau einfacher dienst, z.B. Jellyfin (einfacher media server):
-https://jellyfin.org/docs/general/installation/container/
+Aufbau einfacher dienst, z.B. 
+https://novagallery.org/ --> eigene Bildergallerie, code in image, gallerie mit bind mount
 
 011: Einführung Docker Compose
     - was ist es, wann wird es benutzt
@@ -113,7 +133,8 @@ https://jellyfin.org/docs/general/installation/container/
       - networks
       - volumes
       - secrets
-012: Zusammengesetzt: komplexere setups wie z.B. 
+012: Miniprojekt: Schüler suchen sich ein eigenes Mini-Projekt aus, in 2 Einheiten umsetzen:
+Zusammengesetzt: komplexere setups wie z.B. 
 Wordpress, Nextcloud, Mediawiki, yourls (url shortener, https://hub.docker.com/_/yourls), moodle
       Image gallery: https://github.com/xemle/home-gallery, ticket-system wie redmine, z.b.
       auch mit frontend-load-balancer
@@ -123,24 +144,31 @@ Wordpress, Nextcloud, Mediawiki, yourls (url shortener, https://hub.docker.com/_
         - docsify für Projektdoku, mit plantuml plugin
         - entwerfen / Dokumentieren mittels plantuml / docsify
         - implementieren eines services, siehe oben für beispiele
-        - und/oder auch: M293 mit Formular-Backend-Dienst (was, das einfach Formuladaten entgegennimmt)
-          (z.B. Formodoro: <https://github.com/Trel725/formodoro>)
+Es wird eine Dokumentation erwartet und BEWERTET (20%-Anteil an Modul)
+
 013:
-014:Testen, Testkonzept
+014: L1: Vorstellen/Zeigen Mini-Projekt, L2: 
 015:
 016: LB 2 (mehrere Dienste, docker compose. ev. frontend: form, backend: form-store + email)
+        - z.b.: architektur entwerfen für: M293 mit Formular-Backend-Dienst (was, das einfach Formuladaten entgegennimmt)
+          (z.B. Formodoro: <https://github.com/Trel725/formodoro>)
 017: Bonusthemen, siehe letztes Jahr
 018: Bonusthemen, siehe letztes Jahr
 
 
 TODO:
 
-- Jahresplan fertigstellen
++ Jahresplan fertigstellen
 - alle Themen erarbeiten
 - Lektion 006: Moodle-Übung zum Thema MySQL + PHPMyAdmin erstellen
 - Lektion 007: Moodle-Übung zum Thema Mysql-Backup via Hilfscontainer erstellen
+- Lektion 008, 009: Moodle-Übungen entwerfen (siehe letzte Folie Lektion 008)
 - LB 1 erstellen
 - LB 2 erstellen
++ Mini-Projekt (Moodle-Aufgabe 002_mini_compose_projekt): ausführliche Beschreibung und Bewertungsraster für die
+  Dokumentation
+
+Stand Unterlagen: Lektion 11 (ohne LBs)
 
 
 
