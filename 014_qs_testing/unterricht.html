@@ -8,6 +8,12 @@
 
 ## Heutiges Ziel
 
+* **Lektion 1**: Kurzvorstellung / Zeigen Mini-Projekt
+* **Lektion 2**:
+	* Einführung Qualitätssicherung, Testing, Dokumentation
+	* Sie kennen Qualitätskriterien von Container-Diensten
+	* Sie kennen Begriffe wie "Healthcheck" und "Resource Limits" für das Probing von Services
+	* Sie wissen, was zur Dokumentation Ihrer Dienste notwendig ist
 
 </textarea>
 </section>
@@ -16,10 +22,114 @@
 <!-- ----------------------------------------------------------------------------- -->
 <section data-markdown>
 <textarea data-template>
-# <i class="fas fa-graduation-cap"></i> xxxxx
+# <i class="fas fa-graduation-cap"></i> Kurzvorstellung Mini-Projekt
 
+### Kurzer Einblick in Ihr Mini-Projekt
 
+* **Wir losen aus**, wer sein Projekt kurz der Klasse zeigen _darf_
+* 1 Lektion (45min), ca. 3, 4 Kandidaten
 
+### Vorstellung
+
+- zeigen Sie das "Endprodukt", also die laufende Applikation
+- zeigen Sie kurz die Architektur
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Qualitätssicherung, Testing
+
+**"Qualität"** ist ein sehr weiter Begriff - Wenn Sie bewerten müssten, ob ein Container-Dienst, eine orchestrierte Service-Lösung
+"von guter Qualität" ist - welche Kriterien würden Sie dafür betrachten?
+
+**Sammeln wir Qualitätsmerkmale** - Stichworte ans Flipchart!
+
+(beziehen Sie sich dabei auf die Container-Konzepte - ob die Applikation dahinter gut/schlecht ist, wollen wir hier nicht beurteilen)
+
+Notes:
+
+Mögliche Stichworte:
+
+- gute Dokumentation - verständlich, klar, alle Schritte erklärt
+- guter Code - auch Dockerfiles etc. ist Code, welcher dokumentiert, gewartet, sauber sein muss
+- Überwachbarkeit - wie kann man die Services monitoren?
+- Skalierbarkeit - können die Dienste ( einfach ) skaliert werden?
+- regelmässige Updates, auch der Abhängigkeiten
+- Geheimnisse (Passwörter, API-Keys etc) auf sicherem Weg konfigurierbar
+- Ressourcen-Planung / Limitierung (z.B. max. CPU/RAM)
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Qualitätssicherung, Testing
+
+Wir sehen uns in den nächsten 2 Lektionen nur einen kleinen Aspekt der **Container-Qualität** an, zu mehr haben wir keine Zeit:
+
+* **Runtime-Probing:**
+  * Health Checks (läuft ein Dienst?)
+  * Dependencies (welcher Dienst hängt von welchem anderen ab?)
+  * Restart Policies (wie/wann soll ein Container neu gestartet werden?)
+
+* **Sicherheit:**
+  * Resource Limits
+  * Sicherheitslücken in Images
+  * Best Practices für Dockerfiles ("Linting")
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Runtime Probing
+
+Um Dienste (Docker-Container) monitoren zu können, muss das System feststellen können, ob diese laufen und wann die Dienste bereit sind.
+Ebenso sollen Dienste beim Hochfahren auf andere warten können.
+
+**Beispiel:**
+
+Ihre Web-Applikation macht Datenbank-Abfragen. Diese können aber erst ausgeführt werden, wenn der Datenbankserver bereit ist.
+
+Docker kennt dazu das Konzept der **Health Checks** und **Dependencies** (Abhängigkeiten). Ebenso kann entschieden werden,
+ob/wie ein Container neu gestartet wird, sollte er mal abstürzen (**Restart Policies**).
+
+Arbeiten Sie die **Moodle-Übung** dazu durch.
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Sicherheit: Resource Limit
+
+Container benötigen ebenfalls CPU- und Memory, um ihre Aufgabe zu erfüllen. Was aber, wenn diese "heiss" laufen?
+
+Damit die Container nicht gleich das ganze Host-System lahmlegen, können Sie die zur Verfügung stehenden Ressourcen limitieren.
+
+Arbeiten Sie die **Moodle-Übung** dazu durch.
+
+</textarea>
+</section>
+
+<!-- ----------------------------------------------------------------------------- -->
+<section data-markdown>
+<textarea data-template>
+# <i class="fas fa-graduation-cap"></i> Sicherheit: Best Practices, Security Checks
+
+Zu professionell entwickelten Containern gehört auch das Einhalten von "**Best Practices**" sowie das 
+**Prüfen von Sicherheitslücken** in Ihren Images.
+
+Sie werden diese Praktien mit 2 Tools (Hadolint, <https://github.com/hadolint/hadolint> und
+trivy, <https://trivy.dev/>) kennenlernen.
+
+Arbeiten Sie die **Moodle-Übung** dazu durch.
 </textarea>
 </section>
 

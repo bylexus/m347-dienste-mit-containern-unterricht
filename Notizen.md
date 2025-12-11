@@ -1,5 +1,33 @@
 # Notizen M347 - Dienste mit Containern
 
+## Setup / Todos für neues Semester
+
+Folgende Arbeiten sind für ein neues Semester jeweils zu erledigen:
+
+- Sicherung / Tagging der beiden Branches `unterricht` und `starter` im Repo git@github.com:bylexus/m450_app_testing.git:
+  - `unterricht` beinhaltet den Unterrichts-Stoff / Unterlagen (Repo: git@github.com:bylexus/m450_app_testing.git)
+  - `starter` beinhaltet die Starter-Web-App (Repo: git@github.com:bylexus/m450-template.git)
+  - jeweils mit dem Stand des alten Semesters taggen (endzustand)
+- Semesterplan erstellen
+  - 002_Unterrichtsplanung/index.html
+  - PDF dazu für Marco (rest ist direkt html online)
+- Starter-Repo atualisieren
+  - sauber testen
+- Github classroom repo erstellen
+  - Assignement Link: https://classroom.github.com/classrooms/50485268-m450-in23-27c/assignments/m450-testing
+  - Invitation Link: https://classroom.github.com/a/FWujg9JO
+- Foliensatz aktualisieren:
+  - Wochen durchsehen
+  - Links etc. aktualisieren
+- Moodle-Daten aktualisieren
+  - neuen Foliensatz hochladen
+  - LBs konfigurieren
+  - Daten der Wochen anpassen
+  - aktuelle Wetter-DB (sqlite m450 von kube001.alexi.ch, playground kubernetes namespace) zur Verfügung stellen (moodle download)
+- LBs aktualisieren / verbessern / anpassen
+- LBs auf Edutio vorbereiten
+- Kurs-Sichtbarkeit anpassen (sichtbar für Schüler stellen)
+
 ## Idee: Neugestaltung auf SJ 25/26 (ab Februar 26)
 
 Problematik:
@@ -147,8 +175,8 @@ Wordpress, Nextcloud, Mediawiki, yourls (url shortener, https://hub.docker.com/_
 Es wird eine Dokumentation erwartet und BEWERTET (20%-Anteil an Modul)
 
 013:
-014: L1: Vorstellen/Zeigen Mini-Projekt, L2: 
-015:
+014: L1: Vorstellen/Zeigen Mini-Projekt, L2: Qualitätssicherung
+015: QS, Testing, Doku
 016: LB 2 (mehrere Dienste, docker compose. ev. frontend: form, backend: form-store + email)
         - z.b.: architektur entwerfen für: M293 mit Formular-Backend-Dienst (was, das einfach Formuladaten entgegennimmt)
           (z.B. Formodoro: <https://github.com/Trel725/formodoro>)
@@ -168,7 +196,7 @@ TODO:
 + Mini-Projekt (Moodle-Aufgabe 002_mini_compose_projekt): ausführliche Beschreibung und Bewertungsraster für die
   Dokumentation
 
-Stand Unterlagen: Lektion 11 (ohne LBs)
+Stand Unterlagen: Lektion 14 mit Übungen vorbereitet
 
 
 
