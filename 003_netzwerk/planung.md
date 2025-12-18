@@ -32,7 +32,6 @@ Themen / Vorgehen:
   netcat, nmap, dig, im gleichen netzwerk,
 6. Aufzeichnen mittels plantuml
 
-
 003: Grundlagen Netzwerk: 
     docker run --rm -it jonlabelle/network-tools
      TCP/IP, Übungen mit Netcat-Container (https://github.com/subfuzion/docker-netcat) (server: docker run --rm -ti --net host subfuzion/netcat -vl 1234, client: docker run --rm -ti --net host subfuzion/netcat 10.2.0.210 1234), hostname/dns --> ip

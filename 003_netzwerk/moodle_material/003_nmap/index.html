@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&Uuml;bung zu TCP-Ports</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="übung-zu-tcp-ports">Übung zu TCP-Ports</h1>
+<p>TCP-Dienste werden unter so genannten &quot;Ports&quot; (TCP-Ports) angeboten: Ein Programm kann auf einem TCP-Port eine Verbindung zur Verfügung stellen, welche dann über das Netzwerk erreicht werden kann:</p>
+<p>Eine TCP-Anfrage / TCP-Paket wird über IP an einen Dienst-Port geleitet.</p>
+<p>Wir wollen die TCP-Dienste etwas genauer anschauen.</p>
+<h2 id="starten-des-netzwerk-utils-containers">Starten des Netzwerk-Utils-Containers</h2>
+<p>Für diese Übungen benötigen wir DNS-Tools. Diese stellt das Docker-Image <code>jonlabelle/network-tools</code> zur Verfügung.</p>
+<p><strong>Starten Sie einen Container dieses Images mit einer Linux-Shell (bash)</strong>:</p>
+<pre><code>docker run --rm -ti jonlabelle/network-tools bash
+</code></pre>
+<p>Danach haben Sie die notwendigen Tools (<code>nmap</code>, <code>netcat</code>) zur Verfügung.</p>
+<h2 id="beantworten-sie-folgende-fragen">Beantworten Sie folgende Fragen</h2>
+<p>Die folgenden Fragen können Sie mit den Tools <code>nmap</code> und <code>netcat</code> beantworten. Informieren Sie sich selbständig via Internet, wie die richtigen Kommandos dazu lauten.
+Beantworten Sie die Fragen, und geben Sie als Lösung jeweils die Antwort UND das zugehörige Kommando in der Moodle-Abgabe ab!</p>
+<p><strong>Hinweis</strong>: Bei dieser Übung müssen Sie nichts abgeben - sie dient dem Experimentieren.</p>
+<ol>
+<li>
+<p>Offene Ports: <code>nmap</code> ist ein Netzwerk-Scanner, der ganz unterschiedliche &quot;Dinge&quot; über Netzwerk-Dienste herausfinden kann. Unter anderem kann er bei einen Server &quot;abklappern&quot;, welche TCP-Ports geöffnet sind (also hinter welchem TCP-Port ein Programm auf Verbindung wartet).</p>
+<p>Mit <code>nmap -sT -n -T5 [hostname/IP]</code> ermittelt nmap die gängigen, offenen TCP-Ports eines Hosts. Ermitteln Sie die offenen Ports von:</p>
+<ul>
+<li><code>www.google.ch</code></li>
+<li><code>www.bztf.ch</code></li>
+<li>Ihre lokale IP-Adresse</li>
+<li>Die IP-Adresse Ihres Nachbarn/Ihrer Nachbarin</li>
+</ul>
+</li>
+<li>
+<p>TCP-Ports nutzen / bedienen:</p>
+<p>Sie können TCP-Port-Dienste auch direkt &quot;verbinden&quot;, und, wenn Sie das Protokoll kennen, damit Daten austauschen. Gut geeignet dafür ist das HTTP-Protokoll (Web-Requests), da das Protokoll auch Menschen-Les- und Schreibbar ist.</p>
+<p>Versuchen Sie, mittels <code>netcat</code> den TCP-Port eines HTTP-Servers zu verbinden (Port 80), und dann eine Webseite abzuholen!</p>
+<pre><code># Verbinden auf TCP-Port:
+netcat www.bztf.ch 80
+
+# dann können Sie Daten hin- und herschicken:
+GET / http/1.1
+Host: bztf.ch
+(2x enter)
+</code></pre>
+<p>Frage: Versuchen Sie dasselbe auf den https-Port (443). Warum klappt dies nicht?</p>
+</li>
+</ol>
+
+            
+            
+        </body>
+        </html>

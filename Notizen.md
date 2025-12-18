@@ -4,26 +4,21 @@
 
 Folgende Arbeiten sind für ein neues Semester jeweils zu erledigen:
 
-- Sicherung / Tagging der beiden Branches `unterricht` und `starter` im Repo git@github.com:bylexus/m450_app_testing.git:
-  - `unterricht` beinhaltet den Unterrichts-Stoff / Unterlagen (Repo: git@github.com:bylexus/m450_app_testing.git)
-  - `starter` beinhaltet die Starter-Web-App (Repo: git@github.com:bylexus/m450-template.git)
-  - jeweils mit dem Stand des alten Semesters taggen (endzustand)
-- Semesterplan erstellen
-  - 002_Unterrichtsplanung/index.html
-  - PDF dazu für Marco (rest ist direkt html online)
-- Starter-Repo atualisieren
-  - sauber testen
-- Github classroom repo erstellen
-  - Assignement Link: https://classroom.github.com/classrooms/50485268-m450-in23-27c/assignments/m450-testing
-  - Invitation Link: https://classroom.github.com/a/FWujg9JO
++ Sicherung / Tagging des Repos git@github.com:bylexus/m347-dienste-mit-containern-unterricht.git (Unterrichtsunterlagen)
+  + jeweils mit dem Stand des alten Semesters taggen (endzustand)
+  + neuen Branch für neues Semester anlegen
++ Semesterplan erstellen
+  + 002_Unterrichtsplanung/index.html
+  + PDF dazu für Marco (rest ist direkt html online)
 - Foliensatz aktualisieren:
   - Wochen durchsehen
+- + Bis Woche 5 erledigt
   - Links etc. aktualisieren
 - Moodle-Daten aktualisieren
   - neuen Foliensatz hochladen
+  - Beschreibung Mini-Projekt erstellen/hochladen
   - LBs konfigurieren
   - Daten der Wochen anpassen
-  - aktuelle Wetter-DB (sqlite m450 von kube001.alexi.ch, playground kubernetes namespace) zur Verfügung stellen (moodle download)
 - LBs aktualisieren / verbessern / anpassen
 - LBs auf Edutio vorbereiten
 - Kurs-Sichtbarkeit anpassen (sichtbar für Schüler stellen)

@@ -14,7 +14,7 @@ Wir probieren dies heute mit einem Image aus, welches Ihnen ein Web-Server zur V
 Apache HTTP ist ein leichtgewichtiger Webserver, der statische HTML-Seiten ausliefern kann. Das Image konfiguriert Apache bereits so, dass er PHP-Dateien interpretieren kann.
 * Machen Sie sich auf der Dockerhub-Seite von php schlau, wie / wo Sie den Ordner mit den Files platzieren müssen
 * Konfigurieren Sie den neuen Container so, dass dieser Ihr(e) lokalen Scripte ausliefern kann!
-* Machen Sie ein **PlantUML-Diagramm*, welches die Komponenten (Docker-Host, Container, Client, Ports) aufzeigt! Es soll aufzeigen:
+* Machen Sie ein **PlantUML-Diagramm**, welches die Komponenten (Docker-Host, Container, Client, Ports) aufzeigt! Es soll aufzeigen:
   * welche(r) Container läuft
   * welche Ports dabei wie gemappt werden
   * Beziehung zwischen Browser und Container ist ersichtlich
@@ -44,3 +44,4 @@ Beim Öffnen des Links http://localhost:8000 sollte Ihre Demo-Webseite angezeigt
 ## Abgabe
 
 Geben Sie das dazu notwendige Docker-Kommando und die zugehörigen Files in der Moodle-Aufgabe (text + zip) ab!
+Geben Sie das PlantUML-Diagramm als **BILD**, nicht als Quelltext, ab!

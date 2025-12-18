@@ -10,6 +10,8 @@ Dies ist ein Beispiel eines Komponenten-Diagramm, wie wir es zu Dokumentationszw
 
 Studieren Sie dazu die Dokumentation von PlantUML: <https://plantuml.com/de/component-diagram>
 
+**Verwenden Sie dazu Ihren eigenen, lokalen PlantUML-Server, den Sie als Docker-Container gestartet haben!**
+
 **Abgabe**
 
 Laden Sie den PlantUML-Quellcode und das daraus resultierende Bild als Datei oder in der Textabgabe hoch.

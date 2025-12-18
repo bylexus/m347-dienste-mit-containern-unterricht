@@ -14,7 +14,7 @@ Wir probieren dies heute mit einem ganz einfachen Image aus: mit einem Web-Serve
 Apache HTTP ist ein leichtgewichtiger Webserver, der statische HTML-Seiten ausliefern kann.
 * Machen Sie sich auf der Dockerhub-Seite von httpd schlau, wie / wo Sie den Ordner mit den HTML-Files platzieren müssen
 * Konfigurieren Sie den neuen Container so, dass dieser Ihr(e) lokalen HTML-Seiten ausliefern kann!
-* Machen Sie ein **PlantUML-Diagramm*, welches die Komponenten (Docker-Host, Container, Client, Ports) aufzeigt! Es soll aufzeigen:
+* Machen Sie ein **PlantUML-Diagramm**, welches die Komponenten (Docker-Host, Container, Client, Ports) aufzeigt! Es soll aufzeigen:
   * welche(r) Container läuft
   * welche Ports dabei wie gemappt werden
   * Beziehung zwischen Browser und Container ist ersichtlich
@@ -41,3 +41,4 @@ Beim Öffnen des Links http://localhost:8000 sollte Ihre Demo-Webseite angezeigt
 ## Abgabe
 
 Geben Sie das dazu notwendige Docker-Kommando und die zugehörigen Files in der Moodle-Aufgabe (text + zip) ab!
+Geben Sie das PlantUML-Diagramm als **BILD**, nicht als Quelltext, ab!

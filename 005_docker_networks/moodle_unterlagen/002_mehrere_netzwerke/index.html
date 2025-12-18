@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&Uuml;bung - Container in mehreren Netzwerken</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="übung-container-in-mehreren-netzwerken">Übung - Container in mehreren Netzwerken</h1>
+<p><strong>Erstellen Sie 3 Container</strong> von dem bereits bekannten <code>jonlabelle/network-tools</code>-Image (Netzwerk-Tools), und konfigurieren Sie diese netzwerkmässig wie folgt:</p>
+<p><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgZGF0YS1kaWFncmFtLXR5cGU9Ik5XRElBRyIgaGVpZ2h0PSIyMjVweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjMwM3B4O2hlaWdodDoyMjVweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzMDMgMjI1IiB3aWR0aD0iMzAzcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzOC4wMjE1IiB4PSIyNy44MTA1IiB5PSIxNi42MDE2Ij5za3luZXQ8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNjAuODMyIiB4PSI1IiB5PSIxMjAuNzM0NCI+Z3JvdW5kbmV0PC90ZXh0PjxyZWN0IGZpbGw9IiNFMkUyRjAiIGhlaWdodD0iNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgd2lkdGg9IjIyNC4zNTk0IiB4PSI3MC44MzIiIHk9IjkuNTY2NCIvPjxyZWN0IGZpbGw9IiNFMkUyRjAiIGhlaWdodD0iNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgd2lkdGg9IjIyNC4zNTk0IiB4PSI3MC44MzIiIHk9IjExMy42OTkyIi8+PHBhdGggZD0iTTEyOC45MjE5LDE0LjU2NjQgTDEyOC45MjE5LDQ0LjU2NjQiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48cGF0aCBkPSJNMjQxLjEwMTYsMTQuNTY2NCBMMjQxLjEwMTYsNDQuNTY2NCIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwYXRoIGQ9Ik0yNDEuMTAxNiw3OC42OTkyIEwyNDEuMTAxNiwxMTMuNjk5MiIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwYXRoIGQ9Ik0xMjQuOTIxOSwxMTguNjk5MiBMMTI0LjkyMTksMTQ4LjY5OTIiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjM0LjEzMjgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjgyLjE3OTciIHg9Ijg1LjgzMiIgeT0iNDQuNTY2NCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjYyLjE3OTciIHg9Ijk1LjgzMiIgeT0iNjYuMTY4Ij5jb250YWluZXIxPC90ZXh0PjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMzQuMTMyOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iODIuMTc5NyIgeD0iMTk4LjAxMTciIHk9IjQ0LjU2NjQiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI2Mi4xNzk3IiB4PSIyMDguMDExNyIgeT0iNjYuMTY4Ij5jb250YWluZXIzPC90ZXh0PjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMzQuMTMyOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iODIuMTc5NyIgeD0iODUuODMyIiB5PSIxNDguNjk5MiIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjYyLjE3OTciIHg9Ijk1LjgzMiIgeT0iMTcwLjMwMDgiPmNvbnRhaW5lcjI8L3RleHQ+PCEtLVNSQz1bb29qRm9LbkNMd1pjdWluQkJJZEZCeWZNQUN3azEzOTE4ZnA5LU5hYllQYnZnS002bzFuWkJpdlFCZUp3ekFCeXFobUszMnI2NjVmZ2tHMDBdLS0+PC9nPjwvc3ZnPg==" alt="Multi-Networks"></p>
+<ul>
+<li><code>container1</code> ist im Netzwerk <code>skynet</code></li>
+<li><code>container2</code> ist im Netzwerk <code>groundnet</code></li>
+<li><code>container3</code> ist in beiden Netzwerken</li>
+</ul>
+<p><strong>Notieren Sie die dazu notwendigen Kommandos!</strong></p>
+<p><strong>Verifizieren Sie den Netzwerk-Zugriff:</strong></p>
+<p>Mittels <code>ping [hostname|ipadresse]</code> (also z.B. <code>ping container1</code>) können Sie prüfen, ob ein entfernter Host grundsätzlich erreichbar ist.</p>
+<ul>
+<li>Versuchen Sie, mittels des <code>ping</code>-Befehls aus <code>container1</code> den <code>container2</code> zu erreichen. Funktioniert dies?</li>
+<li>Versuchen Sie, mittels des <code>ping</code>-Befehls aus <code>container1</code> den <code>container3</code> zu erreichen. Funktioniert dies?</li>
+<li>Versuchen Sie, mittels des <code>ping</code>-Befehls aus <code>container2</code> den <code>container1</code> zu erreichen. Funktioniert dies?</li>
+<li>Versuchen Sie, mittels des <code>ping</code>-Befehls aus <code>container2</code> den <code>container3</code> zu erreichen. Funktioniert dies?</li>
+<li>Versuchen Sie, mittels des <code>ping</code>-Befehls aus <code>container3</code> den <code>container1</code> zu erreichen. Funktioniert dies?</li>
+<li>Versuchen Sie, mittels des <code>ping</code>-Befehls aus <code>container3</code> den <code>container2</code> zu erreichen. Funktioniert dies?</li>
+</ul>
+<p><strong>--&gt; Was stellen Sie fest? Welche Container haben Zugriff auf welche anderen, und warum?</strong></p>
+
+            
+            
+        </body>
+        </html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&Uuml;bung - Webseite mit Load-Balancer</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="übung-webseite-mit-load-balancer">Übung - Webseite mit Load-Balancer</h1>
+<h2 id="ziel-aufgabe">Ziel, Aufgabe</h2>
+<p>Wir wollen ein gängiges Szenario, welches Sie in vielen Web-Applikationen vorfinden, aufbauen:</p>
+<p><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgZGF0YS1kaWFncmFtLXR5cGU9IkRFU0NSSVBUSU9OIiBoZWlnaHQ9IjcyM3B4IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBzdHlsZT0id2lkdGg6NTEzcHg7aGVpZ2h0OjcyM3B4O2JhY2tncm91bmQ6I0ZGRkZGRjsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMyA3MjMiIHdpZHRoPSI1MTNweCIgem9vbUFuZFBhbj0ibWFnbmlmeSI+PHRpdGxlPldlYnNlaXRlbiBtaXQgTG9hZC1CYWxhbmNlcjwvdGl0bGU+PGRlZnMvPjxnPjxnIGNsYXNzPSJ0aXRsZSIgZGF0YS1zb3VyY2UtbGluZT0iMiI+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIxMS40ODM0IiB4PSIxNDMuNzU4MyIgeT0iMjMuNTM1MiI+V2Vic2VpdGVuIG1pdCBMb2FkLUJhbGFuY2VyPC90ZXh0PjwvZz48IS0tY2x1c3RlciBkb2NrZXItLT48ZyBjbGFzcz0iY2x1c3RlciIgZGF0YS1lbnRpdHk9ImRvY2tlciIgZGF0YS1zb3VyY2UtbGluZT0iNiIgZGF0YS11aWQ9ImVudDAwMDQiIGlkPSJjbHVzdGVyX2RvY2tlciI+PHBvbHlnb24gZmlsbD0ibm9uZSIgcG9pbnRzPSIxNiwyMzguOTc4MywyNiwyMjguOTc4Myw0OTYsMjI4Ljk3ODMsNDk2LDY5Ni45MjgzLDQ4Niw3MDYuOTI4MywxNiw3MDYuOTI4MywxNiwyMzguOTc4MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSI0ODYiIHgyPSI0OTYiIHkxPSIyMzguOTc4MyIgeTI9IjIyOC45NzgzIi8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjE2IiB4Mj0iNDg2IiB5MT0iMjM4Ljk3ODMiIHkyPSIyMzguOTc4MyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSI0ODYiIHgyPSI0ODYiIHkxPSIyMzguOTc4MyIgeTI9IjcwNi45MjgzIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEzOC4wODU5IiB4PSIxODIuOTU3IiB5PSIyNTUuNTEzNCI+RG9ja2VyLVVtZ2VidW5nPC90ZXh0PjwvZz48IS0tZW50aXR5IGxiLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1lbnRpdHk9ImxiIiBkYXRhLXNvdXJjZS1saW5lPSI3IiBkYXRhLXVpZD0iZW50MDAwNSIgaWQ9ImVudGl0eV9sYiI+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSI2Mi45NzY2IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxMjkuNTU3NiIgeD0iMTkxLjIyIiB5PSIzODYuOTc4MyIvPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMTAiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjE1IiB4PSIzMDAuNzc3NiIgeT0iMzkxLjk3ODMiLz48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjQiIHg9IjI5OC43Nzc2IiB5PSIzOTMuOTc4MyIvPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNCIgeD0iMjk4Ljc3NzYiIHk9IjM5Ny45NzgzIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iODkuNTU3NiIgeD0iMjA2LjIyIiB5PSI0MjAuNTEzNCI+TG9hZEJhbGFuY2VyPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjY1LjUyMjUiIHg9IjIwNi4yMiIgeT0iNDM3LjAwMTciPm1pdCBuZ2lueDwvdGV4dD48L2c+PCEtLWVudGl0eSBzZXJ2ZXIxLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1lbnRpdHk9InNlcnZlcjEiIGRhdGEtc291cmNlLWxpbmU9IjgiIGRhdGEtdWlkPSJlbnQwMDA2IiBpZD0iZW50aXR5X3NlcnZlcjEiPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iNjIuOTc2NiIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTI1LjY3NDgiIHg9IjMyLjE2IiB5PSI2MjcuOTQ4MyIvPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMTAiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjE1IiB4PSIxMzcuODM0OCIgeT0iNjMyLjk0ODMiLz48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjQiIHg9IjEzNS44MzQ4IiB5PSI2MzQuOTQ4MyIvPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNCIgeD0iMTM1LjgzNDgiIHk9IjYzOC45NDgzIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iODUuNjc0OCIgeD0iNDcuMTYiIHk9IjY2MS40ODM0Ij5IVFRQLVNlcnZlcjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1MC4yOTIiIHg9IjQ3LjE2IiB5PSI2NzcuOTcxNyI+c2VydmVyMTwvdGV4dD48L2c+PCEtLWVudGl0eSBzZXJ2ZXIyLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1lbnRpdHk9InNlcnZlcjIiIGRhdGEtc291cmNlLWxpbmU9IjkiIGRhdGEtdWlkPSJlbnQwMDA3IiBpZD0iZW50aXR5X3NlcnZlcjIiPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iNjIuOTc2NiIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTI1LjY3NDgiIHg9IjE5My4xNiIgeT0iNjI3Ljk0ODMiLz48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjEwIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxNSIgeD0iMjk4LjgzNDgiIHk9IjYzMi45NDgzIi8+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI0IiB4PSIyOTYuODM0OCIgeT0iNjM0Ljk0ODMiLz48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjQiIHg9IjI5Ni44MzQ4IiB5PSI2MzguOTQ4MyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9Ijg1LjY3NDgiIHg9IjIwOC4xNiIgeT0iNjYxLjQ4MzQiPkhUVFAtU2VydmVyPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjUwLjI5MiIgeD0iMjA4LjE2IiB5PSI2NzcuOTcxNyI+c2VydmVyMjwvdGV4dD48L2c+PCEtLWVudGl0eSBzZXJ2ZXIzLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1lbnRpdHk9InNlcnZlcjMiIGRhdGEtc291cmNlLWxpbmU9IjEwIiBkYXRhLXVpZD0iZW50MDAwOCIgaWQ9ImVudGl0eV9zZXJ2ZXIzIj48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjYyLjk3NjYiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjEyNS42NzQ4IiB4PSIzNTQuMTYiIHk9IjYyNy45NDgzIi8+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIxMCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTUiIHg9IjQ1OS44MzQ4IiB5PSI2MzIuOTQ4MyIvPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNCIgeD0iNDU3LjgzNDgiIHk9IjYzNC45NDgzIi8+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI0IiB4PSI0NTcuODM0OCIgeT0iNjM4Ljk0ODMiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI4NS42NzQ4IiB4PSIzNjkuMTYiIHk9IjY2MS40ODM0Ij5IVFRQLVNlcnZlcjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1MC4yOTIiIHg9IjM2OS4xNiIgeT0iNjc3Ljk3MTciPnNlcnZlcjM8L3RleHQ+PC9nPjwhLS1lbnRpdHkgcDEtLT48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLWVudGl0eT0icDEiIGRhdGEtc291cmNlLWxpbmU9IjExIiBkYXRhLXVpZD0iZW50MDAwOSIgaWQ9ImVudGl0eV9wMSI+PGVsbGlwc2UgY3g9IjI1NiIgY3k9IjI5Ny45NzgzIiBmaWxsPSIjRjFGMUYxIiByeD0iOCIgcnk9IjgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIyLjEzNDgiIHg9IjI0NC45MzI2IiB5PSIzMjguNTEzNCI+OjgwPC90ZXh0PjwvZz48IS0tZW50aXR5IHAyLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1lbnRpdHk9InAyIiBkYXRhLXNvdXJjZS1saW5lPSIxMiIgZGF0YS11aWQ9ImVudDAwMTAiIGlkPSJlbnRpdHlfcDIiPjxlbGxpcHNlIGN4PSIxMzEiIGN5PSI1MzguOTQ4MyIgZmlsbD0iI0YxRjFGMSIgcng9IjgiIHJ5PSI4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMi4xMzQ4IiB4PSIxMTkuOTMyNiIgeT0iNTY5LjQ4MzQiPjo4MDwvdGV4dD48L2c+PCEtLWVudGl0eSBwMy0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtZW50aXR5PSJwMyIgZGF0YS1zb3VyY2UtbGluZT0iMTMiIGRhdGEtdWlkPSJlbnQwMDExIiBpZD0iZW50aXR5X3AzIj48ZWxsaXBzZSBjeD0iMjU2IiBjeT0iNTM4Ljk0ODMiIGZpbGw9IiNGMUYxRjEiIHJ4PSI4IiByeT0iOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjIuMTM0OCIgeD0iMjQ0LjkzMjYiIHk9IjU2OS40ODM0Ij46ODA8L3RleHQ+PC9nPjwhLS1lbnRpdHkgcDQtLT48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLWVudGl0eT0icDQiIGRhdGEtc291cmNlLWxpbmU9IjE0IiBkYXRhLXVpZD0iZW50MDAxMiIgaWQ9ImVudGl0eV9wNCI+PGVsbGlwc2UgY3g9IjM4MSIgY3k9IjUzOC45NDgzIiBmaWxsPSIjRjFGMUYxIiByeD0iOCIgcnk9IjgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIyLjEzNDgiIHg9IjM2OS45MzI2IiB5PSI1NjkuNDgzNCI+OjgwPC90ZXh0PjwvZz48IS0tZW50aXR5IGNsaWVudC0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtZW50aXR5PSJjbGllbnQiIGRhdGEtc291cmNlLWxpbmU9IjQiIGRhdGEtdWlkPSJlbnQwMDAyIiBpZD0iZW50aXR5X2NsaWVudCI+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSI0Ni40ODgzIiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI5My44MzMiIHg9IjIwOS4wOCIgeT0iNDQuNDg4MyIvPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMTAiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjE1IiB4PSIyODIuOTEzIiB5PSI0OS40ODgzIi8+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI0IiB4PSIyODAuOTEzIiB5PSI1MS40ODgzIi8+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI0IiB4PSIyODAuOTEzIiB5PSI1NS40ODgzIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTMuODMzIiB4PSIyMjQuMDgiIHk9Ijc4LjAyMzQiPkJyb3dzZXI8L3RleHQ+PC9nPjwhLS1lbnRpdHkgcDAtLT48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLWVudGl0eT0icDAiIGRhdGEtc291cmNlLWxpbmU9IjUiIGRhdGEtdWlkPSJlbnQwMDAzIiBpZD0iZW50aXR5X3AwIj48ZWxsaXBzZSBjeD0iMjU2IiBjeT0iMTc5Ljk3ODMiIGZpbGw9IiNGMUYxRjEiIHJ4PSI4IiByeT0iOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iODMuMzkxNiIgeD0iMjE0LjMwNDIiIHk9IjIxMC41MTM0Ij5sb2NhbGhvc3Q6ODA8L3RleHQ+PC9nPjwhLS1saW5rIGNsaWVudCB0byBwMC0tPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJjbGllbnQiIGRhdGEtZW50aXR5LTI9InAwIiBkYXRhLXNvdXJjZS1saW5lPSIxOCIgZGF0YS11aWQ9ImxuazEzIiBpZD0ibGlua19jbGllbnRfcDAiPjxwYXRoIGQ9Ik0yNTYsOTEuMzA4MyBDMjU2LDExNi4xMjgzIDI1NiwxNDguNjU4MyAyNTYsMTY1LjEwODMiIGZpbGw9Im5vbmUiIGlkPSJjbGllbnQtdG8tcDAiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjI1NiwxNzEuMTA4MywyNjAsMTYyLjEwODMsMjU2LDE2Ni4xMDgzLDI1MiwxNjIuMTA4MywyNTYsMTcxLjEwODMiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48L2c+PCEtLWxpbmsgcDAgdG8gcDEtLT48ZyBjbGFzcz0ibGluayIgZGF0YS1lbnRpdHktMT0icDAiIGRhdGEtZW50aXR5LTI9InAxIiBkYXRhLXNvdXJjZS1saW5lPSIxOSIgZGF0YS11aWQ9ImxuazE0IiBpZD0ibGlua19wMF9wMSI+PHBhdGggZD0iTTI1NiwxODguOTQ4MyBDMjU2LDIxMC4yMzgzIDI1NiwyNjIuMjQ4MyAyNTYsMjgzLjI0ODMiIGZpbGw9Im5vbmUiIGlkPSJwMC10by1wMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMjU2LDI4OS4yNDgzLDI2MCwyODAuMjQ4MywyNTYsMjg0LjI0ODMsMjUyLDI4MC4yNDgzLDI1NiwyODkuMjQ4MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjwvZz48IS0tbGluayBsYiB0byBwMi0tPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJsYiIgZGF0YS1lbnRpdHktMj0icDIiIGRhdGEtc291cmNlLWxpbmU9IjIwIiBkYXRhLXVpZD0ibG5rMTUiIGlkPSJsaW5rX2xiX3AyIj48cGF0aCBkPSJNMjIzLjQ4LDQ1MC4yODgzIEMxOTUuMTMsNDc3LjE2ODMgMTYwLjMzNTIsNTEwLjE1MTMgMTQzLjU0NTIsNTI2LjA2MTMiIGZpbGw9Im5vbmUiIGlkPSJsYi10by1wMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTM5LjE5LDUzMC4xODgzLDE0OC40NzQyLDUyNi45MDEzLDE0Mi44MTk0LDUyNi43NDkxLDE0Mi45NzE1LDUyMS4wOTQzLDEzOS4xOSw1MzAuMTg4MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjwvZz48IS0tbGluayBsYiB0byBwMy0tPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJsYiIgZGF0YS1lbnRpdHktMj0icDMiIGRhdGEtc291cmNlLWxpbmU9IjIxIiBkYXRhLXVpZD0ibG5rMTYiIGlkPSJsaW5rX2xiX3AzIj48cGF0aCBkPSJNMjU2LDQ1MC4yODgzIEMyNTYsNDc3LjE2ODMgMjU2LDUwOC4yNzgzIDI1Niw1MjQuMTg4MyIgZmlsbD0ibm9uZSIgaWQ9ImxiLXRvLXAzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyNTYsNTMwLjE4ODMsMjYwLDUyMS4xODgzLDI1Niw1MjUuMTg4MywyNTIsNTIxLjE4ODMsMjU2LDUzMC4xODgzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PC9nPjwhLS1saW5rIGxiIHRvIHA0LS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9ImxiIiBkYXRhLWVudGl0eS0yPSJwNCIgZGF0YS1zb3VyY2UtbGluZT0iMjIiIGRhdGEtdWlkPSJsbmsxNyIgaWQ9ImxpbmtfbGJfcDQiPjxwYXRoIGQ9Ik0yODguNTIsNDUwLjI4ODMgQzMxNi44Nyw0NzcuMTY4MyAzNTEuNjY0OCw1MTAuMTUxMyAzNjguNDU0OCw1MjYuMDYxMyIgZmlsbD0ibm9uZSIgaWQ9ImxiLXRvLXA0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIzNzIuODEsNTMwLjE4ODMsMzY5LjAyODUsNTIxLjA5NDMsMzY5LjE4MDYsNTI2Ljc0OTEsMzYzLjUyNTgsNTI2LjkwMTMsMzcyLjgxLDUzMC4xODgzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PC9nPjwhLS1saW5rIHAxIHRvIGxiLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9InAxIiBkYXRhLWVudGl0eS0yPSJsYiIgZGF0YS1zb3VyY2UtbGluZT0iMjQiIGRhdGEtdWlkPSJsbmsxOCIgaWQ9ImxpbmtfcDFfbGIiPjxwYXRoIGQ9Ik0yNTYsMzA2Ljc0ODMgQzI1NiwzMjIuNjU4MyAyNTYsMzU5LjY4ODMgMjU2LDM4Ni41NTgzIiBmaWxsPSJub25lIiBpZD0icDEtbGIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48L2c+PCEtLWxpbmsgcDIgdG8gc2VydmVyMS0tPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJwMiIgZGF0YS1lbnRpdHktMj0ic2VydmVyMSIgZGF0YS1zb3VyY2UtbGluZT0iMjUiIGRhdGEtdWlkPSJsbmsxOSIgaWQ9ImxpbmtfcDJfc2VydmVyMSI+PHBhdGggZD0iTTEyOC42NCw1NDcuNzI4MyBDMTIzLjgsNTYzLjYzODMgMTEyLjU1LDYwMC42NjgzIDEwNC4zOSw2MjcuNTI4MyIgZmlsbD0ibm9uZSIgaWQ9InAyLXNlcnZlcjEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48L2c+PCEtLWxpbmsgcDMgdG8gc2VydmVyMi0tPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJwMyIgZGF0YS1lbnRpdHktMj0ic2VydmVyMiIgZGF0YS1zb3VyY2UtbGluZT0iMjYiIGRhdGEtdWlkPSJsbmsyMCIgaWQ9ImxpbmtfcDNfc2VydmVyMiI+PHBhdGggZD0iTTI1Niw1NDcuNzI4MyBDMjU2LDU2My42MzgzIDI1Niw2MDAuNjY4MyAyNTYsNjI3LjUyODMiIGZpbGw9Im5vbmUiIGlkPSJwMy1zZXJ2ZXIyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PC9nPjwhLS1saW5rIHA0IHRvIHNlcnZlcjMtLT48ZyBjbGFzcz0ibGluayIgZGF0YS1lbnRpdHktMT0icDQiIGRhdGEtZW50aXR5LTI9InNlcnZlcjMiIGRhdGEtc291cmNlLWxpbmU9IjI3IiBkYXRhLXVpZD0ibG5rMjEiIGlkPSJsaW5rX3A0X3NlcnZlcjMiPjxwYXRoIGQ9Ik0zODMuMzYsNTQ3LjcyODMgQzM4OC4yLDU2My42MzgzIDM5OS40NSw2MDAuNjY4MyA0MDcuNjEsNjI3LjUyODMiIGZpbGw9Im5vbmUiIGlkPSJwNC1zZXJ2ZXIzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PC9nPjwhLS1TUkM9W1hQMF9SeUNXNENOZHRBU3VVTWU3OTFpeUwxcXdIMXF3UDhaS0w1c3dPN25vS0o0V2U3LWFnai16WFpJRXdvS0p4enR6dUJZTlQzQTRwekg1cWVhaVpaaFhwaWNVUlFNSExiNDBLNnhxcGY5RE02czMtdW1LQWZHSGJUNUozUXdraUo5RUlWRmdPaGd6Z0tsRnJzMVRKclpURV9MNldKc0QwdE5sVFlaRGxqSm02cFFCYl9GQ3F5V05jdHpYMXNzX29XTkpfS0NWM2VTelV3Sm1hU2JPcGdQbVZfZUlwMVNtbG1JQjFJbldheFVUYnNuTWRnX3ljY19YMXdPdUlzeDhzNXNFb1RUN3JPM2ZaZWhGSWlvZzFWM0Q5N0NLZGNUbnNqTUJpLUZXc3hDSjBCeTBdLS0+PC9nPjwvc3ZnPg==" alt="Load-Balancer-Szenario"></p>
+<p>Wir starten 3 Instanzen eines <code>httpd</code>-Web-Servers (Apache httpd, den kennen Sie auch bereits aus vorgängigen Lektionen), und wollen die Netzwerk-Last mittels <code>nginx</code>-Load-Balancer verteilen (<code>nginx</code> ist ebenfalls ein Webserver, kann aber auch einfach load-balancen).</p>
+<p>Zudem sollen die Web-Container untereinander getrennt sein, nur mit dem Load-Balancer verbunden sein (aus Sicherheitsgründen).</p>
+<h2 id="aufbau">Aufbau</h2>
+<ul>
+<li>
+<p>Erstellen Sie 3 Webserver-Container mit dem <a href="https://hub.docker.com/_/httpd"><code>httpd</code></a>-Image (das kennen Sie schon). Erstellen Sie eine <strong>EIGENE</strong> Seite pro Server, z.B. mit dem HTML-Inhalt <strong>&quot;Server 1&quot;</strong>, <strong>&quot;Server 2&quot;</strong>, <strong>&quot;Server3&quot;</strong>: Dies macht das Testen / Sichtbarmachen der Load-Balancer-Verteilung einfacher.</p>
+</li>
+<li>
+<p>Erstellen Sie den Load-Balancer mittels <a href="https://hub.docker.com/_/nginx"><code>nginx</code></a>-Image. Damit dieser als Load-Balancer konfiguriert werden kann, definieren Sie eine <code>.conf</code>-Datei und mounten diese beim Container-Start unter <code>/etc/nginx/nginx.conf</code>:</p>
+</li>
+</ul>
+<pre><code class="language-txt"># nginx.conf:
+worker_processes  auto;
+http {
+    upstream mywebapp {
+        server server1;
+        server server2;
+        server server3;
+    }
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://mywebapp;
+        }
+    }
+}
+events {
+    worker_connections  1024;
+}
+</code></pre>
+<p>... also <em><strong>in etwa</strong></em> so:</p>
+<p><code>docker run [... weitere parameter ...] -v /pfad/zum/lokalen/nginx.conf:/etc/nginx/nginx.conf nginx</code></p>
+<p><strong>Sorgen Sie für die notwendigen (aber nicht mehr) Netzwerk-Verbindungen!</strong></p>
+<h2 id="test">Test</h2>
+<p>Öffnen Sie nun die Seite über Ihren Browser (<a href="http://localhost/">http://localhost/</a>), und prüfen Sie, welche Seite Sie erhalten.</p>
+<p>Laden Sie die Seite ein paar Mal neu - können Sie die Funktionalität des Load-Balancers bestätigen? Wie? Warum (nicht)?</p>
+<h2 id="dokumentation">Dokumentation</h2>
+<p>Erstellen Sie ein PlantUML-Diagramm (analog dem oben gezeigten) mit der soeben aufgebauten Architektur! Zusätzlich haben Sie hier noch Daten mittels Volume Bind eingebunden - zeichnen Sie auch diese Volume-Binds / Mounts ein! Überlegen Sie sich, wie Sie dies mit PlantUML machen können!</p>
+<h2 id="abgabe">Abgabe</h2>
+<ul>
+<li>die notwendigen Docker-Kommandos</li>
+<li>die zugehörigen Dateien</li>
+<li>das dokumentierende PlantUML-Diagramm als Bild (nicht als Code)</li>
+</ul>
+
+            
+            
+        </body>
+        </html>

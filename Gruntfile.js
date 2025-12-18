@@ -96,6 +96,7 @@ module.exports = function(grunt) {
                         '!m347-build/**',
                         '!m347-build*/**',
                         '!m347-build.zip',
+                        '!Notizen.md',
                         '!__prepare/**',
                         '!CONTRIBUTING.md',
                         '!Gruntfile.js',
